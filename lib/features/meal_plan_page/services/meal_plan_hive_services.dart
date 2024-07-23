@@ -25,7 +25,7 @@ class MealPlanHiveService {
         "ingredients": item["ingredients"],
         "instructions": item["instructions"],
         "nutrients": item["nutrients"],
-        "yields": item["yields"],
+        "yields": item["servings"],
         "addTime": item["addTime"],
       };
     }).toList();

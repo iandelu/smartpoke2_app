@@ -5,12 +5,14 @@ import 'package:meal_ai/features/main_page/screens/main_page.dart';
 import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
 
 void main() async {
+  Hive.deleteFromDisk();
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(NutrientsAdapter());
   await Hive.openBox('grocery_list');
   await Hive.openBox('recipe_from_url');
   await Hive.openBox('meal_plan_recipe');
+  //Hive.deleteFromDisk();
   // await Hive.deleteBoxFromDisk('recipe_from_url');
   // await Hive.deleteBoxFromDisk('meal_plan_recipe');
   // await Hive.deleteBoxFromDisk('grocery_list');
