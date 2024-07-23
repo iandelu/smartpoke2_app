@@ -15,7 +15,7 @@ class RecipeModel with _$RecipeModel {
     required List<String> ingredients,
     required String instructions,
     required Nutrients nutrients,
-    required String servings,
+    required String yields,
     @JsonKey(defaultValue: '') required String addTime,
   }) = _RecipeModel;
 

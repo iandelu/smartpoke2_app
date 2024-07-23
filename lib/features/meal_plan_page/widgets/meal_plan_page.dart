@@ -48,7 +48,7 @@ class MealPlaneRecipeWidget extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Serving ${recipe.servings.toString()}',
+                      'Serving ${recipe.yields.toString()}',
                       textAlign: TextAlign.left,
                       style:
                           AppTextStyles().mThick.copyWith(color: Colors.white),

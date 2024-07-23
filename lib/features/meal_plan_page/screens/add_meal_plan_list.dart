@@ -90,7 +90,7 @@ class _AddedMealPlanListState extends ConsumerState<AddedMealPlanList> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Serving ${mealPlanRecipe.servings.toString()}',
+                            'Serving ${mealPlanRecipe.yields.toString()}',
                             textAlign: TextAlign.left,
                             style: AppTextStyles()
                                 .mThick

@@ -10,7 +10,7 @@ class SpoonacularApiService {
 
   Future<RecipeModel> getRecipeFromUrl({required String url}) async {
     final apiUrl =
-        Uri.parse('https://savorapi-ebbed74b7cd2.herokuapp.com/scrape/');
+        Uri.parse('http://10.0.2.2:5000/scrape');
 
     try {
       final response = await http.post(
@@ -19,7 +19,7 @@ class SpoonacularApiService {
           'accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({'url': url}),
+        body: jsonEncode({'url': url, 'wild' : true}),
       );
 
       if (response.statusCode == 200) {

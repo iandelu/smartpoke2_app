@@ -42,7 +42,7 @@ class MealPlan extends _$MealPlan {
       "ingredients": recipe.ingredients,
       "instructions": recipe.instructions,
       "nutrients": recipe.nutrients,
-      "servings": recipe.servings,
+      "servings": recipe.yields,
       "addTime": addTime.toString(),
     });
     logger.d('Successfully added meal plan recipe to Hive');

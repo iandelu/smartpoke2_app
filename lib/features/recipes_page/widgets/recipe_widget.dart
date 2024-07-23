@@ -142,7 +142,7 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Serving ${widget.recipe.servings.toString()}',
+                          'Serving ${widget.recipe.yields.toString()}',
                           textAlign: TextAlign.left,
                           style: AppTextStyles()
                               .mThick

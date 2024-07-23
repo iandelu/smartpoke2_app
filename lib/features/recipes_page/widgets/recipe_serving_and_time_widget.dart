@@ -25,7 +25,7 @@ class RecipeServingAndTimeWidget extends StatelessWidget {
             children: [
               const Text('Servings'),
               Text(
-                  (int.parse(recipe.servings.split(' ').first) +
+                  (int.parse(recipe.yields.split(' ').first) +
                           sliderValue.round())
                       .toStringAsFixed(0),
                   style: AppTextStyles().mThick)

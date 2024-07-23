@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: non_constant_identifier_names
-
 part of 'recipe_model.dart';
 
 // **************************************************************************
@@ -70,23 +68,23 @@ class NutrientsAdapter extends TypeAdapter<Nutrients> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RecipeModel _$$_RecipeModelFromJson(Map<String, dynamic> json) =>
-    _$_RecipeModel(
+_$RecipeModelImpl _$$RecipeModelImplFromJson(Map<String, dynamic> json) =>
+    _$RecipeModelImpl(
       key: json['key'],
       host: json['host'] as String,
       title: json['title'] as String,
-      total_time: json['total_time'] as int,
+      total_time: (json['total_time'] as num).toInt(),
       image: json['image'] as String,
       ingredients: (json['ingredients'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
       instructions: json['instructions'] as String,
       nutrients: Nutrients.fromJson(json['nutrients'] as Map<String, dynamic>),
-      servings: json['servings'] as String,
+      yields: json['yields'] as String,
       addTime: json['addTime'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$_RecipeModelToJson(_$_RecipeModel instance) =>
+Map<String, dynamic> _$$RecipeModelImplToJson(_$RecipeModelImpl instance) =>
     <String, dynamic>{
       'key': instance.key,
       'host': instance.host,
@@ -96,11 +94,12 @@ Map<String, dynamic> _$$_RecipeModelToJson(_$_RecipeModel instance) =>
       'ingredients': instance.ingredients,
       'instructions': instance.instructions,
       'nutrients': instance.nutrients,
-      'servings': instance.servings,
+      'yields': instance.yields,
       'addTime': instance.addTime,
     };
 
-_$_Nutrients _$$_NutrientsFromJson(Map<String, dynamic> json) => _$_Nutrients(
+_$NutrientsImpl _$$NutrientsImplFromJson(Map<String, dynamic> json) =>
+    _$NutrientsImpl(
       calories: json['calories'] as String?,
       carbohydrateContent: json['carbohydrateContent'] as String?,
       proteinContent: json['proteinContent'] as String?,
@@ -112,7 +111,7 @@ _$_Nutrients _$$_NutrientsFromJson(Map<String, dynamic> json) => _$_Nutrients(
       servingSize: json['servingSize'] as String?,
     );
 
-Map<String, dynamic> _$$_NutrientsToJson(_$_Nutrients instance) =>
+Map<String, dynamic> _$$NutrientsImplToJson(_$NutrientsImpl instance) =>
     <String, dynamic>{
       'calories': instance.calories,
       'carbohydrateContent': instance.carbohydrateContent,
