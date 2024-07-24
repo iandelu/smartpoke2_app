@@ -31,19 +31,17 @@ mixin _$RecipeModel {
   String get lan => throw _privateConstructorUsedError;
   double get ratings => throw _privateConstructorUsedError;
   int get views => throw _privateConstructorUsedError;
-  String get videoUrl => throw _privateConstructorUsedError;
-  DateTime get lastUpdateDate => throw _privateConstructorUsedError;
+  String? get videoUrl => throw _privateConstructorUsedError;
+  DateTime? get lastUpdateDate => throw _privateConstructorUsedError;
   @Uint8ListConverter()
-  Uint8List get imageFile => throw _privateConstructorUsedError;
+  Uint8List? get imageFile => throw _privateConstructorUsedError;
   String get difficulty => throw _privateConstructorUsedError;
   Nutrients get nutrients => throw _privateConstructorUsedError;
   List<RecipeStep> get recipeSteps => throw _privateConstructorUsedError;
   List<RecipeProduct> get recipeProducts => throw _privateConstructorUsedError;
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
-  UserModel get user => throw _privateConstructorUsedError;
-  @JsonKey(defaultValue: '')
+  UserModel? get user => throw _privateConstructorUsedError;
   String get addTime => throw _privateConstructorUsedError;
-  dynamic get required => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -69,20 +67,19 @@ abstract class $RecipeModelCopyWith<$Res> {
       String lan,
       double ratings,
       int views,
-      String videoUrl,
-      DateTime lastUpdateDate,
-      @Uint8ListConverter() Uint8List imageFile,
+      String? videoUrl,
+      DateTime? lastUpdateDate,
+      @Uint8ListConverter() Uint8List? imageFile,
       String difficulty,
       Nutrients nutrients,
       List<RecipeStep> recipeSteps,
       List<RecipeProduct> recipeProducts,
       List<CategoryModel> categories,
-      UserModel user,
-      @JsonKey(defaultValue: '') String addTime,
-      dynamic required});
+      UserModel? user,
+      String addTime});
 
   $NutrientsCopyWith<$Res> get nutrients;
-  $UserModelCopyWith<$Res> get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -109,17 +106,16 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
     Object? lan = null,
     Object? ratings = null,
     Object? views = null,
-    Object? videoUrl = null,
-    Object? lastUpdateDate = null,
-    Object? imageFile = null,
+    Object? videoUrl = freezed,
+    Object? lastUpdateDate = freezed,
+    Object? imageFile = freezed,
     Object? difficulty = null,
     Object? nutrients = null,
     Object? recipeSteps = null,
     Object? recipeProducts = null,
     Object? categories = null,
-    Object? user = null,
+    Object? user = freezed,
     Object? addTime = null,
-    Object? required = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -166,18 +162,18 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
           ? _value.views
           : views // ignore: cast_nullable_to_non_nullable
               as int,
-      videoUrl: null == videoUrl
+      videoUrl: freezed == videoUrl
           ? _value.videoUrl
           : videoUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastUpdateDate: null == lastUpdateDate
+              as String?,
+      lastUpdateDate: freezed == lastUpdateDate
           ? _value.lastUpdateDate
           : lastUpdateDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      imageFile: null == imageFile
+              as DateTime?,
+      imageFile: freezed == imageFile
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
-              as Uint8List,
+              as Uint8List?,
       difficulty: null == difficulty
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
@@ -198,18 +194,14 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
-      user: null == user
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as UserModel?,
       addTime: null == addTime
           ? _value.addTime
           : addTime // ignore: cast_nullable_to_non_nullable
               as String,
-      required: freezed == required
-          ? _value.required
-          : required // ignore: cast_nullable_to_non_nullable
-              as dynamic,
     ) as $Val);
   }
 
@@ -223,8 +215,12 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res> get user {
-    return $UserModelCopyWith<$Res>(_value.user, (value) {
+  $UserModelCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
@@ -250,22 +246,21 @@ abstract class _$$RecipeModelImplCopyWith<$Res>
       String lan,
       double ratings,
       int views,
-      String videoUrl,
-      DateTime lastUpdateDate,
-      @Uint8ListConverter() Uint8List imageFile,
+      String? videoUrl,
+      DateTime? lastUpdateDate,
+      @Uint8ListConverter() Uint8List? imageFile,
       String difficulty,
       Nutrients nutrients,
       List<RecipeStep> recipeSteps,
       List<RecipeProduct> recipeProducts,
       List<CategoryModel> categories,
-      UserModel user,
-      @JsonKey(defaultValue: '') String addTime,
-      dynamic required});
+      UserModel? user,
+      String addTime});
 
   @override
   $NutrientsCopyWith<$Res> get nutrients;
   @override
-  $UserModelCopyWith<$Res> get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -290,17 +285,16 @@ class __$$RecipeModelImplCopyWithImpl<$Res>
     Object? lan = null,
     Object? ratings = null,
     Object? views = null,
-    Object? videoUrl = null,
-    Object? lastUpdateDate = null,
-    Object? imageFile = null,
+    Object? videoUrl = freezed,
+    Object? lastUpdateDate = freezed,
+    Object? imageFile = freezed,
     Object? difficulty = null,
     Object? nutrients = null,
     Object? recipeSteps = null,
     Object? recipeProducts = null,
     Object? categories = null,
-    Object? user = null,
+    Object? user = freezed,
     Object? addTime = null,
-    Object? required = freezed,
   }) {
     return _then(_$RecipeModelImpl(
       id: null == id
@@ -347,18 +341,18 @@ class __$$RecipeModelImplCopyWithImpl<$Res>
           ? _value.views
           : views // ignore: cast_nullable_to_non_nullable
               as int,
-      videoUrl: null == videoUrl
+      videoUrl: freezed == videoUrl
           ? _value.videoUrl
           : videoUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastUpdateDate: null == lastUpdateDate
+              as String?,
+      lastUpdateDate: freezed == lastUpdateDate
           ? _value.lastUpdateDate
           : lastUpdateDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      imageFile: null == imageFile
+              as DateTime?,
+      imageFile: freezed == imageFile
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
-              as Uint8List,
+              as Uint8List?,
       difficulty: null == difficulty
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
@@ -379,15 +373,14 @@ class __$$RecipeModelImplCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
-      user: null == user
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as UserModel?,
       addTime: null == addTime
           ? _value.addTime
           : addTime // ignore: cast_nullable_to_non_nullable
               as String,
-      required: freezed == required ? _value.required! : required,
     ));
   }
 }
@@ -399,26 +392,25 @@ class _$RecipeModelImpl implements _RecipeModel {
   const _$RecipeModelImpl(
       {required this.id,
       required this.name,
-      required this.description,
-      required this.totalTime,
-      required this.price,
-      required this.yields,
-      required this.pictureUrl,
-      required this.source,
-      required this.lan,
-      required this.ratings,
-      required this.views,
-      required this.videoUrl,
-      required this.lastUpdateDate,
-      @Uint8ListConverter() required this.imageFile,
-      required this.difficulty,
-      required this.nutrients,
-      required final List<RecipeStep> recipeSteps,
-      required final List<RecipeProduct> recipeProducts,
-      required final List<CategoryModel> categories,
-      required this.user,
-      @JsonKey(defaultValue: '') required this.addTime,
-      this.required})
+      this.description = 'No description available',
+      this.totalTime = 0,
+      this.price = 0.0,
+      this.yields = 1,
+      this.pictureUrl = '',
+      this.source = 'Unknown',
+      this.lan = 'en',
+      this.ratings = 5.0,
+      this.views = 0,
+      this.videoUrl,
+      this.lastUpdateDate,
+      @Uint8ListConverter() this.imageFile,
+      this.difficulty = 'easy',
+      this.nutrients = const Nutrients(),
+      final List<RecipeStep> recipeSteps = const [],
+      final List<RecipeProduct> recipeProducts = const [],
+      final List<CategoryModel> categories = const [],
+      this.user,
+      this.addTime = ''})
       : _recipeSteps = recipeSteps,
         _recipeProducts = recipeProducts,
         _categories = categories;
@@ -431,36 +423,48 @@ class _$RecipeModelImpl implements _RecipeModel {
   @override
   final String name;
   @override
+  @JsonKey()
   final String description;
   @override
+  @JsonKey()
   final int totalTime;
   @override
+  @JsonKey()
   final double price;
   @override
+  @JsonKey()
   final int yields;
   @override
+  @JsonKey()
   final String pictureUrl;
   @override
+  @JsonKey()
   final String source;
   @override
+  @JsonKey()
   final String lan;
   @override
+  @JsonKey()
   final double ratings;
   @override
+  @JsonKey()
   final int views;
   @override
-  final String videoUrl;
+  final String? videoUrl;
   @override
-  final DateTime lastUpdateDate;
+  final DateTime? lastUpdateDate;
   @override
   @Uint8ListConverter()
-  final Uint8List imageFile;
+  final Uint8List? imageFile;
   @override
+  @JsonKey()
   final String difficulty;
   @override
+  @JsonKey()
   final Nutrients nutrients;
   final List<RecipeStep> _recipeSteps;
   @override
+  @JsonKey()
   List<RecipeStep> get recipeSteps {
     if (_recipeSteps is EqualUnmodifiableListView) return _recipeSteps;
     // ignore: implicit_dynamic_type
@@ -469,6 +473,7 @@ class _$RecipeModelImpl implements _RecipeModel {
 
   final List<RecipeProduct> _recipeProducts;
   @override
+  @JsonKey()
   List<RecipeProduct> get recipeProducts {
     if (_recipeProducts is EqualUnmodifiableListView) return _recipeProducts;
     // ignore: implicit_dynamic_type
@@ -477,6 +482,7 @@ class _$RecipeModelImpl implements _RecipeModel {
 
   final List<CategoryModel> _categories;
   @override
+  @JsonKey()
   List<CategoryModel> get categories {
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
@@ -484,16 +490,14 @@ class _$RecipeModelImpl implements _RecipeModel {
   }
 
   @override
-  final UserModel user;
+  final UserModel? user;
   @override
-  @JsonKey(defaultValue: '')
+  @JsonKey()
   final String addTime;
-  @override
-  final dynamic required;
 
   @override
   String toString() {
-    return 'RecipeModel(id: $id, name: $name, description: $description, totalTime: $totalTime, price: $price, yields: $yields, pictureUrl: $pictureUrl, source: $source, lan: $lan, ratings: $ratings, views: $views, videoUrl: $videoUrl, lastUpdateDate: $lastUpdateDate, imageFile: $imageFile, difficulty: $difficulty, nutrients: $nutrients, recipeSteps: $recipeSteps, recipeProducts: $recipeProducts, categories: $categories, user: $user, addTime: $addTime, required: $required)';
+    return 'RecipeModel(id: $id, name: $name, description: $description, totalTime: $totalTime, price: $price, yields: $yields, pictureUrl: $pictureUrl, source: $source, lan: $lan, ratings: $ratings, views: $views, videoUrl: $videoUrl, lastUpdateDate: $lastUpdateDate, imageFile: $imageFile, difficulty: $difficulty, nutrients: $nutrients, recipeSteps: $recipeSteps, recipeProducts: $recipeProducts, categories: $categories, user: $user, addTime: $addTime)';
   }
 
   @override
@@ -531,8 +535,7 @@ class _$RecipeModelImpl implements _RecipeModel {
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.addTime, addTime) || other.addTime == addTime) &&
-            const DeepCollectionEquality().equals(other.required, required));
+            (identical(other.addTime, addTime) || other.addTime == addTime));
   }
 
   @JsonKey(ignore: true)
@@ -559,8 +562,7 @@ class _$RecipeModelImpl implements _RecipeModel {
         const DeepCollectionEquality().hash(_recipeProducts),
         const DeepCollectionEquality().hash(_categories),
         user,
-        addTime,
-        const DeepCollectionEquality().hash(required)
+        addTime
       ]);
 
   @JsonKey(ignore: true)
@@ -581,26 +583,25 @@ abstract class _RecipeModel implements RecipeModel {
   const factory _RecipeModel(
       {required final int id,
       required final String name,
-      required final String description,
-      required final int totalTime,
-      required final double price,
-      required final int yields,
-      required final String pictureUrl,
-      required final String source,
-      required final String lan,
-      required final double ratings,
-      required final int views,
-      required final String videoUrl,
-      required final DateTime lastUpdateDate,
-      @Uint8ListConverter() required final Uint8List imageFile,
-      required final String difficulty,
-      required final Nutrients nutrients,
-      required final List<RecipeStep> recipeSteps,
-      required final List<RecipeProduct> recipeProducts,
-      required final List<CategoryModel> categories,
-      required final UserModel user,
-      @JsonKey(defaultValue: '') required final String addTime,
-      final dynamic required}) = _$RecipeModelImpl;
+      final String description,
+      final int totalTime,
+      final double price,
+      final int yields,
+      final String pictureUrl,
+      final String source,
+      final String lan,
+      final double ratings,
+      final int views,
+      final String? videoUrl,
+      final DateTime? lastUpdateDate,
+      @Uint8ListConverter() final Uint8List? imageFile,
+      final String difficulty,
+      final Nutrients nutrients,
+      final List<RecipeStep> recipeSteps,
+      final List<RecipeProduct> recipeProducts,
+      final List<CategoryModel> categories,
+      final UserModel? user,
+      final String addTime}) = _$RecipeModelImpl;
 
   factory _RecipeModel.fromJson(Map<String, dynamic> json) =
       _$RecipeModelImpl.fromJson;
@@ -628,12 +629,12 @@ abstract class _RecipeModel implements RecipeModel {
   @override
   int get views;
   @override
-  String get videoUrl;
+  String? get videoUrl;
   @override
-  DateTime get lastUpdateDate;
+  DateTime? get lastUpdateDate;
   @override
   @Uint8ListConverter()
-  Uint8List get imageFile;
+  Uint8List? get imageFile;
   @override
   String get difficulty;
   @override
@@ -645,12 +646,9 @@ abstract class _RecipeModel implements RecipeModel {
   @override
   List<CategoryModel> get categories;
   @override
-  UserModel get user;
+  UserModel? get user;
   @override
-  @JsonKey(defaultValue: '')
   String get addTime;
-  @override
-  dynamic get required;
   @override
   @JsonKey(ignore: true)
   _$$RecipeModelImplCopyWith<_$RecipeModelImpl> get copyWith =>
@@ -1165,132 +1163,163 @@ class __$$NutrientsImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$NutrientsImpl implements _Nutrients {
   const _$NutrientsImpl(
-      {@HiveField(0) required this.amount,
-      @HiveField(1) required this.calories,
-      @HiveField(2) required this.fats,
-      @HiveField(3) required this.saturatedFats,
-      @HiveField(4) required this.cholesterol,
-      @HiveField(5) required this.cabs,
-      @HiveField(6) required this.fiber,
-      @HiveField(7) required this.protein,
-      @HiveField(8) required this.salt,
-      @HiveField(9) required this.alcohol,
-      @HiveField(10) required this.water,
-      @HiveField(11) required this.caffeine,
-      @HiveField(12) required this.sugars,
-      @HiveField(13) required this.calcium,
-      @HiveField(14) required this.iron,
-      @HiveField(15) required this.magnesium,
-      @HiveField(16) required this.phosphorus,
-      @HiveField(17) required this.potassium,
-      @HiveField(18) required this.sodium,
-      @HiveField(19) required this.zinc,
-      @HiveField(20) required this.copper,
-      @HiveField(21) required this.retinol,
-      @HiveField(22) required this.vitaminA,
-      @HiveField(23) required this.vitaminE,
-      @HiveField(24) required this.vitaminD,
-      @HiveField(25) required this.vitaminC,
-      @HiveField(26) required this.vitaminB6,
-      @HiveField(27) required this.vitaminB12,
-      @HiveField(28) required this.vitaminK,
-      @HiveField(29) required this.thiamin,
-      @HiveField(30) required this.niacin});
+      {@HiveField(0) this.amount = 0,
+      @HiveField(1) this.calories = 0,
+      @HiveField(2) this.fats = 0.0,
+      @HiveField(3) this.saturatedFats = 0.0,
+      @HiveField(4) this.cholesterol = 0.0,
+      @HiveField(5) this.cabs = 0.0,
+      @HiveField(6) this.fiber = 0.0,
+      @HiveField(7) this.protein = 0.0,
+      @HiveField(8) this.salt = 0.0,
+      @HiveField(9) this.alcohol = 0.0,
+      @HiveField(10) this.water = 0.0,
+      @HiveField(11) this.caffeine = 0.0,
+      @HiveField(12) this.sugars = 0.0,
+      @HiveField(13) this.calcium = 0.0,
+      @HiveField(14) this.iron = 0.0,
+      @HiveField(15) this.magnesium = 0.0,
+      @HiveField(16) this.phosphorus = 0.0,
+      @HiveField(17) this.potassium = 0.0,
+      @HiveField(18) this.sodium = 0.0,
+      @HiveField(19) this.zinc = 0.0,
+      @HiveField(20) this.copper = 0.0,
+      @HiveField(21) this.retinol = 0.0,
+      @HiveField(22) this.vitaminA = 0.0,
+      @HiveField(23) this.vitaminE = 0.0,
+      @HiveField(24) this.vitaminD = 0.0,
+      @HiveField(25) this.vitaminC = 0.0,
+      @HiveField(26) this.vitaminB6 = 0.0,
+      @HiveField(27) this.vitaminB12 = 0.0,
+      @HiveField(28) this.vitaminK = 0.0,
+      @HiveField(29) this.thiamin = 0.0,
+      @HiveField(30) this.niacin = 0.0});
 
   factory _$NutrientsImpl.fromJson(Map<String, dynamic> json) =>
       _$$NutrientsImplFromJson(json);
 
   @override
+  @JsonKey()
   @HiveField(0)
   final int amount;
   @override
+  @JsonKey()
   @HiveField(1)
   final int calories;
   @override
+  @JsonKey()
   @HiveField(2)
   final double fats;
   @override
+  @JsonKey()
   @HiveField(3)
   final double saturatedFats;
   @override
+  @JsonKey()
   @HiveField(4)
   final double cholesterol;
   @override
+  @JsonKey()
   @HiveField(5)
   final double cabs;
   @override
+  @JsonKey()
   @HiveField(6)
   final double fiber;
   @override
+  @JsonKey()
   @HiveField(7)
   final double protein;
   @override
+  @JsonKey()
   @HiveField(8)
   final double salt;
   @override
+  @JsonKey()
   @HiveField(9)
   final double alcohol;
   @override
+  @JsonKey()
   @HiveField(10)
   final double water;
   @override
+  @JsonKey()
   @HiveField(11)
   final double caffeine;
   @override
+  @JsonKey()
   @HiveField(12)
   final double sugars;
   @override
+  @JsonKey()
   @HiveField(13)
   final double calcium;
   @override
+  @JsonKey()
   @HiveField(14)
   final double iron;
   @override
+  @JsonKey()
   @HiveField(15)
   final double magnesium;
   @override
+  @JsonKey()
   @HiveField(16)
   final double phosphorus;
   @override
+  @JsonKey()
   @HiveField(17)
   final double potassium;
   @override
+  @JsonKey()
   @HiveField(18)
   final double sodium;
   @override
+  @JsonKey()
   @HiveField(19)
   final double zinc;
   @override
+  @JsonKey()
   @HiveField(20)
   final double copper;
   @override
+  @JsonKey()
   @HiveField(21)
   final double retinol;
   @override
+  @JsonKey()
   @HiveField(22)
   final double vitaminA;
   @override
+  @JsonKey()
   @HiveField(23)
   final double vitaminE;
   @override
+  @JsonKey()
   @HiveField(24)
   final double vitaminD;
   @override
+  @JsonKey()
   @HiveField(25)
   final double vitaminC;
   @override
+  @JsonKey()
   @HiveField(26)
   final double vitaminB6;
   @override
+  @JsonKey()
   @HiveField(27)
   final double vitaminB12;
   @override
+  @JsonKey()
   @HiveField(28)
   final double vitaminK;
   @override
+  @JsonKey()
   @HiveField(29)
   final double thiamin;
   @override
+  @JsonKey()
   @HiveField(30)
   final double niacin;
 
@@ -1404,37 +1433,37 @@ class _$NutrientsImpl implements _Nutrients {
 
 abstract class _Nutrients implements Nutrients {
   const factory _Nutrients(
-      {@HiveField(0) required final int amount,
-      @HiveField(1) required final int calories,
-      @HiveField(2) required final double fats,
-      @HiveField(3) required final double saturatedFats,
-      @HiveField(4) required final double cholesterol,
-      @HiveField(5) required final double cabs,
-      @HiveField(6) required final double fiber,
-      @HiveField(7) required final double protein,
-      @HiveField(8) required final double salt,
-      @HiveField(9) required final double alcohol,
-      @HiveField(10) required final double water,
-      @HiveField(11) required final double caffeine,
-      @HiveField(12) required final double sugars,
-      @HiveField(13) required final double calcium,
-      @HiveField(14) required final double iron,
-      @HiveField(15) required final double magnesium,
-      @HiveField(16) required final double phosphorus,
-      @HiveField(17) required final double potassium,
-      @HiveField(18) required final double sodium,
-      @HiveField(19) required final double zinc,
-      @HiveField(20) required final double copper,
-      @HiveField(21) required final double retinol,
-      @HiveField(22) required final double vitaminA,
-      @HiveField(23) required final double vitaminE,
-      @HiveField(24) required final double vitaminD,
-      @HiveField(25) required final double vitaminC,
-      @HiveField(26) required final double vitaminB6,
-      @HiveField(27) required final double vitaminB12,
-      @HiveField(28) required final double vitaminK,
-      @HiveField(29) required final double thiamin,
-      @HiveField(30) required final double niacin}) = _$NutrientsImpl;
+      {@HiveField(0) final int amount,
+      @HiveField(1) final int calories,
+      @HiveField(2) final double fats,
+      @HiveField(3) final double saturatedFats,
+      @HiveField(4) final double cholesterol,
+      @HiveField(5) final double cabs,
+      @HiveField(6) final double fiber,
+      @HiveField(7) final double protein,
+      @HiveField(8) final double salt,
+      @HiveField(9) final double alcohol,
+      @HiveField(10) final double water,
+      @HiveField(11) final double caffeine,
+      @HiveField(12) final double sugars,
+      @HiveField(13) final double calcium,
+      @HiveField(14) final double iron,
+      @HiveField(15) final double magnesium,
+      @HiveField(16) final double phosphorus,
+      @HiveField(17) final double potassium,
+      @HiveField(18) final double sodium,
+      @HiveField(19) final double zinc,
+      @HiveField(20) final double copper,
+      @HiveField(21) final double retinol,
+      @HiveField(22) final double vitaminA,
+      @HiveField(23) final double vitaminE,
+      @HiveField(24) final double vitaminD,
+      @HiveField(25) final double vitaminC,
+      @HiveField(26) final double vitaminB6,
+      @HiveField(27) final double vitaminB12,
+      @HiveField(28) final double vitaminK,
+      @HiveField(29) final double thiamin,
+      @HiveField(30) final double niacin}) = _$NutrientsImpl;
 
   factory _Nutrients.fromJson(Map<String, dynamic> json) =
       _$NutrientsImpl.fromJson;
@@ -1670,10 +1699,10 @@ class __$$RecipeStepImplCopyWithImpl<$Res>
 class _$RecipeStepImpl implements _RecipeStep {
   const _$RecipeStepImpl(
       {required this.id,
-      required this.description,
-      required this.position,
-      required this.time,
-      required this.picture});
+      this.description = 'No description available',
+      this.position = 0,
+      this.time = 0,
+      this.picture = ''});
 
   factory _$RecipeStepImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecipeStepImplFromJson(json);
@@ -1681,12 +1710,16 @@ class _$RecipeStepImpl implements _RecipeStep {
   @override
   final int id;
   @override
+  @JsonKey()
   final String description;
   @override
+  @JsonKey()
   final int position;
   @override
+  @JsonKey()
   final int time;
   @override
+  @JsonKey()
   final String picture;
 
   @override
@@ -1730,10 +1763,10 @@ class _$RecipeStepImpl implements _RecipeStep {
 abstract class _RecipeStep implements RecipeStep {
   const factory _RecipeStep(
       {required final int id,
-      required final String description,
-      required final int position,
-      required final int time,
-      required final String picture}) = _$RecipeStepImpl;
+      final String description,
+      final int position,
+      final int time,
+      final String picture}) = _$RecipeStepImpl;
 
   factory _RecipeStep.fromJson(Map<String, dynamic> json) =
       _$RecipeStepImpl.fromJson;
@@ -1765,7 +1798,7 @@ mixin _$RecipeProduct {
   String get text => throw _privateConstructorUsedError;
   String get ingredientName => throw _privateConstructorUsedError;
   UnitOfMeasure get unitOfMeasure => throw _privateConstructorUsedError;
-  ProductModel get product => throw _privateConstructorUsedError;
+  ProductModel? get product => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1785,10 +1818,10 @@ abstract class $RecipeProductCopyWith<$Res> {
       String text,
       String ingredientName,
       UnitOfMeasure unitOfMeasure,
-      ProductModel product});
+      ProductModel? product});
 
   $UnitOfMeasureCopyWith<$Res> get unitOfMeasure;
-  $ProductModelCopyWith<$Res> get product;
+  $ProductModelCopyWith<$Res>? get product;
 }
 
 /// @nodoc
@@ -1809,7 +1842,7 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
     Object? text = null,
     Object? ingredientName = null,
     Object? unitOfMeasure = null,
-    Object? product = null,
+    Object? product = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -1832,10 +1865,10 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
           ? _value.unitOfMeasure
           : unitOfMeasure // ignore: cast_nullable_to_non_nullable
               as UnitOfMeasure,
-      product: null == product
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as ProductModel,
+              as ProductModel?,
     ) as $Val);
   }
 
@@ -1849,8 +1882,12 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
 
   @override
   @pragma('vm:prefer-inline')
-  $ProductModelCopyWith<$Res> get product {
-    return $ProductModelCopyWith<$Res>(_value.product, (value) {
+  $ProductModelCopyWith<$Res>? get product {
+    if (_value.product == null) {
+      return null;
+    }
+
+    return $ProductModelCopyWith<$Res>(_value.product!, (value) {
       return _then(_value.copyWith(product: value) as $Val);
     });
   }
@@ -1870,12 +1907,12 @@ abstract class _$$RecipeProductImplCopyWith<$Res>
       String text,
       String ingredientName,
       UnitOfMeasure unitOfMeasure,
-      ProductModel product});
+      ProductModel? product});
 
   @override
   $UnitOfMeasureCopyWith<$Res> get unitOfMeasure;
   @override
-  $ProductModelCopyWith<$Res> get product;
+  $ProductModelCopyWith<$Res>? get product;
 }
 
 /// @nodoc
@@ -1894,7 +1931,7 @@ class __$$RecipeProductImplCopyWithImpl<$Res>
     Object? text = null,
     Object? ingredientName = null,
     Object? unitOfMeasure = null,
-    Object? product = null,
+    Object? product = freezed,
   }) {
     return _then(_$RecipeProductImpl(
       id: null == id
@@ -1917,10 +1954,10 @@ class __$$RecipeProductImplCopyWithImpl<$Res>
           ? _value.unitOfMeasure
           : unitOfMeasure // ignore: cast_nullable_to_non_nullable
               as UnitOfMeasure,
-      product: null == product
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as ProductModel,
+              as ProductModel?,
     ));
   }
 }
@@ -1931,11 +1968,11 @@ class __$$RecipeProductImplCopyWithImpl<$Res>
 class _$RecipeProductImpl implements _RecipeProduct {
   const _$RecipeProductImpl(
       {required this.id,
-      required this.amount,
-      required this.text,
-      required this.ingredientName,
-      required this.unitOfMeasure,
-      required this.product});
+      this.amount = 0.0,
+      this.text = 'No text available',
+      this.ingredientName = 'Unknown ingredient',
+      this.unitOfMeasure = const UnitOfMeasure(id: 0, name: 'Unknown'),
+      this.product});
 
   factory _$RecipeProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecipeProductImplFromJson(json);
@@ -1943,15 +1980,19 @@ class _$RecipeProductImpl implements _RecipeProduct {
   @override
   final int id;
   @override
+  @JsonKey()
   final double amount;
   @override
+  @JsonKey()
   final String text;
   @override
+  @JsonKey()
   final String ingredientName;
   @override
+  @JsonKey()
   final UnitOfMeasure unitOfMeasure;
   @override
-  final ProductModel product;
+  final ProductModel? product;
 
   @override
   String toString() {
@@ -1995,11 +2036,11 @@ class _$RecipeProductImpl implements _RecipeProduct {
 abstract class _RecipeProduct implements RecipeProduct {
   const factory _RecipeProduct(
       {required final int id,
-      required final double amount,
-      required final String text,
-      required final String ingredientName,
-      required final UnitOfMeasure unitOfMeasure,
-      required final ProductModel product}) = _$RecipeProductImpl;
+      final double amount,
+      final String text,
+      final String ingredientName,
+      final UnitOfMeasure unitOfMeasure,
+      final ProductModel? product}) = _$RecipeProductImpl;
 
   factory _RecipeProduct.fromJson(Map<String, dynamic> json) =
       _$RecipeProductImpl.fromJson;
@@ -2015,7 +2056,7 @@ abstract class _RecipeProduct implements RecipeProduct {
   @override
   UnitOfMeasure get unitOfMeasure;
   @override
-  ProductModel get product;
+  ProductModel? get product;
   @override
   @JsonKey(ignore: true)
   _$$RecipeProductImplCopyWith<_$RecipeProductImpl> get copyWith =>
@@ -2117,7 +2158,7 @@ class __$$UnitOfMeasureImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$UnitOfMeasureImpl implements _UnitOfMeasure {
-  const _$UnitOfMeasureImpl({required this.id, required this.name});
+  const _$UnitOfMeasureImpl({required this.id, this.name = 'Unknown'});
 
   factory _$UnitOfMeasureImpl.fromJson(Map<String, dynamic> json) =>
       _$$UnitOfMeasureImplFromJson(json);
@@ -2125,6 +2166,7 @@ class _$UnitOfMeasureImpl implements _UnitOfMeasure {
   @override
   final int id;
   @override
+  @JsonKey()
   final String name;
 
   @override
@@ -2160,9 +2202,8 @@ class _$UnitOfMeasureImpl implements _UnitOfMeasure {
 }
 
 abstract class _UnitOfMeasure implements UnitOfMeasure {
-  const factory _UnitOfMeasure(
-      {required final int id,
-      required final String name}) = _$UnitOfMeasureImpl;
+  const factory _UnitOfMeasure({required final int id, final String name}) =
+      _$UnitOfMeasureImpl;
 
   factory _UnitOfMeasure.fromJson(Map<String, dynamic> json) =
       _$UnitOfMeasureImpl.fromJson;

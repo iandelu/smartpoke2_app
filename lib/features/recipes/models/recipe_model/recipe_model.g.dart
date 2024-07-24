@@ -136,35 +136,43 @@ class NutrientsImplAdapter extends TypeAdapter<_$NutrientsImpl> {
 
 _$RecipeModelImpl _$$RecipeModelImplFromJson(Map<String, dynamic> json) =>
     _$RecipeModelImpl(
-      id: (json['id'] as num).toInt(),
+      id: (json['key'] as num).toInt(),
       name: json['name'] as String,
-      description: json['description'] as String,
-      totalTime: (json['totalTime'] as num).toInt(),
-      price: (json['price'] as num).toDouble(),
-      yields: (json['yields'] as num).toInt(),
-      pictureUrl: json['pictureUrl'] as String,
-      source: json['source'] as String,
-      lan: json['lan'] as String,
-      ratings: (json['ratings'] as num).toDouble(),
-      views: (json['views'] as num).toInt(),
-      videoUrl: json['videoUrl'] as String,
-      lastUpdateDate: DateTime.parse(json['lastUpdateDate'] as String),
-      imageFile:
-          const Uint8ListConverter().fromJson(json['imageFile'] as String),
-      difficulty: json['difficulty'] as String,
-      nutrients: Nutrients.fromJson(json['nutrients'] as Map<String, dynamic>),
-      recipeSteps: (json['recipeSteps'] as List<dynamic>)
-          .map((e) => RecipeStep.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      recipeProducts: (json['recipeProducts'] as List<dynamic>)
-          .map((e) => RecipeProduct.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      description: json['description'] as String? ?? 'No description available',
+      totalTime: (json['totalTime'] as num?)?.toInt() ?? 0,
+      price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      yields: (json['yields'] as num?)?.toInt() ?? 1,
+      pictureUrl: json['pictureUrl'] as String? ?? '',
+      source: json['url'] as String? ?? 'Unknown',
+      lan: json['lan'] as String? ?? 'en',
+      ratings: (json['ratings'] as num?)?.toDouble() ?? 5.0,
+      views: (json['views'] as num?)?.toInt() ?? 0,
+      videoUrl: json['videoUrl'] as String?,
+      lastUpdateDate: json['lastUpdateDate'] == null
+          ? null
+          : DateTime.parse(json['lastUpdateDate'] as String),
+      imageFile: _$JsonConverterFromJson<String, Uint8List>(
+          json['imageFile'], const Uint8ListConverter().fromJson),
+      difficulty: json['difficulty'] as String? ?? 'easy',
+      nutrients: json['nutrients'] == null
+          ? const Nutrients()
+          : Nutrients.fromJson(json['nutrients'] as Map<String, dynamic>),
+      recipeSteps: (json['recipeSteps'] as List<dynamic>?)
+              ?.map((e) => RecipeStep.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      recipeProducts: (json['recipeProducts'] as List<dynamic>?)
+              ?.map((e) => RecipeProduct.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      categories: (json['categories'] as List<dynamic>?)
+              ?.map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      user: json['user'] == null
+          ? null
+          : UserModel.fromJson(json['user'] as Map<String, dynamic>),
       addTime: json['addTime'] as String? ?? '',
-      required: json['required'],
     );
 
 Map<String, dynamic> _$$RecipeModelImplToJson(_$RecipeModelImpl instance) =>
@@ -181,51 +189,63 @@ Map<String, dynamic> _$$RecipeModelImplToJson(_$RecipeModelImpl instance) =>
       'ratings': instance.ratings,
       'views': instance.views,
       'videoUrl': instance.videoUrl,
-      'lastUpdateDate': instance.lastUpdateDate.toIso8601String(),
-      'imageFile': const Uint8ListConverter().toJson(instance.imageFile),
+      'lastUpdateDate': instance.lastUpdateDate?.toIso8601String(),
+      'imageFile': _$JsonConverterToJson<String, Uint8List>(
+          instance.imageFile, const Uint8ListConverter().toJson),
       'difficulty': instance.difficulty,
       'nutrients': instance.nutrients.toJson(),
       'recipeSteps': instance.recipeSteps.map((e) => e.toJson()).toList(),
       'recipeProducts': instance.recipeProducts.map((e) => e.toJson()).toList(),
       'categories': instance.categories.map((e) => e.toJson()).toList(),
-      'user': instance.user.toJson(),
+      'user': instance.user?.toJson(),
       'addTime': instance.addTime,
-      'required': instance.required,
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
 
 _$NutrientsImpl _$$NutrientsImplFromJson(Map<String, dynamic> json) =>
     _$NutrientsImpl(
-      amount: (json['amount'] as num).toInt(),
-      calories: (json['calories'] as num).toInt(),
-      fats: (json['fats'] as num).toDouble(),
-      saturatedFats: (json['saturatedFats'] as num).toDouble(),
-      cholesterol: (json['cholesterol'] as num).toDouble(),
-      cabs: (json['cabs'] as num).toDouble(),
-      fiber: (json['fiber'] as num).toDouble(),
-      protein: (json['protein'] as num).toDouble(),
-      salt: (json['salt'] as num).toDouble(),
-      alcohol: (json['alcohol'] as num).toDouble(),
-      water: (json['water'] as num).toDouble(),
-      caffeine: (json['caffeine'] as num).toDouble(),
-      sugars: (json['sugars'] as num).toDouble(),
-      calcium: (json['calcium'] as num).toDouble(),
-      iron: (json['iron'] as num).toDouble(),
-      magnesium: (json['magnesium'] as num).toDouble(),
-      phosphorus: (json['phosphorus'] as num).toDouble(),
-      potassium: (json['potassium'] as num).toDouble(),
-      sodium: (json['sodium'] as num).toDouble(),
-      zinc: (json['zinc'] as num).toDouble(),
-      copper: (json['copper'] as num).toDouble(),
-      retinol: (json['retinol'] as num).toDouble(),
-      vitaminA: (json['vitaminA'] as num).toDouble(),
-      vitaminE: (json['vitaminE'] as num).toDouble(),
-      vitaminD: (json['vitaminD'] as num).toDouble(),
-      vitaminC: (json['vitaminC'] as num).toDouble(),
-      vitaminB6: (json['vitaminB6'] as num).toDouble(),
-      vitaminB12: (json['vitaminB12'] as num).toDouble(),
-      vitaminK: (json['vitaminK'] as num).toDouble(),
-      thiamin: (json['thiamin'] as num).toDouble(),
-      niacin: (json['niacin'] as num).toDouble(),
+      amount: (json['amount'] as num?)?.toInt() ?? 0,
+      calories: (json['calories'] as num?)?.toInt() ?? 0,
+      fats: (json['fats'] as num?)?.toDouble() ?? 0.0,
+      saturatedFats: (json['saturatedFats'] as num?)?.toDouble() ?? 0.0,
+      cholesterol: (json['cholesterol'] as num?)?.toDouble() ?? 0.0,
+      cabs: (json['cabs'] as num?)?.toDouble() ?? 0.0,
+      fiber: (json['fiber'] as num?)?.toDouble() ?? 0.0,
+      protein: (json['protein'] as num?)?.toDouble() ?? 0.0,
+      salt: (json['salt'] as num?)?.toDouble() ?? 0.0,
+      alcohol: (json['alcohol'] as num?)?.toDouble() ?? 0.0,
+      water: (json['water'] as num?)?.toDouble() ?? 0.0,
+      caffeine: (json['caffeine'] as num?)?.toDouble() ?? 0.0,
+      sugars: (json['sugars'] as num?)?.toDouble() ?? 0.0,
+      calcium: (json['calcium'] as num?)?.toDouble() ?? 0.0,
+      iron: (json['iron'] as num?)?.toDouble() ?? 0.0,
+      magnesium: (json['magnesium'] as num?)?.toDouble() ?? 0.0,
+      phosphorus: (json['phosphorus'] as num?)?.toDouble() ?? 0.0,
+      potassium: (json['potassium'] as num?)?.toDouble() ?? 0.0,
+      sodium: (json['sodium'] as num?)?.toDouble() ?? 0.0,
+      zinc: (json['zinc'] as num?)?.toDouble() ?? 0.0,
+      copper: (json['copper'] as num?)?.toDouble() ?? 0.0,
+      retinol: (json['retinol'] as num?)?.toDouble() ?? 0.0,
+      vitaminA: (json['vitaminA'] as num?)?.toDouble() ?? 0.0,
+      vitaminE: (json['vitaminE'] as num?)?.toDouble() ?? 0.0,
+      vitaminD: (json['vitaminD'] as num?)?.toDouble() ?? 0.0,
+      vitaminC: (json['vitaminC'] as num?)?.toDouble() ?? 0.0,
+      vitaminB6: (json['vitaminB6'] as num?)?.toDouble() ?? 0.0,
+      vitaminB12: (json['vitaminB12'] as num?)?.toDouble() ?? 0.0,
+      vitaminK: (json['vitaminK'] as num?)?.toDouble() ?? 0.0,
+      thiamin: (json['thiamin'] as num?)?.toDouble() ?? 0.0,
+      niacin: (json['niacin'] as num?)?.toDouble() ?? 0.0,
     );
 
 Map<String, dynamic> _$$NutrientsImplToJson(_$NutrientsImpl instance) =>
@@ -266,10 +286,10 @@ Map<String, dynamic> _$$NutrientsImplToJson(_$NutrientsImpl instance) =>
 _$RecipeStepImpl _$$RecipeStepImplFromJson(Map<String, dynamic> json) =>
     _$RecipeStepImpl(
       id: (json['id'] as num).toInt(),
-      description: json['description'] as String,
-      position: (json['position'] as num).toInt(),
-      time: (json['time'] as num).toInt(),
-      picture: json['picture'] as String,
+      description: json['description'] as String? ?? 'No description available',
+      position: (json['position'] as num?)?.toInt() ?? 0,
+      time: (json['time'] as num?)?.toInt() ?? 0,
+      picture: json['picture'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$RecipeStepImplToJson(_$RecipeStepImpl instance) =>
@@ -284,12 +304,16 @@ Map<String, dynamic> _$$RecipeStepImplToJson(_$RecipeStepImpl instance) =>
 _$RecipeProductImpl _$$RecipeProductImplFromJson(Map<String, dynamic> json) =>
     _$RecipeProductImpl(
       id: (json['id'] as num).toInt(),
-      amount: (json['amount'] as num).toDouble(),
-      text: json['text'] as String,
-      ingredientName: json['ingredientName'] as String,
-      unitOfMeasure:
-          UnitOfMeasure.fromJson(json['unitOfMeasure'] as Map<String, dynamic>),
-      product: ProductModel.fromJson(json['product'] as Map<String, dynamic>),
+      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+      text: json['text'] as String? ?? 'No text available',
+      ingredientName: json['ingredientName'] as String? ?? 'Unknown ingredient',
+      unitOfMeasure: json['unitOfMeasure'] == null
+          ? const UnitOfMeasure(id: 0, name: 'Unknown')
+          : UnitOfMeasure.fromJson(
+              json['unitOfMeasure'] as Map<String, dynamic>),
+      product: json['product'] == null
+          ? null
+          : ProductModel.fromJson(json['product'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$RecipeProductImplToJson(_$RecipeProductImpl instance) =>
@@ -299,13 +323,13 @@ Map<String, dynamic> _$$RecipeProductImplToJson(_$RecipeProductImpl instance) =>
       'text': instance.text,
       'ingredientName': instance.ingredientName,
       'unitOfMeasure': instance.unitOfMeasure.toJson(),
-      'product': instance.product.toJson(),
+      'product': instance.product?.toJson(),
     };
 
 _$UnitOfMeasureImpl _$$UnitOfMeasureImplFromJson(Map<String, dynamic> json) =>
     _$UnitOfMeasureImpl(
       id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
+      name: json['name'] as String? ?? 'Unknown',
     );
 
 Map<String, dynamic> _$$UnitOfMeasureImplToJson(_$UnitOfMeasureImpl instance) =>

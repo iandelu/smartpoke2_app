@@ -19,10 +19,10 @@ class SmartpokeRecipeApiService {
           'accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({'url': url, 'wild' : true}),
+        body: jsonEncode({'url': url}),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         // Decode the response body with UTF-8
         var decodedResponse = utf8.decode(response.bodyBytes);
 
