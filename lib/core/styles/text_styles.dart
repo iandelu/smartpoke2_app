@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 
 class AppTextStyles {
   final TextStyle sRegular = GoogleFonts.workSans(
@@ -47,12 +48,19 @@ class AppTextStyles {
     letterSpacing: 0,
   );
 
-  final lThick = GoogleFonts.workSans(
+  final lThick = const TextStyle(
+    fontFamily: 'Tanker',
     fontWeight: FontWeight.w900,
     fontStyle: FontStyle.normal,
     fontSize: 36,
-    color: const Color(0xAA1BB859),
+    color: flamingo,
     decoration: TextDecoration.none,
     letterSpacing: 0,
+  );
+
+  get emojiCategory => const TextStyle(
+    fontFamily: 'NotoEmoji',
+    fontWeight: FontWeight.w600,
+    fontSize: 28,
   );
 }

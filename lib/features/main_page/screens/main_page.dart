@@ -37,7 +37,7 @@ class MainPageState extends State<MainPage> {
   ];
 
   final List<Widget> pages = [
-    const Recipes(),
+    const RecipesPage(),
     const GroceryListPage(),
     const MealPlanPage(),
     const SettingsPage(),

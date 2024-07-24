@@ -6,14 +6,14 @@ import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:meal_ai/features/recipes/screens/recipe_page_body.dart';
 import 'package:meal_ai/features/recipes/widgets/add_recipe_menu.dart';
 
-class Recipes extends ConsumerStatefulWidget {
-  const Recipes({super.key});
+class RecipesPage extends ConsumerStatefulWidget {
+  const RecipesPage({super.key});
 
   @override
-  ConsumerState<Recipes> createState() => _RecipesState();
+  ConsumerState<RecipesPage> createState() => _RecipesState();
 }
 
-class _RecipesState extends ConsumerState<Recipes> {
+class _RecipesState extends ConsumerState<RecipesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
