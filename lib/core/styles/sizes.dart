@@ -71,3 +71,4 @@ abstract class BorderRadiusSizes {
   /// 40 units
   static const double xxl = 40;
 }
+

@@ -4,6 +4,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_ai/features/main_page/screens/main_page.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
+import 'config/theme/app_theme.dart';
+
 void main() async {
   Hive.deleteFromDisk();
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,13 +31,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Savor',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.grey.shade100,
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.white,
-              primary: const Color.fromARGB(250, 27, 184, 90)),
-          useMaterial3: true,
-        ),
+        theme: AppTheme.getTheme(),
         home: const MainPage(),
       ),
     );

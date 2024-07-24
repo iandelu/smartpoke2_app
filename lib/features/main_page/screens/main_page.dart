@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
+import 'package:meal_ai/core/widgets/app_bar.dart';
 import 'package:meal_ai/features/meal_plan_page/screens/meal_plane_page.dart';
 import 'package:meal_ai/features/recipes/screens/recipes_page.dart';
 import 'package:meal_ai/features/settings_page/screens/settings_page.dart';
@@ -15,6 +16,25 @@ class MainPage extends StatefulWidget {
 
 class MainPageState extends State<MainPage> {
   int currentIndex = 0;
+
+  final navBarMenus = <NavItem>[
+    NavItem(
+      icon: Icons.home,
+      label: 'Home',
+    ),
+    NavItem(
+      icon: Icons.shopping_cart,
+      label: 'Planner',
+    ),
+    NavItem(
+      icon: Icons.calendar_today,
+      label: 'Pantry',
+    ),
+    NavItem(
+      icon: Icons.settings,
+      label: 'Shop',
+    ),
+  ];
 
   final List<Widget> pages = [
     const Recipes(),
@@ -34,73 +54,21 @@ class MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: PopScope(
         canPop: !isOnMainPage,
         child: pages[currentIndex],
       ),
       bottomNavigationBar: isOnMainPage
-          ? BottomNavigationBar(
-              unselectedFontSize: 12,
-              selectedFontSize: 12,
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white,
-              selectedItemColor: Colors.green,
-              unselectedItemColor: Colors.grey,
+          ? BrutBottomNavigationBar(
+              activeColor: Theme.of(context).colorScheme.secondary,
+              defaultColor: Theme.of(context).colorScheme.primary,
+              items: navBarMenus,
               currentIndex: currentIndex,
-              onTap: onTap,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Column(
-                    children: [
-                      SvgPicture.asset('images/book.svg',
-                          width: 25,
-                          height: 25,
-                          // ignore: deprecated_member_use
-                          color: currentIndex == 0
-                              ? context.primaryColor
-                              : Colors.grey),
-                      const SizedBox(height: 5),
-                    ],
-                  ),
-                  label: 'Recipes',
-                ),
-                BottomNavigationBarItem(
-                  icon: Column(
-                    children: [
-                      Icon(Icons.shopping_cart_outlined,
-                          color:
-                              currentIndex == 1 ? Colors.green : Colors.grey),
-                      const SizedBox(height: 5),
-                    ],
-                  ),
-                  label: 'Grocery List',
-                ),
-                BottomNavigationBarItem(
-                  icon: Column(
-                    children: [
-                      Icon(Icons.calendar_month_outlined,
-                          color:
-                              currentIndex == 2 ? Colors.green : Colors.grey),
-                      const SizedBox(height: 5),
-                    ],
-                  ),
-                  label: 'Meal Plan',
-                ),
-                BottomNavigationBarItem(
-                  icon: Column(
-                    children: [
-                      Icon(Icons.settings_outlined,
-                          color:
-                              currentIndex == 3 ? Colors.green : Colors.grey),
-                      const SizedBox(height: 5),
-                    ],
-                  ),
-                  label: 'Settings',
-                ),
-              ],
-            )
+              onItemTapped: onTap,
+      )
           : null,
     );
   }
 }
+
