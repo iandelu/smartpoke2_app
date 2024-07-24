@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_ai/core/utils/helper_methods.dart';
-import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 class MealPlanHiveService {
   final _recipeFromApi = Hive.box('meal_plan_recipe');
@@ -18,14 +18,14 @@ class MealPlanHiveService {
       final item = _recipeFromApi.get(key);
       return {
         "key": key,
-        "host": item["host"],
-        "title": item["title"],
-        "total_time": item["total_time"],
-        "image": item["image"],
-        "ingredients": item["ingredients"],
-        "instructions": item["instructions"],
+        "url": item["url"],
+        "name": item["name"],
+        "totalTime": item["totalTime"],
+        "pictureUrl": item["pictureUrl"],
+        "recipeProducts": item["recipeProducts"],
+        "recipeSteps": item["recipeSteps"],
         "nutrients": item["nutrients"],
-        "yields": item["servings"],
+        "yields": item["yields"],
         "addTime": item["addTime"],
       };
     }).toList();

@@ -10,7 +10,7 @@ import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provid
 import 'package:meal_ai/features/meal_plan_page/providers/meal_plane_page_provider/meal_plan_page_provider.dart';
 import 'package:meal_ai/features/meal_plan_page/screens/add_meal_plan_list.dart';
 import 'package:meal_ai/features/meal_plan_page/widgets/meal_plan_menu.dart';
-import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 class MealPlanPage extends ConsumerStatefulWidget {
   const MealPlanPage({super.key});
@@ -36,7 +36,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
       if (recipeDate.isBefore(currentDate)) {
         ref
             .read(mealPlanProvider.notifier)
-            .deleteMealPlanRecipeFromHive(key: mealRecipe.key);
+            .deleteMealPlanRecipeFromHive(key: mealRecipe.id);
       }
     }
     super.didChangeDependencies();
@@ -55,11 +55,10 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
               ref.read(mealPlanProvider.notifier).getMealPlanRecipes();
 
           for (var mealRecipe in mealRecipes) {
-            for (var ingredient in mealRecipe.ingredients) {
-              final RegExp regex = RegExp(r'^([\d./\s]+)?(.*)$');
-              final Match match = regex.firstMatch(ingredient)!;
-              final String? amount = match[1]?.trim();
-              final String description = match[2]!.trim();
+            for (var product in mealRecipe.recipeProducts) {
+
+              final String amount = product.amount.toString();
+              final String description = product.ingredientName;
               mealRecipeIngredients.add({
                 "groceryName": description,
                 "value": amount,

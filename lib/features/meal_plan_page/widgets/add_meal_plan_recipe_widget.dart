@@ -6,7 +6,7 @@ import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:meal_ai/core/widgets/searchbar_widget.dart';
 import 'package:meal_ai/features/meal_plan_page/providers/meal_plane_page_provider/meal_plan_page_provider.dart';
 import 'package:meal_ai/features/meal_plan_page/widgets/meal_plan_page.dart';
-import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 class AddMealPlanRecipeWidget extends StatelessWidget {
   const AddMealPlanRecipeWidget({

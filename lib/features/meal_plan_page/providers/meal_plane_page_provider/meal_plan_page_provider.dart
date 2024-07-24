@@ -1,6 +1,6 @@
 import 'package:meal_ai/core/utils/logger.dart';
 import 'package:meal_ai/features/meal_plan_page/services/meal_plan_hive_services.dart';
-import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'meal_plan_page_provider.g.dart';
 
@@ -35,12 +35,12 @@ class MealPlan extends _$MealPlan {
       {required RecipeModel recipe, required DateTime addTime}) async {
     logger.d('Adding meal plan recipe to Hive');
     await _hiveService.addMealPlanRecipe({
-      "host": recipe.host,
-      "title": recipe.title,
-      "total_time": recipe.total_time,
-      "image": recipe.image,
-      "ingredients": recipe.ingredients,
-      "instructions": recipe.instructions,
+      "host": recipe.source,
+      "title": recipe.name,
+      "total_time": recipe.totalTime,
+      "image": recipe.pictureUrl,
+      "ingredients": recipe.recipeProducts.map((e) => e.text).toList(),
+      "instructions": recipe.recipeSteps.map((e) => e.description).toList(),
       "nutrients": recipe.nutrients,
       "servings": recipe.yields,
       "addTime": addTime.toString(),

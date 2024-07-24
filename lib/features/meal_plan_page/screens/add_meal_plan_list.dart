@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/features/meal_plan_page/providers/meal_plane_page_provider/meal_plan_page_provider.dart';
-import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 class AddedMealPlanList extends ConsumerStatefulWidget {
   const AddedMealPlanList({
@@ -44,7 +44,7 @@ class _AddedMealPlanListState extends ConsumerState<AddedMealPlanList> {
                         await ref
                             .read(mealPlanProvider.notifier)
                             .deleteMealPlanRecipeFromHive(
-                                key: mealPlanRecipe.key);
+                                key: mealPlanRecipe.id);
                         if (!mounted) return;
                         Navigator.pop(cupertinoContext);
                       }),
@@ -70,7 +70,7 @@ class _AddedMealPlanListState extends ConsumerState<AddedMealPlanList> {
                           colorFilter: ColorFilter.mode(
                               Colors.black.withOpacity(0.3), BlendMode.darken),
                           image: CachedNetworkImageProvider(
-                              mealPlanRecipe.image))),
+                              mealPlanRecipe.pictureUrl))),
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: PaddingSizes.sm, top: PaddingSizes.mdl),
@@ -80,7 +80,7 @@ class _AddedMealPlanListState extends ConsumerState<AddedMealPlanList> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            mealPlanRecipe.title,
+                            mealPlanRecipe.name,
                             textAlign: TextAlign.start,
                             style: AppTextStyles()
                                 .mThick

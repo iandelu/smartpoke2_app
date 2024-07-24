@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
-import 'package:meal_ai/features/recipes_page/screens/recipes_page.dart';
 import 'package:meal_ai/features/meal_plan_page/screens/meal_plane_page.dart';
+import 'package:meal_ai/features/recipes/screens/recipes_page.dart';
 import 'package:meal_ai/features/settings_page/screens/settings_page.dart';
 import 'package:meal_ai/features/grocery_list_page/screens/grocery_list.dart';
 
@@ -35,16 +35,8 @@ class MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: WillPopScope(
-        onWillPop: () async {
-          if (!isOnMainPage) {
-            setState(() {
-              isOnMainPage = true;
-            });
-            return false;
-          }
-          return true;
-        },
+      body: PopScope(
+        canPop: !isOnMainPage,
         child: pages[currentIndex],
       ),
       bottomNavigationBar: isOnMainPage

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/features/meal_plan_page/providers/meal_plane_page_provider/meal_plan_page_provider.dart';
 import 'package:meal_ai/features/meal_plan_page/widgets/add_meal_plan_recipe_widget.dart';
-import 'package:meal_ai/features/recipes_page/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
+import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
 class MealPlanMenu extends ConsumerStatefulWidget {

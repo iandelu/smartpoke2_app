@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_ai/features/main_page/screens/main_page.dart';
-import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 void main() async {
   Hive.deleteFromDisk();
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(NutrientsAdapter());
+  Hive.registerAdapter(NutrientsImplAdapter());
+  Hive.deleteFromDisk();
   await Hive.openBox('grocery_list');
   await Hive.openBox('recipe_from_url');
   await Hive.openBox('meal_plan_recipe');
-  //Hive.deleteFromDisk();
+
   // await Hive.deleteBoxFromDisk('recipe_from_url');
   // await Hive.deleteBoxFromDisk('meal_plan_recipe');
   // await Hive.deleteBoxFromDisk('grocery_list');
