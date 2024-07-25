@@ -8,15 +8,13 @@ part of 'category_models.dart';
 
 _$CategoryModelImpl _$$CategoryModelImplFromJson(Map<String, dynamic> json) =>
     _$CategoryModelImpl(
-      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       lan: json['lan'] as String?,
-      emoji: json['emoji'] as String?,
+      emoji: json['emoji'] as String? ?? '🍽️',
     );
 
 Map<String, dynamic> _$$CategoryModelImplToJson(_$CategoryModelImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'lan': instance.lan,
       'emoji': instance.emoji,

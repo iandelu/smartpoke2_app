@@ -61,6 +61,6 @@ class AppTextStyles {
   get emojiCategory => const TextStyle(
     fontFamily: 'NotoEmoji',
     fontWeight: FontWeight.w600,
-    fontSize: 28,
+    fontSize: 20,
   );
 }

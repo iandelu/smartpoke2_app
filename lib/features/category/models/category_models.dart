@@ -7,10 +7,9 @@ part 'category_models.g.dart';
 class CategoryModel with _$CategoryModel {
   @JsonSerializable(explicitToJson: true)
   const factory CategoryModel({
-    required int id,
     required String name,
     String? lan,
-    String? emoji
+    @Default('🍽️')String emoji
   }) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);

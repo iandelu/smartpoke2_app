@@ -20,10 +20,9 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CategoryModel {
-  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get lan => throw _privateConstructorUsedError;
-  String? get emoji => throw _privateConstructorUsedError;
+  String get emoji => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +36,7 @@ abstract class $CategoryModelCopyWith<$Res> {
           CategoryModel value, $Res Function(CategoryModel) then) =
       _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
-  $Res call({int id, String name, String? lan, String? emoji});
+  $Res call({String name, String? lan, String emoji});
 }
 
 /// @nodoc
@@ -53,16 +52,11 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
     Object? lan = freezed,
-    Object? emoji = freezed,
+    Object? emoji = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -71,10 +65,10 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
           ? _value.lan
           : lan // ignore: cast_nullable_to_non_nullable
               as String?,
-      emoji: freezed == emoji
+      emoji: null == emoji
           ? _value.emoji
           : emoji // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -87,7 +81,7 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
       __$$CategoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String? lan, String? emoji});
+  $Res call({String name, String? lan, String emoji});
 }
 
 /// @nodoc
@@ -101,16 +95,11 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
     Object? lan = freezed,
-    Object? emoji = freezed,
+    Object? emoji = null,
   }) {
     return _then(_$CategoryModelImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -119,10 +108,10 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
           ? _value.lan
           : lan // ignore: cast_nullable_to_non_nullable
               as String?,
-      emoji: freezed == emoji
+      emoji: null == emoji
           ? _value.emoji
           : emoji // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -131,24 +120,22 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$CategoryModelImpl implements _CategoryModel {
-  const _$CategoryModelImpl(
-      {required this.id, required this.name, this.lan, this.emoji});
+  const _$CategoryModelImpl({required this.name, this.lan, this.emoji = '🍽️'});
 
   factory _$CategoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CategoryModelImplFromJson(json);
 
   @override
-  final int id;
-  @override
   final String name;
   @override
   final String? lan;
   @override
-  final String? emoji;
+  @JsonKey()
+  final String emoji;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, lan: $lan, emoji: $emoji)';
+    return 'CategoryModel(name: $name, lan: $lan, emoji: $emoji)';
   }
 
   @override
@@ -156,7 +143,6 @@ class _$CategoryModelImpl implements _CategoryModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryModelImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.lan, lan) || other.lan == lan) &&
             (identical(other.emoji, emoji) || other.emoji == emoji));
@@ -164,7 +150,7 @@ class _$CategoryModelImpl implements _CategoryModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, lan, emoji);
+  int get hashCode => Object.hash(runtimeType, name, lan, emoji);
 
   @JsonKey(ignore: true)
   @override
@@ -182,22 +168,19 @@ class _$CategoryModelImpl implements _CategoryModel {
 
 abstract class _CategoryModel implements CategoryModel {
   const factory _CategoryModel(
-      {required final int id,
-      required final String name,
+      {required final String name,
       final String? lan,
-      final String? emoji}) = _$CategoryModelImpl;
+      final String emoji}) = _$CategoryModelImpl;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$CategoryModelImpl.fromJson;
 
   @override
-  int get id;
-  @override
   String get name;
   @override
   String? get lan;
   @override
-  String? get emoji;
+  String get emoji;
   @override
   @JsonKey(ignore: true)
   _$$CategoryModelImplCopyWith<_$CategoryModelImpl> get copyWith =>

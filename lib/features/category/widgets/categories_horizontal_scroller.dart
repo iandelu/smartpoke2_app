@@ -4,20 +4,36 @@ import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/features/category/models/category_models.dart';
+import 'package:meal_ai/features/category/services/api_services/smartpoke_api_service.dart';
 
 class CategoriesHorizontalScroller extends StatelessWidget{
-
+  final SmartpokeCategoryApiService _apiService = SmartpokeCategoryApiService();
   final String title;
-  const CategoriesHorizontalScroller({
+  CategoriesHorizontalScroller({
     required this.title,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final List<CategoryModel> categories = mockCategories;
+    return FutureBuilder<Widget>(
+      future: _buildFutureContent(context),
+      builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return snapshot.data ?? Container();
+        }
+      },
+    );
+  }
+
+  Future<Widget> _buildFutureContent(BuildContext context) async {
+    final List<CategoryModel> categories = await _apiService.getRecipeCategories();
     return  SizedBox(
-      height: 45,
+      height: 60,
       child: ListView.separated(
         clipBehavior: Clip.none,
         itemCount: categories.length,
@@ -29,7 +45,6 @@ class CategoriesHorizontalScroller extends StatelessWidget{
     );
   }
 
-
 }
 
 class CategoryItem extends StatelessWidget{
@@ -39,32 +54,41 @@ class CategoryItem extends StatelessWidget{
 
     @override
     Widget build(BuildContext context) {
-      return Container(
-        width: 45,
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(48),
-          border: Border.all(
-            color: Colors.black,
-            width: 1.5,
-          ),
-          boxShadow: const [
-           BoxShadow(
-            color: BrutColors.blackBrown, // Opacidad del 100%
-            offset: Offset(4, 4), // Offset X, Y
-            blurRadius: 0, // No blur
-          ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '${category.emoji}',
-              style: AppTextStyles().emojiCategory,
+      return Column(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.circular(48),
+              border: Border.all(
+                color: Colors.black,
+                width: 1.5,
+              ),
+              boxShadow: const [
+               BoxShadow(
+                color: BrutColors.blackBrown, // Opacidad del 100%
+                offset: Offset(4, 4), // Offset X, Y
+                blurRadius: 0, // No blur
+              ),
+              ],
             ),
-          ],
-        ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${category.emoji}',
+                  style: AppTextStyles().emojiCategory,
+                ),
+              ],
+            ),
+          ),
+          Text(
+            category.name,
+            style: AppTextStyles().sRegular,
+          ),
+        ],
       );
     }
 
@@ -89,19 +113,19 @@ class _Title extends StatelessWidget {
 }
 
 const mockCategories = [
-  CategoryModel(id: 1, name: 'Fruits', emoji: '🍏'),
-  CategoryModel(id: 2, name: 'Vegetables', emoji: '🥦'),
-  CategoryModel(id: 3, name: 'Dairy', emoji: '🧀'),
-  CategoryModel(id: 4, name: 'Meat', emoji: '🍖'),
-  CategoryModel(id: 5, name: 'Fast Food', emoji: '🍔'),
-  CategoryModel(id: 6, name: 'Seafood', emoji: '🍤'),
-  CategoryModel(id: 7, name: 'Desserts', emoji: '🍰'),
-  CategoryModel(id: 8, name: 'Beverages', emoji: '🥤'),
-  CategoryModel(id: 9, name: 'Snacks', emoji: '🍿'),
-  CategoryModel(id: 10, name: 'Bakery', emoji: '🥐'),
-  CategoryModel(id: 11, name: 'Grains', emoji: '🍚'),
-  CategoryModel(id: 12, name: 'Condiments', emoji: '🥫'),
-  CategoryModel(id: 13, name: 'Noodles', emoji: '🍜'),
-  CategoryModel(id: 14, name: 'Sushi', emoji: '🍣'),
-  CategoryModel(id: 15, name: 'Salads', emoji: '🥗'),
+  CategoryModel( name: 'Fruits', emoji: '🍏'),
+  CategoryModel( name: 'Vegetables', emoji: '🥦'),
+  CategoryModel( name: 'Dairy', emoji: '🧀'),
+  CategoryModel( name: 'Meat', emoji: '🍖'),
+  CategoryModel( name: 'Fast Food', emoji: '🍔'),
+  CategoryModel( name: 'Seafood', emoji: '🍤'),
+  CategoryModel( name: 'Desserts', emoji: '🍰'),
+  CategoryModel(name: 'Beverages', emoji: '🥤'),
+  CategoryModel(name: 'Snacks', emoji: '🍿'),
+  CategoryModel(name: 'Bakery', emoji: '🥐'),
+  CategoryModel(name: 'Grains', emoji: '🍚'),
+  CategoryModel(name: 'Condiments', emoji: '🥫'),
+  CategoryModel(name: 'Noodles', emoji: '🍜'),
+  CategoryModel(name: 'Sushi', emoji: '🍣'),
+  CategoryModel(name: 'Salads', emoji: '🥗'),
 ];
