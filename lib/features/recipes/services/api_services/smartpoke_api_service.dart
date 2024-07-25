@@ -10,7 +10,7 @@ class SmartpokeRecipeApiService {
 
   Future<RecipeModel> getRecipeFromUrl({required String url}) async {
     final apiUrl =
-        Uri.parse('http://10.0.2.2:8082/api/recipes/from_url');
+        Uri.parse('http://localhost:8082/api/recipes/from_url');
 
     try {
       final response = await http.post(

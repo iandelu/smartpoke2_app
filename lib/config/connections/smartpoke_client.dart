@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:meal_ai/core/utils/logger.dart';
 
 final smartpokeBaseOptions = BaseOptions(
-  baseUrl: 'http://10.0.2.2:8082/api/',
-  connectTimeout: const Duration(seconds: 2),
-  receiveTimeout: const Duration(seconds: 10),
+  baseUrl: 'http://127.0.0.1:8082/api/',
+  connectTimeout: const Duration(seconds: 20),
+  receiveTimeout: const Duration(seconds: 100),
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
   },

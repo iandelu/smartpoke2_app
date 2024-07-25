@@ -33,7 +33,7 @@ class CategoriesHorizontalScroller extends StatelessWidget{
   Future<Widget> _buildFutureContent(BuildContext context) async {
     final List<CategoryModel> categories = await _apiService.getRecipeCategories();
     return  SizedBox(
-      height: 60,
+      height: 45,
       child: ListView.separated(
         clipBehavior: Clip.none,
         itemCount: categories.length,
@@ -54,42 +54,34 @@ class CategoryItem extends StatelessWidget{
 
     @override
     Widget build(BuildContext context) {
-      return Column(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.circular(48),
-              border: Border.all(
-                color: Colors.black,
-                width: 1.5,
-              ),
-              boxShadow: const [
-               BoxShadow(
-                color: BrutColors.blackBrown, // Opacidad del 100%
-                offset: Offset(4, 4), // Offset X, Y
-                blurRadius: 0, // No blur
-              ),
-              ],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${category.emoji}',
-                  style: AppTextStyles().emojiCategory,
-                ),
-              ],
-            ),
+      return Container(
+        width: 45,
+        decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(48),
+          border: Border.all(
+            color: Colors.black,
+            width: 1.5,
           ),
-          Text(
-            category.name,
-            style: AppTextStyles().sRegular,
+          boxShadow: const [
+           BoxShadow(
+            color: BrutColors.blackBrown, // Opacidad del 100%
+            offset: Offset(4, 4), // Offset X, Y
+            blurRadius: 0, // No blur
           ),
-        ],
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '${category.emoji}',
+              style: AppTextStyles().emojiCategory,
+            ),
+          ],
+        ),
       );
+
     }
 
 }

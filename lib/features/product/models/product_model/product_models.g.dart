@@ -8,7 +8,8 @@ part of 'product_models.dart';
 
 _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
     _$ProductModelImpl(
-      ean: json['ean'] as String,
+      id: (json['id'] as num).toInt(),
+      ean: json['ean'] as String?,
       name: json['name'] as String,
       amount: json['amount'] as String?,
       nutriscore: json['nutriscore'] as String?,
@@ -22,7 +23,9 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       lastUpdate: json['lastUpdate'] == null
           ? null
           : DateTime.parse(json['lastUpdate'] as String),
-      category: Category.fromJson(json['category'] as Map<String, dynamic>),
+      category: json['category'] == null
+          ? null
+          : Category.fromJson(json['category'] as Map<String, dynamic>),
       keywords: json['keywords'] as String?,
       nutrients: json['nutrients'] == null
           ? null
@@ -35,6 +38,7 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'ean': instance.ean,
       'name': instance.name,
       'amount': instance.amount,
@@ -47,7 +51,7 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'preservation': instance.preservation,
       'picture': instance.picture,
       'lastUpdate': instance.lastUpdate?.toIso8601String(),
-      'category': instance.category.toJson(),
+      'category': instance.category?.toJson(),
       'keywords': instance.keywords,
       'nutrients': instance.nutrients?.toJson(),
       'tags': instance.tags,

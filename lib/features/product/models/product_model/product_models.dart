@@ -8,7 +8,8 @@ part 'product_models.g.dart';
 class ProductModel with _$ProductModel {
   @JsonSerializable(explicitToJson: true)
   const factory ProductModel({
-    required String ean,
+    required int id,
+    String? ean,
     required String name,
     String? amount,
     String? nutriscore,
@@ -20,7 +21,7 @@ class ProductModel with _$ProductModel {
     String? preservation,
     String? picture,
     DateTime? lastUpdate,
-    required Category category,
+    Category? category,
     String? keywords,
     Nutrients? nutrients,
     List<String>? tags,

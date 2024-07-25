@@ -20,7 +20,8 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductModel {
-  String get ean => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String? get ean => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get amount => throw _privateConstructorUsedError;
   String? get nutriscore => throw _privateConstructorUsedError;
@@ -32,7 +33,7 @@ mixin _$ProductModel {
   String? get preservation => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
   DateTime? get lastUpdate => throw _privateConstructorUsedError;
-  Category get category => throw _privateConstructorUsedError;
+  Category? get category => throw _privateConstructorUsedError;
   String? get keywords => throw _privateConstructorUsedError;
   Nutrients? get nutrients => throw _privateConstructorUsedError;
   List<String>? get tags => throw _privateConstructorUsedError;
@@ -51,7 +52,8 @@ abstract class $ProductModelCopyWith<$Res> {
       _$ProductModelCopyWithImpl<$Res, ProductModel>;
   @useResult
   $Res call(
-      {String ean,
+      {int id,
+      String? ean,
       String name,
       String? amount,
       String? nutriscore,
@@ -63,13 +65,13 @@ abstract class $ProductModelCopyWith<$Res> {
       String? preservation,
       String? picture,
       DateTime? lastUpdate,
-      Category category,
+      Category? category,
       String? keywords,
       Nutrients? nutrients,
       List<String>? tags,
       List<AllergenDto>? allergens});
 
-  $CategoryCopyWith<$Res> get category;
+  $CategoryCopyWith<$Res>? get category;
   $NutrientsCopyWith<$Res>? get nutrients;
 }
 
@@ -86,7 +88,8 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ean = null,
+    Object? id = null,
+    Object? ean = freezed,
     Object? name = null,
     Object? amount = freezed,
     Object? nutriscore = freezed,
@@ -98,17 +101,21 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? preservation = freezed,
     Object? picture = freezed,
     Object? lastUpdate = freezed,
-    Object? category = null,
+    Object? category = freezed,
     Object? keywords = freezed,
     Object? nutrients = freezed,
     Object? tags = freezed,
     Object? allergens = freezed,
   }) {
     return _then(_value.copyWith(
-      ean: null == ean
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      ean: freezed == ean
           ? _value.ean
           : ean // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -153,10 +160,10 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.lastUpdate
           : lastUpdate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category,
+              as Category?,
       keywords: freezed == keywords
           ? _value.keywords
           : keywords // ignore: cast_nullable_to_non_nullable
@@ -178,8 +185,12 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
+  $CategoryCopyWith<$Res>? get category {
+    if (_value.category == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.category!, (value) {
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
@@ -206,7 +217,8 @@ abstract class _$$ProductModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String ean,
+      {int id,
+      String? ean,
       String name,
       String? amount,
       String? nutriscore,
@@ -218,14 +230,14 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       String? preservation,
       String? picture,
       DateTime? lastUpdate,
-      Category category,
+      Category? category,
       String? keywords,
       Nutrients? nutrients,
       List<String>? tags,
       List<AllergenDto>? allergens});
 
   @override
-  $CategoryCopyWith<$Res> get category;
+  $CategoryCopyWith<$Res>? get category;
   @override
   $NutrientsCopyWith<$Res>? get nutrients;
 }
@@ -241,7 +253,8 @@ class __$$ProductModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ean = null,
+    Object? id = null,
+    Object? ean = freezed,
     Object? name = null,
     Object? amount = freezed,
     Object? nutriscore = freezed,
@@ -253,17 +266,21 @@ class __$$ProductModelImplCopyWithImpl<$Res>
     Object? preservation = freezed,
     Object? picture = freezed,
     Object? lastUpdate = freezed,
-    Object? category = null,
+    Object? category = freezed,
     Object? keywords = freezed,
     Object? nutrients = freezed,
     Object? tags = freezed,
     Object? allergens = freezed,
   }) {
     return _then(_$ProductModelImpl(
-      ean: null == ean
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      ean: freezed == ean
           ? _value.ean
           : ean // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -308,10 +325,10 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value.lastUpdate
           : lastUpdate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category,
+              as Category?,
       keywords: freezed == keywords
           ? _value.keywords
           : keywords // ignore: cast_nullable_to_non_nullable
@@ -337,7 +354,8 @@ class __$$ProductModelImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$ProductModelImpl implements _ProductModel {
   const _$ProductModelImpl(
-      {required this.ean,
+      {required this.id,
+      this.ean,
       required this.name,
       this.amount,
       this.nutriscore,
@@ -349,7 +367,7 @@ class _$ProductModelImpl implements _ProductModel {
       this.preservation,
       this.picture,
       this.lastUpdate,
-      required this.category,
+      this.category,
       this.keywords,
       this.nutrients,
       final List<String>? tags,
@@ -361,7 +379,9 @@ class _$ProductModelImpl implements _ProductModel {
       _$$ProductModelImplFromJson(json);
 
   @override
-  final String ean;
+  final int id;
+  @override
+  final String? ean;
   @override
   final String name;
   @override
@@ -385,7 +405,7 @@ class _$ProductModelImpl implements _ProductModel {
   @override
   final DateTime? lastUpdate;
   @override
-  final Category category;
+  final Category? category;
   @override
   final String? keywords;
   @override
@@ -412,7 +432,7 @@ class _$ProductModelImpl implements _ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(ean: $ean, name: $name, amount: $amount, nutriscore: $nutriscore, novaGroup: $novaGroup, description: $description, brand: $brand, ingredients: $ingredients, origin: $origin, preservation: $preservation, picture: $picture, lastUpdate: $lastUpdate, category: $category, keywords: $keywords, nutrients: $nutrients, tags: $tags, allergens: $allergens)';
+    return 'ProductModel(id: $id, ean: $ean, name: $name, amount: $amount, nutriscore: $nutriscore, novaGroup: $novaGroup, description: $description, brand: $brand, ingredients: $ingredients, origin: $origin, preservation: $preservation, picture: $picture, lastUpdate: $lastUpdate, category: $category, keywords: $keywords, nutrients: $nutrients, tags: $tags, allergens: $allergens)';
   }
 
   @override
@@ -420,6 +440,7 @@ class _$ProductModelImpl implements _ProductModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProductModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.ean, ean) || other.ean == ean) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.amount, amount) || other.amount == amount) &&
@@ -453,6 +474,7 @@ class _$ProductModelImpl implements _ProductModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
       ean,
       name,
       amount,
@@ -487,7 +509,8 @@ class _$ProductModelImpl implements _ProductModel {
 
 abstract class _ProductModel implements ProductModel {
   const factory _ProductModel(
-      {required final String ean,
+      {required final int id,
+      final String? ean,
       required final String name,
       final String? amount,
       final String? nutriscore,
@@ -499,7 +522,7 @@ abstract class _ProductModel implements ProductModel {
       final String? preservation,
       final String? picture,
       final DateTime? lastUpdate,
-      required final Category category,
+      final Category? category,
       final String? keywords,
       final Nutrients? nutrients,
       final List<String>? tags,
@@ -509,7 +532,9 @@ abstract class _ProductModel implements ProductModel {
       _$ProductModelImpl.fromJson;
 
   @override
-  String get ean;
+  int get id;
+  @override
+  String? get ean;
   @override
   String get name;
   @override
@@ -533,7 +558,7 @@ abstract class _ProductModel implements ProductModel {
   @override
   DateTime? get lastUpdate;
   @override
-  Category get category;
+  Category? get category;
   @override
   String? get keywords;
   @override
