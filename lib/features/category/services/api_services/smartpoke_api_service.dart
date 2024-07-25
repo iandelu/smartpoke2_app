@@ -27,8 +27,9 @@ class SmartpokeCategoryApiService {
 
   Future<List<CategoryModel>> getRecipeCategories() async {
     try {
-      final response = await Dio().get(
-        'http://10.0.2.2:8082/api/categories/recipe');
+      final response = await smartPokeClient.get(
+        'categories/product',
+      );
 
       if (response.statusCode == 200) {
         List<dynamic> categoriesJson = await response.data;

@@ -15,32 +15,7 @@ final smartPokeClient = ApiClient(smartpokeBaseOptions);
 class ApiClient {
   final Dio _dio;
 
-  ApiClient(BaseOptions baseOptions) : _dio = Dio(baseOptions) {
-    _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        String? token = 'token';
-
-        if (token != null) {
-          options.headers['Authorization'] = 'Bearer $token';
-        }
-        logger.i('REQUEST[${options.method}] => PATH: ${options.path}');
-        logger.i('Request Headers: ${options.headers}');
-        logger.i('Request Data: ${options.data}');
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        logger.i('RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
-        logger.i('Response Data: ${response.data}');
-        return handler.next(response);
-      },
-      onError: (DioError e, handler) {
-        logger.e('ERROR[${e.response?.statusCode}] => PATH: ${e.requestOptions.path}');
-        logger.e('Error Message: ${e.message}');
-        logger.e('Error Data: ${e.response?.data}');
-        return handler.next(e);
-      },
-    ));
-  }
+  ApiClient(BaseOptions baseOptions) : _dio = Dio(baseOptions);
 
   Future<Response> get(String path, {Map<String, dynamic>? queryParams}) async {
     return await _dio.get(path, queryParameters: queryParams);
