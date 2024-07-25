@@ -8,6 +8,7 @@ import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/logger.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
+import 'package:meal_ai/features/recipes/screens/recipe_detail.dart';
 import 'package:meal_ai/features/recipes/screens/recipe_details_page.dart';
 
 class RecipeWidget extends ConsumerStatefulWidget {
@@ -111,7 +112,7 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
                   context,
                   CupertinoPageRoute(
                       builder: (context) =>
-                          RecipeDetailsPage(recipe: widget.recipe))),
+                          RecipeDetail(recipe: widget.recipe))),
               child: Container(
                 height: 160,
                 width: MediaQuery.sizeOf(context).width * 0.9,

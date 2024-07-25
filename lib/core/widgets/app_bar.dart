@@ -14,8 +14,8 @@ class BrutBottomNavigationBar extends StatefulWidget {
     Key? key,
     required this.items,
     required this.currentIndex,
-    this.defaultColor = BrutColors.purpleHeart,
-    this.activeColor = BrutColors.electricLime,
+    this.defaultColor = accentTeal1,
+    this.activeColor = black3,
     required this.onItemTapped,
   }) : super(key: key);
 
@@ -45,7 +45,7 @@ class _BrutBottomNavigationBarState extends State<BrutBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: BrutColors.smokyWhite,
+      color: white,
       padding: EdgeInsets.zero,
       shape: const CircularNotchedRectangle(),
       height: 60,
@@ -71,7 +71,7 @@ class _BrutBottomNavigationBarState extends State<BrutBottomNavigationBar> {
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: Icon(
                   item.icon,
-                  color: _selectedIndex == index ? BrutColors.blackBrown : BrutColors.smokyWhite,
+                  color: _selectedIndex == index ? black1 : white,
                 ),
               ),
             );

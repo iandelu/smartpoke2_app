@@ -3,13 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
 
 class AppTextStyles {
-  final TextStyle sRegular = GoogleFonts.workSans(
-    fontWeight: FontWeight.w400,
-    fontStyle: FontStyle.normal,
-    fontSize: 14,
-    decoration: TextDecoration.none,
-    letterSpacing: 0,
-  );
+
   final TextStyle sThick = GoogleFonts.workSans(
     fontWeight: FontWeight.w600,
     fontStyle: FontStyle.normal,
@@ -53,7 +47,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w900,
     fontStyle: FontStyle.normal,
     fontSize: 36,
-    color: flamingo,
+    color: accentTeal1,
     decoration: TextDecoration.none,
     letterSpacing: 0,
   );
@@ -63,4 +57,20 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 20,
   );
+
+  get sRegular => const TextStyle(
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.normal,
+    fontSize: 14,
+    decoration: TextDecoration.none,
+    letterSpacing: 0,
+  );
 }
+
+const sRegular = TextStyle(
+fontWeight: FontWeight.w400,
+fontStyle: FontStyle.normal,
+fontSize: 14,
+decoration: TextDecoration.none,
+letterSpacing: 0,
+);
