@@ -2070,7 +2070,7 @@ UnitOfMeasure _$UnitOfMeasureFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UnitOfMeasure {
   int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -2084,7 +2084,7 @@ abstract class $UnitOfMeasureCopyWith<$Res> {
           UnitOfMeasure value, $Res Function(UnitOfMeasure) then) =
       _$UnitOfMeasureCopyWithImpl<$Res, UnitOfMeasure>;
   @useResult
-  $Res call({int id, String name});
+  $Res call({int id, String? name});
 }
 
 /// @nodoc
@@ -2101,17 +2101,17 @@ class _$UnitOfMeasureCopyWithImpl<$Res, $Val extends UnitOfMeasure>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? name = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -2124,7 +2124,7 @@ abstract class _$$UnitOfMeasureImplCopyWith<$Res>
       __$$UnitOfMeasureImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call({int id, String? name});
 }
 
 /// @nodoc
@@ -2139,17 +2139,17 @@ class __$$UnitOfMeasureImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? name = freezed,
   }) {
     return _then(_$UnitOfMeasureImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -2158,7 +2158,7 @@ class __$$UnitOfMeasureImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$UnitOfMeasureImpl implements _UnitOfMeasure {
-  const _$UnitOfMeasureImpl({required this.id, this.name = 'Unknown'});
+  const _$UnitOfMeasureImpl({required this.id, this.name});
 
   factory _$UnitOfMeasureImpl.fromJson(Map<String, dynamic> json) =>
       _$$UnitOfMeasureImplFromJson(json);
@@ -2166,8 +2166,7 @@ class _$UnitOfMeasureImpl implements _UnitOfMeasure {
   @override
   final int id;
   @override
-  @JsonKey()
-  final String name;
+  final String? name;
 
   @override
   String toString() {
@@ -2202,7 +2201,7 @@ class _$UnitOfMeasureImpl implements _UnitOfMeasure {
 }
 
 abstract class _UnitOfMeasure implements UnitOfMeasure {
-  const factory _UnitOfMeasure({required final int id, final String name}) =
+  const factory _UnitOfMeasure({required final int id, final String? name}) =
       _$UnitOfMeasureImpl;
 
   factory _UnitOfMeasure.fromJson(Map<String, dynamic> json) =
@@ -2211,7 +2210,7 @@ abstract class _UnitOfMeasure implements UnitOfMeasure {
   @override
   int get id;
   @override
-  String get name;
+  String? get name;
   @override
   @JsonKey(ignore: true)
   _$$UnitOfMeasureImplCopyWith<_$UnitOfMeasureImpl> get copyWith =>

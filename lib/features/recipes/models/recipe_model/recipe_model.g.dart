@@ -329,7 +329,7 @@ Map<String, dynamic> _$$RecipeProductImplToJson(_$RecipeProductImpl instance) =>
 _$UnitOfMeasureImpl _$$UnitOfMeasureImplFromJson(Map<String, dynamic> json) =>
     _$UnitOfMeasureImpl(
       id: (json['id'] as num).toInt(),
-      name: json['name'] as String? ?? 'Unknown',
+      name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$$UnitOfMeasureImplToJson(_$UnitOfMeasureImpl instance) =>

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
+import 'package:meal_ai/config/theme/brut_shadows.dart';
+import 'package:meal_ai/core/styles/sizes.dart';
+import 'package:meal_ai/core/styles/text_styles.dart';
 
 class YieldsCounter extends StatefulWidget {
   final int count;
@@ -47,31 +51,26 @@ class _YieldsCounterState extends State<YieldsCounter> {
       child: Container(
         height: 40,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: widget.buttonColor, width: 3)
+            borderRadius: BorderRadius.circular(BorderRadiusSizes.lg),
+            color: accentCoral1,
+            boxShadow: const [shadowSmallBrut]
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: _dicrement,
-              child: Icon(Icons.remove, color: Theme.of(context).colorScheme.onSurface, size: 25,),
+            IconButton(
+              onPressed: _dicrement,
+              icon: Icon(Icons.remove, color: Theme.of(context).colorScheme.onSurface, size: 25,),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7.0),
               child: Text('$_currentCount',
-                  style:TextStyle(
-                      fontSize: 21,
-                      fontWeight: FontWeight.w900,
-                      fontFamily: 'Mulish',
-                      color: widget.buttonColor
-                  )
+                  style: headline6
               ),
             ),
-            Icon(Icons.people_alt_outlined, color: widget.buttonColor, size: 25,),
-            GestureDetector(
-              onTap: _increment,
-              child: Icon(Icons.add, color: Theme.of(context).colorScheme.onSurface, size: 25,),
+            IconButton(
+              onPressed: _increment,
+              icon: Icon(Icons.add, color: Theme.of(context).colorScheme.onSurface, size: 25,),
             ),
           ],
         ),

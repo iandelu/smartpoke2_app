@@ -4,9 +4,9 @@ import 'package:meal_ai/config/theme/brut_colors.dart';
 class AppTheme{
 
   static getTheme() => ThemeData(
-    scaffoldBackgroundColor: Colors.grey.shade100,
+    scaffoldBackgroundColor: cream2,
     colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.white,
+        seedColor: cream2,
         primary: accentTeal1,
     ),
     useMaterial3: true,

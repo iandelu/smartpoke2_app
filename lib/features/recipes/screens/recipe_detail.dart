@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
+import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/human_formats.dart';
 import 'package:meal_ai/core/widgets/buttons.dart';
 import 'package:meal_ai/core/widgets/expandable_text.dart';
@@ -103,8 +104,8 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
     return SliverToBoxAdapter(
       child: Container(
         padding: const EdgeInsets.only(
-          left: PaddingSizes.xs,
-          right: PaddingSizes.xs,
+          left: PaddingSizes.lg,
+          right: PaddingSizes.lg,
           top: PaddingSizes.xs,
         ),
         decoration: BoxDecoration(
@@ -146,37 +147,8 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
                 ),
               ],
             ),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "by Amedian Company",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    color: black2,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w800),
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            ExpandableTextWidget(text: recipe!.description,
-              style: const TextStyle(
-                  color: black2,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500),
-              maxLines: 3,
-            ),
-            const SizedBox(height: PaddingSizes.sm),
-            const SizedBox(
-              height: 12,
-            ),
-            CategoriesWidget(categories: recipe!.categories,),
-            const SizedBox(
-              height: 12,
-            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 createIconText(
                   Icons.signal_cellular_alt,
@@ -195,6 +167,17 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
                 ),
               ],
             ),
+            ExpandableTextWidget(text: recipe!.description,
+              style: const TextStyle(
+                  color: black2,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500),
+              maxLines: 3,
+            ),
+            const SizedBox(height: PaddingSizes.md),
+            CategoriesWidget(categories: recipe!.categories,),
+            const SizedBox(height: PaddingSizes.md),
+
             const SizedBox(
               height: 12,
             ),
@@ -277,5 +260,21 @@ _launchURL(String urlString) async {
 }
 
 Widget createIconText(IconData icon, String text, Color iconColor) {
-  return IconAndTextWidget(icon: icon, text: text, iconColor: iconColor);
+  return Row(
+    children: [
+      Icon(
+        icon,
+        color: iconColor,
+      ),
+      const SizedBox(width: PaddingSizes.xxxs),
+      Text(
+        text,
+        style: cons t TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.w800,8
+        ),
+      ),
+    ],
+  );
 }

@@ -115,7 +115,7 @@ class UnitOfMeasure with _$UnitOfMeasure {
   @JsonSerializable(explicitToJson: true)
   const factory UnitOfMeasure({
     required int id,
-    @Default('Unknown') String name,
+    String? name,
   }) = _UnitOfMeasure;
 
   factory UnitOfMeasure.fromJson(Map<String, dynamic> json) => _$UnitOfMeasureFromJson(json);
