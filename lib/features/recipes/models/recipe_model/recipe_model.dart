@@ -103,7 +103,7 @@ class RecipeProduct with _$RecipeProduct {
     @Default(0.0) double amount,
     @Default('No text available') String text,
     @Default('Unknown ingredient') String ingredientName,
-    @Default(UnitOfMeasure(id: 0, name: 'Unknown')) UnitOfMeasure unitOfMeasure,
+    UnitOfMeasure? unitOfMeasure,
     ProductModel? product,
   }) = _RecipeProduct;
 

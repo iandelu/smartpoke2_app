@@ -120,19 +120,14 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                const SizedBox(
+                  height: PaddingSizes.md,
+                ),
                 ExpandableTextWidget(
                   text: recipe!.name,
-                  style: const TextStyle(
-                    fontFamily: 'Tanker',
-                    fontWeight: FontWeight.w900,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 36,
-                    color: Colors.black,
-                    decoration: TextDecoration.none,
-                    letterSpacing: 0,
-                  ),
+                  style: headline1,
                   maxLines: 2,
                 ),
                 Align(
@@ -146,6 +141,9 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
                   ),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: PaddingSizes.md,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,6 +165,13 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
                 ),
               ],
             ),
+            const SizedBox(
+              height: PaddingSizes.md,
+            ),
+            const Text(
+              "Description",
+              style: headline5,
+            ),
             ExpandableTextWidget(text: recipe!.description,
               style: const TextStyle(
                   color: black2,
@@ -174,27 +179,24 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
                   fontWeight: FontWeight.w500),
               maxLines: 3,
             ),
-            const SizedBox(height: PaddingSizes.md),
+            const SizedBox(
+              height: PaddingSizes.md,
+            ),
             CategoriesWidget(categories: recipe!.categories,),
-            const SizedBox(height: PaddingSizes.md),
-
             const SizedBox(
-              height: 12,
+              height: PaddingSizes.md,
             ),
-            const SizedBox(
-              height: 12,
-            ),
-            Text(
+            const Text(
               "Ingredientes",
-              style: Theme.of(context).textTheme.titleMedium,
+              style: headline5,
             ),
             IngredientsPage(ingredients: recipe!.recipeProducts, factor: _factor),
             const SizedBox(
-              height: 12,
+              height: PaddingSizes.md,
             ),
-            Text(
+            const Text(
               "Preparacion",
-              style: Theme.of(context).textTheme.titleMedium,
+              style: headline5,
             ),
             StepsRecipeList(recipeSteps: recipe!.recipeSteps),
           ],
@@ -269,11 +271,7 @@ Widget createIconText(IconData icon, String text, Color iconColor) {
       const SizedBox(width: PaddingSizes.xxxs),
       Text(
         text,
-        style: cons t TextStyle(
-          color: Colors.black,
-          fontSize: 18,
-          fontWeight: FontWeight.w800,8
-        ),
+        style: bodyText2
       ),
     ],
   );

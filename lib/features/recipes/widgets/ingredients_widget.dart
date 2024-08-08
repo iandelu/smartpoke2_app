@@ -63,9 +63,9 @@ class _IngredientsPageState extends State<IngredientsPage> with SingleTickerProv
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                      if (ingredient.unitOfMeasure.name != "")
+                      if (ingredient.unitOfMeasure != null)
                         Text(
-                            "${ingredient.unitOfMeasure.name} ",
+                            "${ingredient.unitOfMeasure!.name}",
                             style: TextStyle(
                               fontSize: 15,
                               color: Theme.of(context).colorScheme.secondary,

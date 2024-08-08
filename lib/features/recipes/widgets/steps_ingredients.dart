@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/human_formats.dart';
 import 'package:meal_ai/core/widgets/expandable_text.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
@@ -20,7 +21,10 @@ class StepsRecipeList extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      NumberCircleWidget(text: step.position.toString()),
+                      Text(
+                        step.position.toString(),
+                        style: headline5,
+                      ),
                       step.time != 0
                           ? Text(
                         HumanFormats.timeToString(step.time),
@@ -34,8 +38,6 @@ class StepsRecipeList extends StatelessWidget {
                     child: Column(
                       children: [
                         ExpandableTextWidget(text: step.description),
-                        if(step.picture != "no-image")
-                          Image.network(step.picture)
                       ],
                     ),
                   ),

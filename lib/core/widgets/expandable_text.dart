@@ -24,7 +24,6 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
     _maxLines = widget.maxLines;
     _textAlign = widget.textAlign;
     return Container(
-      padding: const EdgeInsets.all(2),
       child: GestureDetector(
         onTap: () {
           setState(() {

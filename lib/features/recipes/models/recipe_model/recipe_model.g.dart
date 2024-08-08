@@ -308,7 +308,7 @@ _$RecipeProductImpl _$$RecipeProductImplFromJson(Map<String, dynamic> json) =>
       text: json['text'] as String? ?? 'No text available',
       ingredientName: json['ingredientName'] as String? ?? 'Unknown ingredient',
       unitOfMeasure: json['unitOfMeasure'] == null
-          ? const UnitOfMeasure(id: 0, name: 'Unknown')
+          ? null
           : UnitOfMeasure.fromJson(
               json['unitOfMeasure'] as Map<String, dynamic>),
       product: json['product'] == null
@@ -322,7 +322,7 @@ Map<String, dynamic> _$$RecipeProductImplToJson(_$RecipeProductImpl instance) =>
       'amount': instance.amount,
       'text': instance.text,
       'ingredientName': instance.ingredientName,
-      'unitOfMeasure': instance.unitOfMeasure.toJson(),
+      'unitOfMeasure': instance.unitOfMeasure?.toJson(),
       'product': instance.product?.toJson(),
     };
 

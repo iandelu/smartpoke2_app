@@ -116,7 +116,7 @@ const TextStyle headline6 = TextStyle(
 const TextStyle subtitle1 = TextStyle(
   fontFamily: 'CabinetGrotesk',
   fontSize: 22.0,
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.w100,
   height: 1.27,
   letterSpacing: 0.35,
 );
@@ -130,7 +130,7 @@ const TextStyle bodyText1 = TextStyle(
 const TextStyle bodyText2 = TextStyle(
   fontFamily: 'CabinetGrotesk',
   fontSize: 18.0,
-  fontWeight: FontWeight.w500,
+  fontWeight: FontWeight.w200,
 );
 
 const TextStyle caption = TextStyle(
@@ -167,7 +167,7 @@ const TextStyle subtitle2 = TextStyle(
 const TextStyle bodyText3 = TextStyle(
   fontFamily: 'CabinetGrotesk',
   fontSize: 14.0,
-  fontWeight: FontWeight.w500,
+  fontWeight: FontWeight.w100,
   height: 1.36,
 );
 

@@ -1797,7 +1797,7 @@ mixin _$RecipeProduct {
   double get amount => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   String get ingredientName => throw _privateConstructorUsedError;
-  UnitOfMeasure get unitOfMeasure => throw _privateConstructorUsedError;
+  UnitOfMeasure? get unitOfMeasure => throw _privateConstructorUsedError;
   ProductModel? get product => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1817,10 +1817,10 @@ abstract class $RecipeProductCopyWith<$Res> {
       double amount,
       String text,
       String ingredientName,
-      UnitOfMeasure unitOfMeasure,
+      UnitOfMeasure? unitOfMeasure,
       ProductModel? product});
 
-  $UnitOfMeasureCopyWith<$Res> get unitOfMeasure;
+  $UnitOfMeasureCopyWith<$Res>? get unitOfMeasure;
   $ProductModelCopyWith<$Res>? get product;
 }
 
@@ -1841,7 +1841,7 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
     Object? amount = null,
     Object? text = null,
     Object? ingredientName = null,
-    Object? unitOfMeasure = null,
+    Object? unitOfMeasure = freezed,
     Object? product = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1861,10 +1861,10 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
           ? _value.ingredientName
           : ingredientName // ignore: cast_nullable_to_non_nullable
               as String,
-      unitOfMeasure: null == unitOfMeasure
+      unitOfMeasure: freezed == unitOfMeasure
           ? _value.unitOfMeasure
           : unitOfMeasure // ignore: cast_nullable_to_non_nullable
-              as UnitOfMeasure,
+              as UnitOfMeasure?,
       product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
@@ -1874,8 +1874,12 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
 
   @override
   @pragma('vm:prefer-inline')
-  $UnitOfMeasureCopyWith<$Res> get unitOfMeasure {
-    return $UnitOfMeasureCopyWith<$Res>(_value.unitOfMeasure, (value) {
+  $UnitOfMeasureCopyWith<$Res>? get unitOfMeasure {
+    if (_value.unitOfMeasure == null) {
+      return null;
+    }
+
+    return $UnitOfMeasureCopyWith<$Res>(_value.unitOfMeasure!, (value) {
       return _then(_value.copyWith(unitOfMeasure: value) as $Val);
     });
   }
@@ -1906,11 +1910,11 @@ abstract class _$$RecipeProductImplCopyWith<$Res>
       double amount,
       String text,
       String ingredientName,
-      UnitOfMeasure unitOfMeasure,
+      UnitOfMeasure? unitOfMeasure,
       ProductModel? product});
 
   @override
-  $UnitOfMeasureCopyWith<$Res> get unitOfMeasure;
+  $UnitOfMeasureCopyWith<$Res>? get unitOfMeasure;
   @override
   $ProductModelCopyWith<$Res>? get product;
 }
@@ -1930,7 +1934,7 @@ class __$$RecipeProductImplCopyWithImpl<$Res>
     Object? amount = null,
     Object? text = null,
     Object? ingredientName = null,
-    Object? unitOfMeasure = null,
+    Object? unitOfMeasure = freezed,
     Object? product = freezed,
   }) {
     return _then(_$RecipeProductImpl(
@@ -1950,10 +1954,10 @@ class __$$RecipeProductImplCopyWithImpl<$Res>
           ? _value.ingredientName
           : ingredientName // ignore: cast_nullable_to_non_nullable
               as String,
-      unitOfMeasure: null == unitOfMeasure
+      unitOfMeasure: freezed == unitOfMeasure
           ? _value.unitOfMeasure
           : unitOfMeasure // ignore: cast_nullable_to_non_nullable
-              as UnitOfMeasure,
+              as UnitOfMeasure?,
       product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
@@ -1971,7 +1975,7 @@ class _$RecipeProductImpl implements _RecipeProduct {
       this.amount = 0.0,
       this.text = 'No text available',
       this.ingredientName = 'Unknown ingredient',
-      this.unitOfMeasure = const UnitOfMeasure(id: 0, name: 'Unknown'),
+      this.unitOfMeasure,
       this.product});
 
   factory _$RecipeProductImpl.fromJson(Map<String, dynamic> json) =>
@@ -1989,8 +1993,7 @@ class _$RecipeProductImpl implements _RecipeProduct {
   @JsonKey()
   final String ingredientName;
   @override
-  @JsonKey()
-  final UnitOfMeasure unitOfMeasure;
+  final UnitOfMeasure? unitOfMeasure;
   @override
   final ProductModel? product;
 
@@ -2039,7 +2042,7 @@ abstract class _RecipeProduct implements RecipeProduct {
       final double amount,
       final String text,
       final String ingredientName,
-      final UnitOfMeasure unitOfMeasure,
+      final UnitOfMeasure? unitOfMeasure,
       final ProductModel? product}) = _$RecipeProductImpl;
 
   factory _RecipeProduct.fromJson(Map<String, dynamic> json) =
@@ -2054,7 +2057,7 @@ abstract class _RecipeProduct implements RecipeProduct {
   @override
   String get ingredientName;
   @override
-  UnitOfMeasure get unitOfMeasure;
+  UnitOfMeasure? get unitOfMeasure;
   @override
   ProductModel? get product;
   @override
