@@ -5,6 +5,18 @@ class AppTheme{
 
   static getTheme() => ThemeData(
     scaffoldBackgroundColor: cream2,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: cream2,
+      foregroundColor: black1,
+      titleTextStyle: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w700,
+        color: black1,
+      ),
+      iconTheme: IconThemeData(
+        color: black1,
+      ),
+    ),
     colorScheme: ColorScheme.fromSeed(
         seedColor: cream2,
         primary: accentTeal1,

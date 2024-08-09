@@ -8,6 +8,9 @@ import 'package:meal_ai/features/settings_page/screens/settings_page.dart';
 import 'package:meal_ai/features/grocery_list_page/screens/grocery_list.dart';
 
 class MainPage extends StatefulWidget {
+
+  static String name = 'Home';
+
   const MainPage({Key? key}) : super(key: key);
 
   @override

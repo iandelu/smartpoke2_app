@@ -40,7 +40,7 @@ class BrutButton extends StatelessWidget {
     this.boxShadow = shadowBigBrut,
     this.textStyle = sRegular,
     this.width = double.infinity,
-    this.height = 60,
+    this.height = 50,
   }) : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class BrutButton extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: white,
-        borderRadius: BorderRadius.circular(BorderRadiusSizes.md),
+        borderRadius: BorderRadius.circular(BorderRadiusSizes.xxl),
         border: Border.all( color: borderColor, width: 2,),
         boxShadow: [boxShadow],
       ),
@@ -60,7 +60,7 @@ class BrutButton extends StatelessWidget {
         onPressed: onPressed,
         color: color,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(BorderRadiusSizes.md),
+          borderRadius: BorderRadius.circular(BorderRadiusSizes.xxl),
         ),
         elevation: 0.0,
         child: Text(text, style: textStyle),

@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_ai/features/main_page/screens/main_page.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
+import 'config/router/app_router.dart';
 import 'config/theme/app_theme.dart';
 
 void main() async {
@@ -28,11 +29,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-      child: MaterialApp(
+      child: MaterialApp.router(
+        routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
         title: 'Savor',
         theme: AppTheme.getTheme(),
-        home: const MainPage(),
       ),
     );
   }
