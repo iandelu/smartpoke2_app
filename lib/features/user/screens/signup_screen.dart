@@ -33,8 +33,8 @@ class SignupPage extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  const Text(tSingUp, style: headline1,),
-                  Text("Create an account, It's free", style: Theme.of(context).textTheme.titleSmall,),
+                  const Text(tSingUpHeader, style: headline1,),
+                  Text(tSingUpSubHeader, style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.center,),
                 ],
               ),
               Column(

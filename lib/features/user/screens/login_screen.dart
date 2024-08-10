@@ -22,43 +22,38 @@ class LoginPage extends StatelessWidget {
         elevation: 0,
         title: const Text(tLogin, style: headline6,),
       ),
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  const Text(tLoginText, style: headline1,),
-                  const SizedBox(height: 40,),
-                  Column(
-                    children: <Widget>[
-                      BrutRoundedInputField(label: tEmail,controller: _emailController, ),
-                      BrutRoundedPasswordInputField(label: tPassword, obscureText: true, controller: _passwordController,),
-                    ],
-                  ),
-                  const SizedBox(height: PaddingSizes.md,),
-                  BrutButton(
-                      text: tLogin,
-                      onPressed: () => {},
-                      color: Theme.of(context).colorScheme.primary,
-                      textStyle: headline6,
-                    ),
-                  const SizedBox(height: 20,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Text(tAskForAccount),
-                      TextButton(onPressed: () {}, child: Text(tSingUp, style: Theme.of(context).textTheme.titleSmall),)
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          height: MediaQuery.of(context).size.height - 50,
+          width: double.infinity,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                const Text(tLoginHeader, style: headline1,),
+                Column(
+                  children: <Widget>[
+                    BrutRoundedInputField(label: tEmail,controller: _emailController, ),
+                    BrutRoundedPasswordInputField(label: tPassword, obscureText: true, controller: _passwordController,),
+                  ],
+                ),
+                const SizedBox(height: PaddingSizes.md,),
+                BrutButton(
+                  text: tLogin,
+                  onPressed: () => {},
+                  color: Theme.of(context).colorScheme.primary,
+                  textStyle: headline6,
+                ),
+                const SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(tAskForAccount),
+                    TextButton(onPressed: () {}, child: Text(tSingUp, style: Theme.of(context).textTheme.titleSmall),)
+                  ],
+                ),
+              ],
+          )
         ),
       ),
     );
