@@ -6,63 +6,51 @@ import 'package:meal_ai/features/category/models/category_models.dart';
 class SmartpokeCategoryApiService {
 
   Future<List<CategoryModel>> getAllCategories() async {
-    try {
-      final response = await smartPokeClient.get(
-        '/categories/all',
-      );
+    final response = await smartPokeClient.get(
+      '/categories/all',
+    );
 
-      if (response.statusCode == 200) {
-        List<Map<String, dynamic>> categoriesJson = await response.data;
-        return categoriesJson.map((category) => CategoryModel.fromJson(category)).toList();
+    if (response.statusCode == 200) {
+      List<Map<String, dynamic>> categoriesJson = await response.data;
+      return categoriesJson.map((category) => CategoryModel.fromJson(category)).toList();
 
-      } else {
-        logger.d(response.statusCode);
-        throw Exception('Something went wrong');
-      }
-    } catch (e, st) {
-      logger.d('Error', error: e, stackTrace: st);
-      throw Exception('Error: $e');
+    } else {
+      logger.d(response.statusCode);
+      throw Exception('Something went wrong');
     }
+
   }
 
   Future<List<CategoryModel>> getRecipeCategories() async {
-    try {
-      final response = await smartPokeClient.get(
-        'categories/recipe',
-      );
+    final response = await smartPokeClient.get(
+      'categories/recipe',
+    );
 
-      if (response.statusCode == 200) {
-        List<dynamic> categoriesJson = await response.data;
-        return categoriesJson.map((category) => CategoryModel.fromJson(category)).toList();
+    if (response.statusCode == 200) {
+      List<dynamic> categoriesJson = await response.data;
+      return categoriesJson.map((category) => CategoryModel.fromJson(category)).toList();
 
-      } else {
-        logger.d(response.statusCode);
-        throw Exception('Something went wrong');
-      }
-    } catch (e, st) {
-      logger.d('Error', error: e, stackTrace: st);
-      throw Exception('Error: $e');
+    } else {
+      logger.d(response.statusCode);
+      throw Exception('Something went wrong');
     }
+
   }
 
   Future<List<CategoryModel>> getProductCategories() async {
-    try {
-      final response = await smartPokeClient.get(
-        '/categories/product',
-      );
+    final response = await smartPokeClient.get(
+      '/categories/product',
+    );
 
-      if (response.statusCode == 200) {
-        List<Map<String, dynamic>> categoriesJson = await response.data;
-        return categoriesJson.map((category) => CategoryModel.fromJson(category)).toList();
+    if (response.statusCode == 200) {
+      List<Map<String, dynamic>> categoriesJson = await response.data;
+      return categoriesJson.map((category) => CategoryModel.fromJson(category)).toList();
 
-      } else {
-        logger.d(response.statusCode);
-        throw Exception('Something went wrong');
-      }
-    } catch (e, st) {
-      logger.d('Error', error: e, stackTrace: st);
-      throw Exception('Error: $e');
+    } else {
+      logger.d(response.statusCode);
+      throw Exception('Something went wrong');
     }
+
   }
 
 }
