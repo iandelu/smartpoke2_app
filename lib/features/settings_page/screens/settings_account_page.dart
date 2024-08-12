@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
@@ -170,6 +171,45 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                     });
                   }),
                   const SizedBox(height: PaddingSizes.xxl),
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Are you sure?'),
+                            content: Text('Do you really want to log out?'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(); // Close the dialog
+                                },
+                                child: Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () async{
+                                  final isCleared = await ref.read(resetStorage.notifier).state;
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        isCleared != null
+                                            ? 'logged out successfully!'
+                                            : 'Failed to log out.',
+                                      ),
+                                    ),
+                                  );
+                                  context.go('/session');
+                                },
+                                child: Text('Logout'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Text('Logout'),
+                  )
                 ],
               ),
             ),
