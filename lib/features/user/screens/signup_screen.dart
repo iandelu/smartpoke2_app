@@ -1,12 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/texts.dart';
 import 'package:meal_ai/core/widgets/buttons.dart';
+import 'package:meal_ai/features/user/provider/auth_provider.dart';
 import 'package:meal_ai/features/user/widgets/input_field.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends ConsumerWidget {
 
   static const String name = 'singup-screen';
   final TextEditingController _emailController = TextEditingController();
@@ -15,8 +18,17 @@ class SignupPage extends StatelessWidget {
 
   SignupPage({super.key});
 
+  void showSnackbar(BuildContext context, String text) {
+    final snackBar = SnackBar(
+      content: Text(text),
+      duration: const Duration(seconds: 5),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -49,7 +61,24 @@ class SignupPage extends StatelessWidget {
               const SizedBox(height: PaddingSizes.md,),
               BrutButton(
                   text: tSingUp,
-                  onPressed: () => {},
+                  onPressed: () async {
+                    final email = _emailController.text;
+                    final password = _passwordController.text;
+                    final passwordConfirm = _passwordConfirmController.text;
+                    if (password != passwordConfirm) {
+                      showSnackbar(context, tPasswordNotMatch);
+                      return;
+                    }else{
+                      ref.read(userControllerProvider.notifier)
+                          .signup(email: email, password: password)
+                          .then((res) => {
+                            res.fold(
+                              (l) => showSnackbar(context, l),
+                              (r) => context.go('/home'),
+                            )
+                      });
+                    }
+                  },
                   color: Colors.greenAccent,
                   textStyle: headline6,
               ),

@@ -1,4 +1,4 @@
-import 'package:meal_ai/features/user/models/user_models.dart';
+import 'package:meal_ai/features/user/models/user/user_models.dart';
 
 class LoginRequest {
   final String email;
@@ -8,7 +8,7 @@ class LoginRequest {
 
   Map<String, dynamic> toJson() {
     return {
-      'username': email,
+      'email': email,
       'password': password,
     };
   }
@@ -16,16 +16,16 @@ class LoginRequest {
 
 class RegisterRequest {
   final String password;
-  final String firstName;
-  final String lastName;
+  final String? firstName;
+  final String? lastName;
   final String email;
   final Location? location;
   final Userinfo? userInfo;
 
   RegisterRequest({
     required this.password,
-    required this.firstName,
-    required this.lastName,
+    this.firstName,
+    this.lastName,
     required this.email,
     this.location,
     this.userInfo,

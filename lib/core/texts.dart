@@ -10,3 +10,4 @@ const String tConfirmPassword = "Confirm Password";
 const String tEmail = "Email";
 const String tAskForAccount = "Dont have an account?";
 const String tAskForAlreadyAccount = "Already have an account?";
+const String tPasswordNotMatch = "Password does not match";

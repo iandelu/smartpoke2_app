@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_ai/core/utils/image_utils.dart';
 import 'package:meal_ai/features/category/models/category_models.dart';
 import 'package:meal_ai/features/product/models/product_model/product_models.dart';
-import 'package:meal_ai/features/user/models/user_models.dart';
+import 'package:meal_ai/features/user/models/user/user_models.dart';
 
 part 'recipe_model.freezed.dart';
 part 'recipe_model.g.dart';

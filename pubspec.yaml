@@ -63,6 +63,7 @@ dependencies:
   rich_text_controller: ^1.4.2
   dio: ^5.5.0+1
   go_router: ^14.2.3
+  dartz: ^0.10.1
 
 
 flutter_icons:

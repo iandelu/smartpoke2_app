@@ -3,20 +3,33 @@ import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:meal_ai/features/settings_page/widgets/settings_list_tile_widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/features/user/models/user/user_models.dart';
+import 'package:meal_ai/features/user/service/local_user_service.dart';
 
-class SettingsAccountPage extends StatelessWidget {
+import 'edit_profile_page.dart';
+
+class SettingsAccountPage extends ConsumerWidget {
   const SettingsAccountPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authenticatedUser = ref.watch(getAuthenticatedUserProvider);
+
     return Scaffold(
         backgroundColor: Colors.grey.shade200,
-        body: const SafeArea(child: SettingsAccountPageBody()));
+        body: SafeArea(child: authenticatedUser.when(
+          data: (user) => SettingsAccountPageBody(authenticatedUser: user),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (err, stack) => Center(child: Text('Error: $err')),
+        )));
   }
 }
 
 class SettingsAccountPageBody extends StatefulWidget {
-  const SettingsAccountPageBody({super.key});
+  final UserModel authenticatedUser;
+
+  const SettingsAccountPageBody({super.key, required this.authenticatedUser});
 
   @override
   State<SettingsAccountPageBody> createState() =>
@@ -54,7 +67,7 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Account',
+                widget.authenticatedUser.email,
                 style: AppTextStyles().lThick,
               ),
             ),
@@ -88,10 +101,10 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                   color: Colors.white, borderRadius: BorderRadius.circular(12)),
               child: Column(
                 children: [
-                  const SettingsListTileWidget(
+                  SettingsListTileWidget(
                       title: 'Name',
                       paddingSize: 0,
-                      trailingText: 'Annonymous',
+                      trailingText: widget.authenticatedUser.email,
                       showArrow: false),
                   Divider(
                       indent: PaddingSizes.mdl,
@@ -144,6 +157,18 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                 trailingText: '',
                 paddingSize: PaddingSizes.xl,
               ),
+            ),
+            const SizedBox(height: PaddingSizes.xxl),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfilePage(user: widget.authenticatedUser),
+                  ),
+                );
+              },
+              child: const Text('Edit Profile'),
             ),
           ],
         ),

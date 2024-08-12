@@ -16,6 +16,7 @@ void main() async {
   await Hive.openBox('grocery_list');
   await Hive.openBox('recipe_from_url');
   await Hive.openBox('meal_plan_recipe');
+  await Hive.openBox('my_user_info');
 
   // await Hive.deleteBoxFromDisk('recipe_from_url');
   // await Hive.deleteBoxFromDisk('meal_plan_recipe');

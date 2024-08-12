@@ -8,22 +8,15 @@ class UserModel with _$UserModel {
   @JsonSerializable(explicitToJson: true)
   const factory UserModel({
     required int id,
-    required String password,
-    required String firstName,
-    required String lastName,
-    required String picture,
+    String? firstName,
+    String? lastName,
+    String? picture,
     required String email,
     required bool verify,
     required bool premium,
     required String role,
-    required Location location,
-    required Userinfo userinfo,
-    required bool enabled,
-    required String username,
-    required List<String> authorities,
-    required bool accountNonExpired,
-    required bool credentialsNonExpired,
-    required bool accountNonLocked,
+    Location? location,
+    Userinfo? userinfo,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

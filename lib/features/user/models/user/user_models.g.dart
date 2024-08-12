@@ -9,30 +9,24 @@ part of 'user_models.dart';
 _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
     _$UserModelImpl(
       id: (json['id'] as num).toInt(),
-      password: json['password'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      picture: json['picture'] as String,
+      firstName: json['firstName'] as String?,
+      lastName: json['lastName'] as String?,
+      picture: json['picture'] as String?,
       email: json['email'] as String,
       verify: json['verify'] as bool,
       premium: json['premium'] as bool,
       role: json['role'] as String,
-      location: Location.fromJson(json['location'] as Map<String, dynamic>),
-      userinfo: Userinfo.fromJson(json['userinfo'] as Map<String, dynamic>),
-      enabled: json['enabled'] as bool,
-      username: json['username'] as String,
-      authorities: (json['authorities'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      accountNonExpired: json['accountNonExpired'] as bool,
-      credentialsNonExpired: json['credentialsNonExpired'] as bool,
-      accountNonLocked: json['accountNonLocked'] as bool,
+      location: json['location'] == null
+          ? null
+          : Location.fromJson(json['location'] as Map<String, dynamic>),
+      userinfo: json['userinfo'] == null
+          ? null
+          : Userinfo.fromJson(json['userinfo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'password': instance.password,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'picture': instance.picture,
@@ -40,14 +34,8 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'verify': instance.verify,
       'premium': instance.premium,
       'role': instance.role,
-      'location': instance.location.toJson(),
-      'userinfo': instance.userinfo.toJson(),
-      'enabled': instance.enabled,
-      'username': instance.username,
-      'authorities': instance.authorities,
-      'accountNonExpired': instance.accountNonExpired,
-      'credentialsNonExpired': instance.credentialsNonExpired,
-      'accountNonLocked': instance.accountNonLocked,
+      'location': instance.location?.toJson(),
+      'userinfo': instance.userinfo?.toJson(),
     };
 
 _$LocationImpl _$$LocationImplFromJson(Map<String, dynamic> json) =>

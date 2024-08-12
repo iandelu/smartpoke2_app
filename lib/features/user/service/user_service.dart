@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:meal_ai/config/connections/smartpoke_client.dart';
-import 'package:meal_ai/features/user/models/user_models.dart';
+import 'package:meal_ai/features/user/models/user/user_models.dart';
 
 class SmartPokeUserDatasource {
   final String path = '/user';
