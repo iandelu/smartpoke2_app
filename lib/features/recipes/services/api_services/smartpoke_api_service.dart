@@ -12,31 +12,27 @@ class SmartpokeRecipeApiService {
     final apiUrl =
         Uri.parse('http://localhost:8082/api/recipes/from_url');
 
-    try {
-      final response = await http.post(
-        apiUrl,
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({'url': url}),
-      );
+    final response = await http.post(
+      apiUrl,
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({'url': url}),
+    );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        // Decode the response body with UTF-8
-        var decodedResponse = utf8.decode(response.bodyBytes);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // Decode the response body with UTF-8
+      var decodedResponse = utf8.decode(response.bodyBytes);
 
-        // Parse the decoded string to JSON
-        final Map<String, dynamic> jsonResponse = jsonDecode(decodedResponse);
-        final result = RecipeModel.fromJson(parser(jsonResponse));
-        return result;
-      } else {
-        logger.d(response.statusCode);
-        throw Exception('Something went wrong');
-      }
-    } catch (e, st) {
-      logger.d('Error', error: e, stackTrace: st);
-      throw Exception('Error: $e');
+      // Parse the decoded string to JSON
+      final Map<String, dynamic> jsonResponse = jsonDecode(decodedResponse);
+      final result = RecipeModel.fromJson(parser(jsonResponse));
+      return result;
+    } else {
+      logger.d(response.statusCode);
+      throw Exception('Something went wrong');
     }
+
   }
 }

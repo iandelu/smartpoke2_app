@@ -14,21 +14,41 @@ class ApiClient {
 
   Future<Response> get(String path, {Map<String, dynamic>? queryParams}) async {
     String url = smartpokeBaseOptions.baseUrl + path;
-    return await _dio.get(url);
+    try {
+      return await _dio.get(url);
+    } catch (e, stackTrace) {
+      logger.e("GET request failed",error: e, stackTrace: stackTrace);
+      rethrow;
+    }
   }
 
   Future<Response> post(String path, {dynamic data}) async {
     String url = smartpokeBaseOptions.baseUrl + path;
-    return _dio.post(url, data: data);
+    try {
+      return await _dio.post(url, data: data);
+    } catch (e, stackTrace) {
+      logger.e("POST request failed",error: e, stackTrace: stackTrace);
+      rethrow;
+    }
   }
 
   Future<Response> delete(String path, {dynamic data, Map<String, dynamic>? queryParams}) async {
     String url = smartpokeBaseOptions.baseUrl + path;
-    return _dio.delete(url, data: data, queryParameters: queryParams);
+    try {
+      return await _dio.delete(url, data: data, queryParameters: queryParams);
+    } catch (e, stackTrace) {
+      logger.e("DELETE request failed",error: e, stackTrace: stackTrace);
+      rethrow;
+    }
   }
 
   Future<Response> put(String path, {dynamic data, Map<String, dynamic>? queryParams}) async {
     String url = smartpokeBaseOptions.baseUrl + path;
-    return _dio.put(url, data: data, queryParameters: queryParams);
+    try {
+      return await _dio.put(url, data: data, queryParameters: queryParams);
+    } catch (e, stackTrace) {
+      logger.e("PUT request failed", error: e, stackTrace: stackTrace);
+      rethrow;
+    }
   }
 }
