@@ -1,9 +1,14 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meal_ai/features/main_page/screens/main_page.dart';
 import 'package:meal_ai/features/user/screens/init_screen.dart';
+import 'package:meal_ai/features/user/service/local_user_service.dart';
 
-final appRouter = GoRouter(
-    initialLocation: '/session',
+final appRouter = Provider<GoRouter>((ref) {
+  final user = ref.watch(getAuthenticatedUserProvider).asData?.value;
+
+  return GoRouter(
+    initialLocation: user != null ? '/home' : '/session',
     routes: [
       GoRoute(
         path: '/home',
@@ -15,5 +20,6 @@ final appRouter = GoRouter(
         name: InitialPage.name,
         builder: (context, state) => const InitialPage(),
       ),
-
-    ]);
+    ],
+  );
+});

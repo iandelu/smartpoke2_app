@@ -16,22 +16,24 @@ void main() async {
   await Hive.openBox('grocery_list');
   await Hive.openBox('recipe_from_url');
   await Hive.openBox('meal_plan_recipe');
-  await Hive.openBox('my_user_info');
+  await Hive.openBox('authBox');
 
-  // await Hive.deleteBoxFromDisk('recipe_from_url');
-  // await Hive.deleteBoxFromDisk('meal_plan_recipe');
-  // await Hive.deleteBoxFromDisk('grocery_list');
+  //await Hive.deleteBoxFromDisk('recipe_from_url');
+  //await Hive.deleteBoxFromDisk('meal_plan_recipe');
+  //await Hive.deleteBoxFromDisk('grocery_list');
+  //await Hive.deleteBoxFromDisk('authBox');
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(appRouter);
     return ProviderScope(
       child: MaterialApp.router(
-        routerConfig: appRouter,
+        routerConfig: router,
         debugShowCheckedModeBanner: false,
         title: 'Savor',
         theme: AppTheme.getTheme(),
