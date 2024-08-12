@@ -4,6 +4,9 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_ai/features/user/models/response/auth_response.dart';
 import 'package:meal_ai/features/user/models/user/user_models.dart';
+import 'package:meal_ai/features/user/service/user_service.dart';
+
+import 'auth_service.dart';
 
 const IS_AUTHENTICATED_KEY = 'IS_AUTHENTICATED_KEY';
 const AUTHENTICATED_USER_EMAIL_KEY = 'AUTHENTICATED_USER_EMAIL_KEY';
@@ -19,75 +22,61 @@ final hiveBoxProvider = FutureProvider<Box>((ref) async {
   return await hive.openBox('authBox');
 });
 
-final setAuthStateProvider = StateProvider<AuthResponse?>(
-      (ref) => null,
-);
+class AuthState extends StateNotifier<AuthResponse?> {
+  final Box _box;
+  final SmartPokeUserDatasource _apiClient;
 
-final setIsAuthenticatedProvider = StateProvider.family<void, bool>(
-      (ref, isAuth) async {
-    final box = await ref.watch(hiveBoxProvider.future);
-    ref.watch(setAuthStateProvider);
-    box.put(
-      IS_AUTHENTICATED_KEY,
-      isAuth,
-    );
-  },
-);
+  AuthState(this._box, this._apiClient) : super(null) {
+    _loadFromHive();
+  }
 
-final setAuthenticatedUserProvider = StateProvider.family<void, UserModel>(
-      (ref, userdata) async {
-    final box = await ref.watch(hiveBoxProvider.future);
-    ref.watch(setAuthStateProvider);
-    box.put(
-      AUTHENTICATED_USER_EMAIL_KEY,
-      json.encode(userdata),
-    );
-  },
-);
+  bool get isAuthenticated => _box.get(IS_AUTHENTICATED_KEY, defaultValue: false);
+  String? get jwt => _box.get(JWT_KEY);
+  UserModel? get userModel => _box.get(AUTHENTICATED_USER_EMAIL_KEY) != null
+      ? UserModel.fromJson(json.decode(_box.get(AUTHENTICATED_USER_EMAIL_KEY)))
+      : null;
 
-final setJwtProvider = StateProvider.family<void, String>(
-      (ref, token) async {
-    final box = await ref.watch(hiveBoxProvider.future);
-    box.put(JWT_KEY, token);
-  },
-);
+  Future<void> setAuthenticated(bool isAuth) async {
+    await _box.put(IS_AUTHENTICATED_KEY, isAuth);
+    state = state?.copyWith(isAuthenticated: isAuth);
+  }
 
-final getIsAuthenticatedProvider = FutureProvider<bool>(
-      (ref) async {
-    final box = await ref.watch(hiveBoxProvider.future);
-    ref.watch(setAuthStateProvider);
-    return box.get(IS_AUTHENTICATED_KEY, defaultValue: false);
-  },
-);
+  Future<void> setUser(UserModel user) async {
+    await _box.put(AUTHENTICATED_USER_EMAIL_KEY, json.encode(user));
+    await _apiClient.updateUser(user.id, user);
+    state = state?.copyWith(user: user);
+  }
 
-final getAuthenticatedUserProvider = FutureProvider<UserModel>(
-      (ref) async {
-    final box = await ref.watch(hiveBoxProvider.future);
-    ref.watch(setAuthStateProvider);
-    dynamic user =
-    json.decode(box.get(AUTHENTICATED_USER_EMAIL_KEY) ?? "");
-    return UserModel.fromJson(user);
-  },
-);
+  Future<void> setJwt(String token) async {
+    await _box.put(JWT_KEY, token);
 
-final getJwtProvider = FutureProvider<String?>(
-      (ref) async {
-    final box = await ref.watch(hiveBoxProvider.future);
-    return box.get(JWT_KEY);
-  },
-);
+    state = state?.copyWith(token: token);
+  }
 
-final deleteJwtProvider = StateProvider<void>(
-      (ref) async {
-    final box = await ref.watch(hiveBoxProvider.future);
-    await box.delete(JWT_KEY);
-  },
-);
+  Future<void> _loadFromHive() async {
+    final isAuth = _box.get(IS_AUTHENTICATED_KEY, defaultValue: false);
+    final token = _box.get(JWT_KEY);
+    final user = _box.get(AUTHENTICATED_USER_EMAIL_KEY) != null
+        ? UserModel.fromJson(json.decode(_box.get(AUTHENTICATED_USER_EMAIL_KEY)))
+        : null;
+    state = AuthResponse(isAuthenticated: isAuth, token: token, user: user);
+  }
 
-final resetStorage = StateProvider<dynamic>(
-      (ref) async {
-    final box = await ref.watch(hiveBoxProvider.future);
-    final isCleared = await box.clear();
-    return isCleared;
-  },
-);
+  Future<bool> logout() async {
+    try {
+      await _box.delete(JWT_KEY);
+      await _box.delete(AUTHENTICATED_USER_EMAIL_KEY);
+      await _box.put(IS_AUTHENTICATED_KEY, false);
+      state = const AuthResponse(isAuthenticated: false, token: null, user: null);
+      return true;
+    } on Exception catch (e) {
+      return false;
+    }
+  }
+}
+
+final authStateProvider = StateNotifierProvider<AuthState, AuthResponse?>((ref) {
+  final box = ref.watch(hiveBoxProvider).asData!.value;
+  final apiClient = ref.watch(userRepositoryProvider);
+  return AuthState(box, apiClient);
+});

@@ -3,27 +3,29 @@ import 'package:go_router/go_router.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
-import 'package:meal_ai/features/settings_page/widgets/settings_list_tile_widgets.dart';
+import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/features/user/models/user/user_models.dart';
 import 'package:meal_ai/features/user/service/local_user_service.dart';
 
-import 'edit_profile_page.dart';
 
 class SettingsAccountPage extends ConsumerWidget {
   const SettingsAccountPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authenticatedUser = ref.watch(getAuthenticatedUserProvider);
+    final authenticatedUser = ref.watch(authStateProvider);
 
     return Scaffold(
-        backgroundColor: Colors.grey.shade200,
-        body: SafeArea(child: authenticatedUser.when(
-          data: (user) => SettingsAccountPageBody(authenticatedUser: user),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (err, stack) => Center(child: Text('Error: $err')),
-        )));
+      backgroundColor: Colors.grey.shade200,
+      body: SafeArea(
+        child: authenticatedUser == null
+            ? const Center(child: CircularProgressIndicator())
+            : authenticatedUser.user == null
+            ? Center(child: Text('Error: User not found'))
+            : SettingsAccountPageBody(authenticatedUser: authenticatedUser.user!),
+      ),
+    );
   }
 }
 
@@ -84,7 +86,7 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
       id: widget.authenticatedUser.id,
     );
 
-    ref.read(setAuthenticatedUserProvider(updatedUser));
+    ref.read(authStateProvider.notifier).setUser(updatedUser);
   }
 
   @override
@@ -134,10 +136,11 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                     child: CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.grey.shade200,
-                      backgroundImage: widget.authenticatedUser.picture != null
-                          ? NetworkImage(widget.authenticatedUser.picture!)
-                          : null,
-                      child: widget.authenticatedUser.picture == null
+                      backgroundImage: widget.authenticatedUser.picture != null || widget.authenticatedUser.picture!.isEmpty
+                          ? null
+                          : NetworkImage(widget.authenticatedUser.picture!),
+                      child: widget.authenticatedUser.picture == null ||
+                              widget.authenticatedUser.picture!.isEmpty
                           ? Icon(Icons.person, size: 50, color: Colors.grey)
                           : null,
                     ),
@@ -177,8 +180,8 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('Are you sure?'),
-                            content: Text('Do you really want to log out?'),
+                            title: const Text('Are you sure?'),
+                            content: const Text('Do you really want to log out?'),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
@@ -188,7 +191,7 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                               ),
                               TextButton(
                                 onPressed: () async{
-                                  final isCleared = await ref.read(resetStorage.notifier).state;
+                                  final isCleared = await ref.read(authStateProvider.notifier).logout();
 
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -201,14 +204,14 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                                   );
                                   context.go('/session');
                                 },
-                                child: Text('Logout'),
+                                child: const Text('Logout'),
                               ),
                             ],
                           );
                         },
                       );
                     },
-                    child: Text('Logout'),
+                    child: const Text('Logout'),
                   )
                 ],
               ),

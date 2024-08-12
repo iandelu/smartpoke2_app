@@ -5,7 +5,7 @@ import 'package:meal_ai/features/user/screens/init_screen.dart';
 import 'package:meal_ai/features/user/service/local_user_service.dart';
 
 final appRouter = Provider<GoRouter>((ref) {
-  final user = ref.watch(getAuthenticatedUserProvider).asData?.value;
+  final user = ref.watch(authStateProvider.notifier).state?.user;
 
   return GoRouter(
     initialLocation: user != null ? '/home' : '/session',
