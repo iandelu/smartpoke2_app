@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:contraflutterkit/brutalism_theme/widgets/vertical_list_page.dart';
-import 'package:contraflutterkit/model/item_basic_info.dart';
-import 'package:meal_ai/features/recipes/mapper/basic_info_mapper.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/search/search_recipe_provider.dart';
 import 'package:meal_ai/features/recipes/widgets/filter_dialog.dart';
