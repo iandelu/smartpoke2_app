@@ -15,7 +15,6 @@ class SettingsAccountPage extends ConsumerWidget {
     final authenticatedUser = ref.watch(authStateProvider.notifier);
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
       body: SafeArea(
         child: authenticatedUser == null
             ? const Center(child: CircularProgressIndicator())
@@ -33,8 +32,7 @@ class SettingsAccountPageBody extends StatefulWidget {
   const SettingsAccountPageBody({super.key, required this.authenticatedUser});
 
   @override
-  State<SettingsAccountPageBody> createState() =>
-      _SettingsAccountPageBodyState();
+  State<SettingsAccountPageBody> createState() => _SettingsAccountPageBodyState();
 }
 
 class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
@@ -45,21 +43,19 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
   late TextEditingController _roleController;
   late bool _verify;
   late bool _premium;
+  late bool _isEditing;
 
   @override
   void initState() {
     super.initState();
-    _firstNameController =
-        TextEditingController(text: widget.authenticatedUser.firstName);
-    _lastNameController =
-        TextEditingController(text: widget.authenticatedUser.lastName);
-    _pictureController =
-        TextEditingController(text: widget.authenticatedUser.picture);
-    _emailController =
-        TextEditingController(text: widget.authenticatedUser.email);
+    _firstNameController = TextEditingController(text: widget.authenticatedUser.firstName);
+    _lastNameController = TextEditingController(text: widget.authenticatedUser.lastName);
+    _pictureController = TextEditingController(text: widget.authenticatedUser.picture);
+    _emailController = TextEditingController(text: widget.authenticatedUser.email);
     _roleController = TextEditingController(text: widget.authenticatedUser.role);
     _verify = widget.authenticatedUser.verify;
     _premium = widget.authenticatedUser.premium;
+    _isEditing = false;
   }
 
   @override
@@ -87,74 +83,76 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
     ref.read(authStateProvider.notifier).setUser(updatedUser);
   }
 
+  void _toggleEditing() {
+    setState(() {
+      _isEditing = !_isEditing;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
         return Scaffold(
-          backgroundColor: Colors.grey.shade200,
           appBar: AppBar(
-            backgroundColor: Colors.white,
             elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: context.primaryColor),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () => Navigator.pop(context),
             ),
             title: Text(
-              'Settings',
-              style: AppTextStyles().mThick.copyWith(color: context.primaryColor),
+              'My Profile',
+              style: AppTextStyles().mThick.copyWith(color: Colors.black),
             ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  _updateUser(ref);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Profile updated successfully!'),
-                    ),
-                  );
-                },
-                child: Text(
-                  'Save',
-                  style: AppTextStyles().mThick.copyWith(color: context.primaryColor),
-                ),
-              ),
-            ],
           ),
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: PaddingSizes.mdl,
-                vertical: PaddingSizes.mdl,
-              ),
+              padding: const EdgeInsets.all(PaddingSizes.mdl),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.grey.shade200,
-                      backgroundImage: widget.authenticatedUser.picture != null && widget.authenticatedUser.picture!.isNotEmpty
-                          ? NetworkImage(widget.authenticatedUser.picture!)
-                          : null,
-                      child: widget.authenticatedUser.picture == null ||
-                          widget.authenticatedUser.picture!.isEmpty
-                          ? Icon(Icons.person, size: 50, color: Colors.grey)
-                          : null,
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.grey.shade300,
+                          backgroundImage: widget.authenticatedUser.picture != null &&
+                              widget.authenticatedUser.picture!.isNotEmpty
+                              ? NetworkImage(widget.authenticatedUser.picture!)
+                              : null,
+                          child: widget.authenticatedUser.picture == null ||
+                              widget.authenticatedUser.picture!.isEmpty
+                              ? Icon(Icons.person, size: 50, color: Colors.grey)
+                              : null,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: context.primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: IconButton(
+                              icon: Icon(Icons.camera_alt, color: Colors.white),
+                              onPressed: () {
+                                // Código para cambiar la foto
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: PaddingSizes.mdl),
-                  _buildEditableField(
-                      context, 'First Name', _firstNameController, ref),
+                  _buildEditableField(context, 'First Name', _firstNameController, ref),
                   const SizedBox(height: PaddingSizes.sm),
-                  _buildEditableField(
-                      context, 'Last Name', _lastNameController, ref),
+                  _buildEditableField(context, 'Last Name', _lastNameController, ref),
                   const SizedBox(height: PaddingSizes.sm),
-                  _buildEditableField(
-                      context, 'Picture URL', _pictureController, ref),
+                  _buildEditableField(context, 'Picture URL', _pictureController, ref),
                   const SizedBox(height: PaddingSizes.sm),
-                  _buildEditableField(context, 'Email', _emailController, ref,
-                      enabled: false), // Email no editable
+                  _buildEditableField(context, 'Email', _emailController, ref, enabled: false),
                   const SizedBox(height: PaddingSizes.sm),
                   _buildEditableField(context, 'Role', _roleController, ref),
                   const SizedBox(height: PaddingSizes.sm),
@@ -170,6 +168,18 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                     });
                   }),
                   const SizedBox(height: PaddingSizes.xxl),
+                  ElevatedButton(
+                    onPressed: () {
+                      _updateUser(ref);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Profile updated successfully!'),
+                        ),
+                      );
+                    },
+                    child: const Text('Save'),
+                  ),
+                  const SizedBox(height: PaddingSizes.sm),
                   ElevatedButton(
                     onPressed: () {
                       showDialog(
@@ -208,7 +218,8 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                       );
                     },
                     child: const Text('Logout'),
-                  )
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  ),
                 ],
               ),
             ),
@@ -218,28 +229,37 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
     );
   }
 
-  Widget _buildEditableField(BuildContext context, String label,
-      TextEditingController controller, WidgetRef ref,
-      {bool enabled = true}) {
+  Widget _buildEditableField(BuildContext context, String label, TextEditingController controller, WidgetRef ref, {bool enabled = true}) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black54, width: 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(PaddingSizes.sm),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.symmetric(vertical: PaddingSizes.sm, horizontal: PaddingSizes.mdl),
+        child: Row(
           children: [
-            Text(label, style: AppTextStyles().sRegular.copyWith(color: Colors.black54)),
-            const SizedBox(height: PaddingSizes.sm),
-            TextField(
-              controller: controller,
-              enabled: enabled,
-              style: AppTextStyles().mRegular,
-              decoration: InputDecoration(
-                border: InputBorder.none,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(label, style: AppTextStyles().sRegular.copyWith(color: Colors.black54)),
+                  const SizedBox(height: PaddingSizes.xs),
+                  TextField(
+                    controller: controller,
+                    enabled: _isEditing && enabled,
+                    style: AppTextStyles().mRegular.copyWith(color: Colors.black),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ],
               ),
+            ),
+            IconButton(
+              icon: Icon(Icons.edit, color: Colors.black54),
+              onPressed: _toggleEditing,
             ),
           ],
         ),
@@ -247,12 +267,12 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
     );
   }
 
-  Widget _buildSwitchTile(
-      BuildContext context, String label, bool value, ValueChanged<bool> onChanged) {
+  Widget _buildSwitchTile(BuildContext context, String label, bool value, ValueChanged<bool> onChanged) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black54, width: 1),
       ),
       child: SwitchListTile(
         title: Text(
