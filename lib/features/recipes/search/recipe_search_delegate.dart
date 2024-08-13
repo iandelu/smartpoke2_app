@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
@@ -8,34 +7,31 @@ import 'package:meal_ai/features/recipes/widgets/filter_dialog.dart';
 
 class RecipeSearchDelegate extends SearchDelegate {
   final WidgetRef ref;
-
   List<RecipeModel> initialRecipes;
-
   StreamController<List<RecipeModel>> debouncedRecipes = StreamController.broadcast();
   StreamController<bool> isLoadingStream = StreamController.broadcast();
-  RecipeSearchDelegate(this.ref,{required this.initialRecipes}) :super(
+  Timer? _debounceTimer;
+
+  RecipeSearchDelegate(this.ref, {required this.initialRecipes}) : super(
     searchFieldLabel: 'Search recipes',
   );
 
-  Timer? _debounceTimer;
-
   void clearStreams() {
     debouncedRecipes.close();
+    isLoadingStream.close();
   }
 
-  void _onQueryChanged( String query ) {
+  void _onQueryChanged(String query) {
     isLoadingStream.add(true);
 
-    if ( _debounceTimer?.isActive ?? false ) _debounceTimer!.cancel();
+    if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
 
-    _debounceTimer = Timer(const Duration( milliseconds: 900 ), () async {
-      final recipes = await ref.watch(searchedRecipesNotifier.notifier).searchRecipes(query);
+    _debounceTimer = Timer(const Duration(milliseconds: 900), () async {
+      final recipes = await ref.read(searchedRecipesNotifier.notifier).searchRecipes(query);
       initialRecipes = recipes;
       debouncedRecipes.add(recipes);
       isLoadingStream.add(false);
-
     });
-
   }
 
   @override
@@ -51,7 +47,7 @@ class RecipeSearchDelegate extends SearchDelegate {
       IconButton(
         icon: const Icon(Icons.filter_list),
         onPressed: () async {
-          final filters = await showDialog<List<String>>(
+          final filters = await showDialog<Map<String, dynamic>>(
             context: context,
             builder: (context) {
               return FilterDialog();
@@ -59,7 +55,12 @@ class RecipeSearchDelegate extends SearchDelegate {
           );
 
           if (filters != null) {
-            ref.read(searchedRecipesNotifier.notifier).setFilters(filters, null, null, null);
+            ref.read(searchedRecipesNotifier.notifier).setFilters(
+              filters['categories'],
+              filters['rating'],
+              filters['time'],
+              filters['difficulty'],
+            );
             ref.read(searchedRecipesNotifier.notifier).searchRecipes(query);
           }
         },
@@ -80,13 +81,14 @@ class RecipeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    _onQueryChanged(query);
     return buildResultsAndSuggestions();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // Podrías mostrar sugerencias recientes aquí
-    return Container();
+    _onQueryChanged(query);
+    return buildResultsAndSuggestions();
   }
 
   Widget buildResultsAndSuggestions() {
@@ -94,14 +96,14 @@ class RecipeSearchDelegate extends SearchDelegate {
       initialData: initialRecipes,
       stream: debouncedRecipes.stream,
       builder: (context, snapshot) {
-
         final List<RecipeModel> recipes = snapshot.data ?? [];
         return ListView.builder(
           itemCount: recipes.length,
           itemBuilder: (context, index) {
             final recipe = recipes[index];
-            return Text(recipe.name);
-
+            return ListTile(
+              title: Text(recipe.name),
+            );
           },
         );
       },
