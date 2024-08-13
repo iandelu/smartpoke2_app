@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:meal_ai/config/connections/smartpoke_client.dart';
 import 'package:meal_ai/core/utils/helper_methods.dart';
 import 'package:meal_ai/core/utils/logger.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/services/local_services/smarpoke_hive_service.dart';
 
-class SmartpokeRecipeApiService {
+class RecipeApiService {
   final SmartPokeRecipeHiveService hiveService = SmartPokeRecipeHiveService();
 
   Future<RecipeModel> getRecipeFromUrl({required String url}) async {
@@ -34,5 +35,28 @@ class SmartpokeRecipeApiService {
       throw Exception('Something went wrong');
     }
 
+  }
+  Future<List<RecipeModel>> fetchRecipes(String query, {required List<String> category, int? rating, int? time, String? difficulty}) async {
+
+    final response = await smartPokeClient.get('recipes',
+                      queryParams: {
+                      'name': query,
+                      'category': category,
+                      'rating': rating,
+                      'time': time,
+                      'difficulty': difficulty
+                    });
+
+    if (response.statusCode == 200) {
+      List<dynamic> recipesJson = response.data['content'];
+      return recipesJson
+          .map(
+              (json) => RecipeModel.fromJson(json))
+          .toList();
+
+    } else {
+      logger.d(response.statusCode);
+      throw Exception('Something went wrong');
+    }
   }
 }

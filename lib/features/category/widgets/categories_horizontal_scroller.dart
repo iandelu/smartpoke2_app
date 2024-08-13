@@ -38,7 +38,6 @@ class CategoriesHorizontalScroller extends StatelessWidget{
         clipBehavior: Clip.none,
         itemCount: categories.length,
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 8),
         separatorBuilder: (context, index) => const SizedBox(width: 10),
         itemBuilder: (context, index) => CategoryItem(categories[index]),
       ),

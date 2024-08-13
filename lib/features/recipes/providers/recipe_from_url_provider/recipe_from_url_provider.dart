@@ -1,6 +1,6 @@
 import 'package:meal_ai/core/utils/logger.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
-import 'package:meal_ai/features/recipes/services/api_services/smartpoke_api_service.dart';
+import 'package:meal_ai/features/recipes/services/api_services/recipe_service.dart';
 import 'package:meal_ai/features/recipes/services/local_services/smarpoke_hive_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'recipe_from_url_provider.g.dart';
@@ -8,7 +8,7 @@ part 'recipe_from_url_provider.g.dart';
 @riverpod
 class RecipeFromUrl extends _$RecipeFromUrl {
   final SmartPokeRecipeHiveService _hiveService = SmartPokeRecipeHiveService();
-  final SmartpokeRecipeApiService _apiService = SmartpokeRecipeApiService();
+  final RecipeApiService _apiService = RecipeApiService();
 
   @override
   Future<List<RecipeModel>> build() async {

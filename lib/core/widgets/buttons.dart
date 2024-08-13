@@ -208,5 +208,60 @@ class IconAndTextWidget extends StatelessWidget {
   }
 }
 
+class CustomIconButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final IconData icon;
+  final Color iconColor;
+  final double iconSize;
+  final double borderRadius;
+  final Color backgroundColor;
+  final Color borderColor;
+  final double borderWidth;
+  final double buttonSize; // Nueva propiedad para el tamaño del botón
+
+  const CustomIconButton({
+    Key? key,
+    required this.onPressed,
+    required this.icon,
+    this.iconColor = Colors.black,
+    this.iconSize = 18.0,
+    this.borderRadius = 12.0,
+    this.backgroundColor = Colors.white,
+    this.borderColor = Colors.black,
+    this.borderWidth = 2.0,
+    this.buttonSize = 35.0, // Tamaño predeterminado
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: buttonSize,
+      height: buttonSize,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(borderRadius),
+        boxShadow: const [
+          shadowSmallBrut,
+        ],
+        border: Border.all(
+          color: borderColor,
+          width: borderWidth,
+        ),
+      ),
+      child: IconButton(
+        icon: Icon(
+          icon,
+          color: iconColor,
+          size: iconSize,
+        ),
+        onPressed: onPressed,
+        padding: EdgeInsets.zero, // Sin padding para mantener el botón compacto
+        constraints: BoxConstraints(), // Sin restricciones para mantener el tamaño del contenedor
+      ),
+    );
+  }
+}
+
+
 
 
