@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/config/connections/smartpoke_client.dart';
 import 'package:meal_ai/features/user/models/user/user_models.dart';
 
-class SmartPokeUserDatasource {
-  final String path = '/user';
+class UserService {
+  final String path = 'user';
 
   Future<UserModel> getMyUser() async {
     final response = await smartPokeClient.get('$path/me');
@@ -18,7 +18,8 @@ class SmartPokeUserDatasource {
 
   Future<UserModel> updateUser(int id, UserModel user) async {
     final response = await smartPokeClient.put(
-      '$path/$id',
+      path,
+      authenticated: true,
       data: json.encode(user.toJson()),
     );
 
@@ -39,4 +40,4 @@ class SmartPokeUserDatasource {
   }
 }
 
-final userRepositoryProvider = Provider<SmartPokeUserDatasource>((ref) => SmartPokeUserDatasource());
+final userRepositoryProvider = Provider<UserService>((ref) => UserService());

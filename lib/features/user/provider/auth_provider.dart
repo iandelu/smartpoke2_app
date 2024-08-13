@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:meal_ai/features/user/models/auth_request.dart';
 import 'package:meal_ai/features/user/models/response/auth_response.dart';
 import 'package:meal_ai/features/user/service/auth_service.dart';
-import 'package:meal_ai/features/user/service/local_user_service.dart';
+import 'package:meal_ai/features/user/service/auth_state_user_service.dart';
 
 
 class UserController extends StateNotifier<AsyncValue<dynamic>> {

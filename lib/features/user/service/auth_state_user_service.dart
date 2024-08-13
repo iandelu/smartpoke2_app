@@ -24,9 +24,9 @@ final hiveBoxProvider = FutureProvider<Box>((ref) async {
 
 class AuthState extends StateNotifier<AuthResponse?> {
   final Box _box;
-  final SmartPokeUserDatasource _apiClient;
+  final UserService _userApiService;
 
-  AuthState(this._box, this._apiClient) : super(null) {
+  AuthState(this._box, this._userApiService) : super(null) {
     _loadFromHive();
   }
 
@@ -43,7 +43,7 @@ class AuthState extends StateNotifier<AuthResponse?> {
 
   Future<void> setUser(UserModel user) async {
     await _box.put(AUTHENTICATED_USER_EMAIL_KEY, json.encode(user));
-    await _apiClient.updateUser(user.id, user);
+    await _userApiService.updateUser(user.id, user);
     state = state?.copyWith(user: user);
   }
 

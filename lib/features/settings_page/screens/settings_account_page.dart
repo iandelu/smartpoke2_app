@@ -3,27 +3,25 @@ import 'package:go_router/go_router.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
-import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/features/user/models/user/user_models.dart';
-import 'package:meal_ai/features/user/service/local_user_service.dart';
-
+import 'package:meal_ai/features/user/service/auth_state_user_service.dart';
 
 class SettingsAccountPage extends ConsumerWidget {
   const SettingsAccountPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authenticatedUser = ref.watch(authStateProvider);
+    final authenticatedUser = ref.watch(authStateProvider.notifier);
 
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       body: SafeArea(
         child: authenticatedUser == null
             ? const Center(child: CircularProgressIndicator())
-            : authenticatedUser.user == null
-            ? Center(child: Text('Error: User not found'))
-            : SettingsAccountPageBody(authenticatedUser: authenticatedUser.user!),
+            : authenticatedUser.userModel == null
+            ? const Center(child: Text('Error: User not found'))
+            : SettingsAccountPageBody(authenticatedUser: authenticatedUser.userModel!),
       ),
     );
   }
@@ -136,11 +134,11 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                     child: CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.grey.shade200,
-                      backgroundImage: widget.authenticatedUser.picture != null || widget.authenticatedUser.picture!.isEmpty
-                          ? null
-                          : NetworkImage(widget.authenticatedUser.picture!),
+                      backgroundImage: widget.authenticatedUser.picture != null && widget.authenticatedUser.picture!.isNotEmpty
+                          ? NetworkImage(widget.authenticatedUser.picture!)
+                          : null,
                       child: widget.authenticatedUser.picture == null ||
-                              widget.authenticatedUser.picture!.isEmpty
+                          widget.authenticatedUser.picture!.isEmpty
                           ? Icon(Icons.person, size: 50, color: Colors.grey)
                           : null,
                     ),
@@ -163,14 +161,12 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                   _buildSwitchTile(context, 'Verify', _verify, (value) {
                     setState(() {
                       _verify = value;
-                      _updateUser(ref);
                     });
                   }),
                   const SizedBox(height: PaddingSizes.sm),
                   _buildSwitchTile(context, 'Premium', _premium, (value) {
                     setState(() {
                       _premium = value;
-                      _updateUser(ref);
                     });
                   }),
                   const SizedBox(height: PaddingSizes.xxl),
@@ -244,7 +240,6 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
               decoration: InputDecoration(
                 border: InputBorder.none,
               ),
-              onChanged: (_) => _updateUser(ref),
             ),
           ],
         ),
@@ -271,4 +266,3 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
     );
   }
 }
-
