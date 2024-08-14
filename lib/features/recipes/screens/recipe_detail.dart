@@ -9,32 +9,34 @@ import 'package:meal_ai/core/utils/human_formats.dart';
 import 'package:meal_ai/core/widgets/buttons.dart';
 import 'package:meal_ai/core/widgets/expandable_text.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
 import 'package:meal_ai/features/recipes/widgets/categories_list_widget.dart';
 import 'package:meal_ai/features/recipes/widgets/ingredients_widget.dart';
 import 'package:meal_ai/features/recipes/widgets/steps_ingredients.dart';
 import 'package:meal_ai/features/recipes/widgets/yields_counter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class RecipeDetail extends ConsumerStatefulWidget {
 
-  final RecipeModel recipe;
+final favoriteProvider = StateProvider<bool>((ref) => false);
+
+class RecipeDetail extends ConsumerStatefulWidget {
+  final RecipeModel? recipe;
+  final int? id;
 
   const RecipeDetail({
     super.key,
-    required this.recipe,
+    this.recipe,
+    this.id,
   });
 
   static const String name = 'recipe-detail-screen';
-
-
 
   @override
   RecipeDetailState createState() => RecipeDetailState();
 }
 
 class RecipeDetailState extends ConsumerState<RecipeDetail> {
-  late RecipeModel? recipe;
-  late var favorite = false;
+  RecipeModel? recipe;
   double _factor = 1.0;
   late Color color = Theme.of(context).colorScheme.secondary;
   late Color colorSecondary = Theme.of(context).colorScheme.primary;
@@ -42,11 +44,23 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
   @override
   void initState() {
     super.initState();
+    _loadRecipe();
+  }
+
+  Future<void> _loadRecipe() async {
+    if (widget.recipe == null && widget.id != null) {
+      recipe = await ref
+          .read(recipeFromUrlProvider.notifier)
+          .getRecipeFromId(id: widget.id!);
+      setState(() {});
+    } else {
+      recipe = widget.recipe;
+    }
   }
 
   void _updateFactor(int peopleCount) {
     setState(() {
-      _factor = peopleCount/recipe!.yields;
+      _factor = peopleCount / (recipe?.yields ?? 1);
     });
   }
 
@@ -58,12 +72,11 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              //If image is null and also url is null, then use default image
               image: recipe?.imageFile != null
                   ? MemoryImage(recipe!.imageFile!)
                   : recipe?.pictureUrl != null
                   ? NetworkImage(recipe!.pictureUrl)
-                  : AssetImage('images/savor.png') as ImageProvider,
+                  : AssetImage('images/apple.png') as ImageProvider,
               fit: BoxFit.cover,
             ),
           ),
@@ -73,7 +86,7 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
         padding: const EdgeInsets.all(6.0),
         child: IconButton(
           icon: const Icon(
-           Icons.close,
+            Icons.close,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -84,17 +97,18 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
       actions: [
         Padding(
           padding: const EdgeInsets.all(6.0),
-          child: IconButton(
-            icon: Icon(
-              favorite ? Icons.favorite : Icons.favorite_border,
-              color: favorite ? Colors.red : Colors.black,
-            ),
-            onPressed: () {
-              setState(() {
-                favorite = !favorite; // Alterna el estado de 'favorite' al presionar el botón
-              });
-            },
-          ),
+          child: Consumer(builder: (context, ref, _) {
+            final favorite = ref.watch(favoriteProvider);
+            return IconButton(
+              icon: Icon(
+                favorite ? Icons.favorite : Icons.favorite_border,
+                color: favorite ? Colors.red : Colors.black,
+              ),
+              onPressed: () {
+                ref.read(favoriteProvider.notifier).state = !favorite;
+              },
+            );
+          }),
         )
       ],
     );
@@ -109,11 +123,11 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
           top: PaddingSizes.xs,
         ),
         decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(BorderRadiusSizes.md),
-              topLeft: Radius.circular(BorderRadiusSizes.md),
-            ),
-            color: Theme.of(context).colorScheme.surface
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(BorderRadiusSizes.md),
+            topLeft: Radius.circular(BorderRadiusSizes.md),
+          ),
+          color: Theme.of(context).colorScheme.surface,
         ),
         child: ListView(
           shrinkWrap: true,
@@ -172,7 +186,8 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
               "Description",
               style: headline5,
             ),
-            ExpandableTextWidget(text: recipe!.description,
+            ExpandableTextWidget(
+              text: recipe!.description,
               style: const TextStyle(
                   color: black2,
                   fontSize: 17,
@@ -182,7 +197,9 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
             const SizedBox(
               height: PaddingSizes.md,
             ),
-            CategoriesWidget(categories: recipe!.categories,),
+            CategoriesWidget(
+              categories: recipe!.categories,
+            ),
             const SizedBox(
               height: PaddingSizes.md,
             ),
@@ -190,7 +207,10 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
               "Ingredientes",
               style: headline5,
             ),
-            IngredientsPage(ingredients: recipe!.recipeProducts, factor: _factor),
+            IngredientsPage(
+              ingredients: recipe!.recipeProducts,
+              factor: _factor,
+            ),
             const SizedBox(
               height: PaddingSizes.md,
             ),
@@ -222,7 +242,7 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
         child: BrutButton(
           color: colorSecondary,
           text: 'Start cooking',
-          onPressed: () =>  {}/*context.push('/recipe-stories', extra: recipe!.recipeSteps)*/,
+          onPressed: () => {} /*context.push('/recipe-stories', extra: recipe!.recipeSteps)*/,
         ),
       ),
     );
@@ -230,8 +250,6 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
 
   @override
   Widget build(BuildContext context) {
-    recipe = widget.recipe;
-
     if (recipe == null) {
       return const Scaffold(
         body: Center(
@@ -252,13 +270,11 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
   }
 }
 
-
 _launchURL(String urlString) async {
   final Uri url = Uri.parse(urlString);
   if (!await launchUrl(url)) {
-    throw Exception('Could not launch $url');
+    print('Could not launch $urlString');
   }
-
 }
 
 Widget createIconText(IconData icon, String text, Color iconColor) {
@@ -271,7 +287,7 @@ Widget createIconText(IconData icon, String text, Color iconColor) {
       const SizedBox(width: PaddingSizes.xxxs),
       Text(
         text,
-        style: bodyText2
+        style: bodyText2,
       ),
     ],
   );

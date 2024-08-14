@@ -35,6 +35,12 @@ class RecipeFromUrl extends _$RecipeFromUrl {
     return recipe;
   }
 
+  Future<RecipeModel> getRecipeFromId({required int id}) async {
+    logger.d('Fetching recipe from API by id: $id');
+    final recipe = await _apiService.getRecipeFromId(id: id);
+    return recipe;
+  }
+
   Future<void> addRecipeFromUrlToHive({required RecipeModel recipe}) async {
     final addDate = DateTime.now().toString();
     final Map<String, dynamic> recipeJson = recipe.toJson();

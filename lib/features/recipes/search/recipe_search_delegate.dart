@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:meal_ai/config/router/app_router.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/search/search_recipe_provider.dart';
 import 'package:meal_ai/features/recipes/widgets/filter_dialog.dart';
@@ -114,9 +116,7 @@ class RecipeSearchDelegate extends SearchDelegate {
                       padding: const EdgeInsets.all(8.0),
                       child: RecipeCard(
                         recipe: recipe,
-                        onTap: () {
-                          close(context, recipe.id);
-                        },
+                        onTap: () => close(context, recipe.id),
                       ),
                     );
                   },

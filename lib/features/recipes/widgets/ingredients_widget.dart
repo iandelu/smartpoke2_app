@@ -55,17 +55,18 @@ class _IngredientsPageState extends State<IngredientsPage> with SingleTickerProv
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (ingredient.amount != 0)
+
                         Text(
-                          "${(ingredient.amount * widget.factor)} ",
+                          "${double.parse((ingredient.amount * widget.factor).toStringAsFixed(2))} ",
                           style: TextStyle(
                             fontSize: 15,
                             color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                      if (ingredient.unitOfMeasure != null)
+                      if (ingredient.unitOfMeasure != null && ingredient.unitOfMeasure!.name != null)
                         Text(
-                            "${ingredient.unitOfMeasure!.name}",
+                            "${ingredient.unitOfMeasure!.name} ",
                             style: TextStyle(
                               fontSize: 15,
                               color: Theme.of(context).colorScheme.secondary,

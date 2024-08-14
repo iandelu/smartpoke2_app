@@ -59,4 +59,15 @@ class RecipeApiService {
       throw Exception('Something went wrong');
     }
   }
+
+  Future<RecipeModel> getRecipeFromId({required int id}) async {
+    final response = await smartPokeClient.get('recipes/$id');
+
+    if (response.statusCode == 200) {
+      return RecipeModel.fromJson(response.data);
+    } else {
+      logger.d(response.statusCode);
+      throw Exception('Something went wrong');
+    }
+  }
 }

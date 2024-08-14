@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/widgets/buttons.dart';
@@ -50,7 +51,10 @@ class MyRecipesPageBody extends ConsumerWidget {
                               ref,
                               initialRecipes: searchedRecipes,
                             ),
-                          );
+                          ).then((id) {
+                            if ( id == null ) return;
+                            context.push('/recipe/$id');
+                            });
 
                         },
                       ),
