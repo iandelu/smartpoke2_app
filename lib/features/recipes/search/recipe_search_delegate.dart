@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/search/search_recipe_provider.dart';
 import 'package:meal_ai/features/recipes/widgets/filter_dialog.dart';
+import 'package:meal_ai/features/recipes/widgets/recipe_card.dart';
 
 class RecipeSearchDelegate extends SearchDelegate {
   final WidgetRef ref;
@@ -92,19 +93,41 @@ class RecipeSearchDelegate extends SearchDelegate {
   }
 
   Widget buildResultsAndSuggestions() {
-    return StreamBuilder(
-      initialData: initialRecipes,
-      stream: debouncedRecipes.stream,
-      builder: (context, snapshot) {
-        final List<RecipeModel> recipes = snapshot.data ?? [];
-        return ListView.builder(
-          itemCount: recipes.length,
-          itemBuilder: (context, index) {
-            final recipe = recipes[index];
-            return ListTile(
-              title: Text(recipe.name),
-            );
-          },
+    return StreamBuilder<bool>(
+      stream: isLoadingStream.stream,
+      initialData: false,
+      builder: (context, isLoadingSnapshot) {
+        final isLoading = isLoadingSnapshot.data ?? false;
+
+        return Stack(
+          children: [
+            StreamBuilder(
+              initialData: initialRecipes,
+              stream: debouncedRecipes.stream,
+              builder: (context, snapshot) {
+                final List<RecipeModel> recipes = snapshot.data ?? [];
+                return ListView.builder(
+                  itemCount: recipes.length,
+                  itemBuilder: (context, index) {
+                    final recipe = recipes[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RecipeCard(
+                        recipe: recipe,
+                        onTap: () {
+                          close(context, recipe.id);
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+            if (isLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+          ],
         );
       },
     );

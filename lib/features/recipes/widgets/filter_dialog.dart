@@ -18,33 +18,6 @@ class _FilterDialogState extends State<FilterDialog> {
       content: SingleChildScrollView(
         child: Column(
           children: [
-            // Category filter example
-            CheckboxListTile(
-              title: Text('Vegetarian'),
-              value: _selectedCategories.contains('Vegetarian'),
-              onChanged: (value) {
-                setState(() {
-                  if (value == true) {
-                    _selectedCategories.add('Vegetarian');
-                  } else {
-                    _selectedCategories.remove('Vegetarian');
-                  }
-                });
-              },
-            ),
-            CheckboxListTile(
-              title: Text('Vegan'),
-              value: _selectedCategories.contains('Vegan'),
-              onChanged: (value) {
-                setState(() {
-                  if (value == true) {
-                    _selectedCategories.add('Vegan');
-                  } else {
-                    _selectedCategories.remove('Vegan');
-                  }
-                });
-              },
-            ),
             // Rating filter
             DropdownButton<int>(
               hint: Text('Select Rating'),
