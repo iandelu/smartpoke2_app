@@ -5,8 +5,9 @@ import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 class MealPlanHiveService {
   final _recipeFromApi = Hive.box('meal_plan_recipe');
 
-  Future<void> addMealPlanRecipe(Map<String, dynamic> item) async {
-    await _recipeFromApi.add(item);
+  Future<void> addMealPlanRecipe(RecipeModel recipe, DateTime addTime) async {
+    final recipeWithTime = recipe.copyWith(addTime: addTime.toString());
+    await _recipeFromApi.add(recipeWithTime.toJson());
   }
 
   Future<void> removeMealPlanRecipe(dynamic key) async {
@@ -16,19 +17,8 @@ class MealPlanHiveService {
   List<RecipeModel> getMealPlanRecipes() {
     final data = _recipeFromApi.keys.map((key) {
       final item = _recipeFromApi.get(key);
-      return {
-        "key": key,
-        "url": item["url"],
-        "name": item["name"],
-        "totalTime": item["totalTime"],
-        "pictureUrl": item["pictureUrl"],
-        "recipeProducts": item["recipeProducts"],
-        "recipeSteps": item["recipeSteps"],
-        "nutrients": item["nutrients"],
-        "yields": item["yields"],
-        "addTime": item["addTime"],
-      };
+      return RecipeModel.fromJson(item);
     }).toList();
-    return data.map((e) => RecipeModel.fromJson(parser(e))).toList();
+    return data;
   }
 }

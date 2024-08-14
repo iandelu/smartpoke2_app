@@ -34,17 +34,7 @@ class MealPlan extends _$MealPlan {
   Future<void> addMealPlanRecipeToHive(
       {required RecipeModel recipe, required DateTime addTime}) async {
     logger.d('Adding meal plan recipe to Hive');
-    await _hiveService.addMealPlanRecipe({
-      "host": recipe.source,
-      "title": recipe.name,
-      "total_time": recipe.totalTime,
-      "image": recipe.pictureUrl,
-      "ingredients": recipe.recipeProducts.map((e) => e.text).toList(),
-      "instructions": recipe.recipeSteps.map((e) => e.description).toList(),
-      "nutrients": recipe.nutrients,
-      "servings": recipe.yields,
-      "addTime": addTime.toString(),
-    });
+    await _hiveService.addMealPlanRecipe(recipe, addTime);
     logger.d('Successfully added meal plan recipe to Hive');
     ref.invalidateSelf();
   }

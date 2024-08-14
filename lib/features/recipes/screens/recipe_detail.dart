@@ -12,6 +12,7 @@ import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
 import 'package:meal_ai/features/recipes/widgets/categories_list_widget.dart';
 import 'package:meal_ai/features/recipes/widgets/ingredients_widget.dart';
+import 'package:meal_ai/features/recipes/widgets/nutrition_list_widget.dart';
 import 'package:meal_ai/features/recipes/widgets/steps_ingredients.dart';
 import 'package:meal_ai/features/recipes/widgets/yields_counter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -219,6 +220,11 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
               style: headline5,
             ),
             StepsRecipeList(recipeSteps: recipe!.recipeSteps),
+            const Text(
+              "Nutritional Information",
+              style: headline5,
+            ),
+            NutritionListWidget(recipe: recipe!)
           ],
         ),
       ),

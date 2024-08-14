@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:meal_ai/config/router/app_router.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
 import 'package:meal_ai/features/recipes/search/search_recipe_provider.dart';
 import 'package:meal_ai/features/recipes/widgets/filter_dialog.dart';
 import 'package:meal_ai/features/recipes/widgets/recipe_card.dart';
@@ -114,10 +113,28 @@ class RecipeSearchDelegate extends SearchDelegate {
                     final recipe = recipes[index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RecipeCard(
-                        recipe: recipe,
-                        onTap: () => close(context, recipe.id),
-                      ),
+                      child:Dismissible(
+                        key: Key(recipe.id.toString()),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          color: Colors.green,
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: const Icon(
+                            Icons.save,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onDismissed: (direction) {
+                          ref.read(recipeFromUrlProvider.notifier).addRecipeFromUrlToHive(recipe: recipe);
+                          initialRecipes.remove(recipe);
+                        },
+                        child: RecipeCard(
+                          recipe: recipe,
+                          onTap: () => close(context, recipe.id),
+                        ),
+                      )
+
                     );
                   },
                 );

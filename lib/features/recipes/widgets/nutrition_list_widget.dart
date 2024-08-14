@@ -26,7 +26,7 @@ class NutritionListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: PaddingSizes.mdl),
+      padding: const EdgeInsets.all(4.0),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(

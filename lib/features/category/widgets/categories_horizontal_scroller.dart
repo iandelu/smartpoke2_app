@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
@@ -53,31 +54,36 @@ class CategoryItem extends StatelessWidget{
 
     @override
     Widget build(BuildContext context) {
-      return Container(
-        width: 45,
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(48),
-          border: Border.all(
-            color: Colors.black,
-            width: 1.5,
-          ),
-          boxShadow: const [
-           BoxShadow(
-            color: black1, // Opacidad del 100%
-            offset: Offset(4, 4), // Offset X, Y
-            blurRadius: 0, // No blur
-          ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '${category.emoji}',
-              style: AppTextStyles().emojiCategory,
+      return GestureDetector(
+        onTap: () {
+          context.push('/category/${category.name}');
+        },
+        child: Container(
+          width: 45,
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.circular(48),
+            border: Border.all(
+              color: Colors.black,
+              width: 1.5,
             ),
-          ],
+            boxShadow: const [
+             BoxShadow(
+              color: black1, // Opacidad del 100%
+              offset: Offset(4, 4), // Offset X, Y
+              blurRadius: 0, // No blur
+            ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${category.emoji}',
+                style: AppTextStyles().emojiCategory,
+              ),
+            ],
+          ),
         ),
       );
 

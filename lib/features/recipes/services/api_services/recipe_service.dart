@@ -70,4 +70,5 @@ class RecipeApiService {
       throw Exception('Something went wrong');
     }
   }
+
 }
