@@ -10,6 +10,7 @@ import 'package:meal_ai/core/widgets/app_textfield.dart';
 import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provider/grocery_list_provider.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/state_providers.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
 
 class GroceryListWidget extends StatefulHookConsumerWidget {
@@ -25,8 +26,8 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
   final List<RichTextController> _nameController = [];
   final List<RichTextController> _completeNameController = [];
   final List<bool> _isChecked = [];
-  final List<Map<String, dynamic>> groceries = [];
-  final List<Map<String, dynamic>> completeGroceries = [];
+  final List<GroceryModel> groceries = [];
+  final List<GroceryModel> completeGroceries = [];
   final _formKey = GlobalKey<FormState>();
   final List<GlobalKey<GroceryTextFieldState>> _groceryTextFieldKeys = [];
 
@@ -34,7 +35,7 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
   FocusNode? _currentFocusNode;
   final groceryStyle = {
     RegExp(r'\d+\.?\d*\/?\d*|½|⅓|⅔|¼|¾|⅕|⅖|⅗|⅘|⅙|⅚|⅐|⅛|⅜|⅝|⅞|⅑|⅒'):
-        const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)
+    const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)
   };
 
   @override
@@ -52,7 +53,7 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
 
       _completeNameController.add(RichTextController(
           patternMatchMap: groceryStyle,
-          text: grocery.groceryName,
+          text: grocery.groceryItem.text,  // Accediendo al texto del producto
           onMatch: (matches) {}));
     }
   }
@@ -66,7 +67,6 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
         onMatch: (matches) {},
       );
 
-      // Add the listener here
       controller.addListener(() {
         if (replaceFractions(controller)) {
           controller.removeListener(listenerFunction);
@@ -106,7 +106,6 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
       }
     }
     if (replaced) {
-      // Preserve the cursor position
       int cursorPos = controller.selection.start;
       controller.text = newText;
       if (cursorPos < newText.length) {
@@ -121,13 +120,10 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
 
   void listenerFunction() {
     if (_nameController.isNotEmpty) {
-      RichTextController controller = _nameController
-          .last; // Get the last controller, which is the current one
+      RichTextController controller = _nameController.last;
       if (replaceFractions(controller)) {
-        controller.removeListener(
-            listenerFunction); // Remove the listener to prevent recursion
-        controller
-            .addListener(listenerFunction); // Add it back after making changes
+        controller.removeListener(listenerFunction);
+        controller.addListener(listenerFunction);
       }
     }
   }
@@ -158,7 +154,7 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                           _completeNameController.clear();
                           FocusScope.of(context).unfocus();
                           ref.read(hasUpdatedGroceryProvider.notifier).state =
-                              false;
+                          false;
                         });
                       },
                       child: Text('Clear',
@@ -173,22 +169,33 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                         }
                         groceries.clear();
                         completeGroceries.clear();
-                        for (var grocery in _nameController) {
-                          groceries.add({
-                            "groceryName": grocery.text.trim(),
-                            "isChecked": false,
-                          });
+                        for (var controller in _nameController) {
+                          groceries.add(GroceryModel(
+                              groceryItem: RecipeProduct(
+                                id: null,
+                                amount: 1,
+                                text: controller.text.trim(),
+                                ingredientName: controller.text.trim(),
+                              ),
+                              isChecked: false,
+                              key: null
+                            )
+                            );
                         }
                         for (int index = 0;
-                            index < groceryList.length;
-                            index++) {
+                        index < groceryList.length;
+                        index++) {
                           var grocery = groceryList[index];
                           var controller = _completeNameController[index];
-                          completeGroceries.add({
-                            "groceryName": controller.text.trim(),
-                            "isChecked": grocery.isChecked,
-                            "key": grocery.key,
-                          });
+                          completeGroceries.add(
+                              GroceryModel(
+                                  groceryItem: grocery.groceryItem.copyWith(
+                                      text: controller.text.trim(),
+                                      ingredientName: controller.text.trim()),
+                                  isChecked: grocery.isChecked,
+                                  key: grocery.key
+                              )
+                          );
                         }
 
                         _nameController.clear();
@@ -200,7 +207,7 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                         await groceryMethods.addMultipleGroceries(groceries);
                         setState(() {
                           ref.read(hasUpdatedGroceryProvider.notifier).state =
-                              false;
+                          false;
                         });
                       },
                       child: Text('Done',
@@ -279,8 +286,8 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                         focusColor: context.primaryColor,
                                         shape: const CircleBorder(),
                                         side:
-                                            MaterialStateBorderSide.resolveWith(
-                                          (states) => BorderSide(
+                                        MaterialStateBorderSide.resolveWith(
+                                              (states) => BorderSide(
                                               width: 1.0,
                                               color: context.primaryColor),
                                         ),
@@ -293,36 +300,33 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                                 .copyWith(isChecked: val!);
                                             groceryList[index] = updatedGrocery;
                                             groceryMethods.updateGrocery(
-                                                groceryName:
-                                                    updatedGrocery.groceryName,
-                                                isChecked:
-                                                    updatedGrocery.isChecked,
+                                                item: updatedGrocery,
                                                 key: updatedGrocery.key);
                                           });
                                         }),
                                   ),
                                   SizedBox(
                                     width:
-                                        MediaQuery.sizeOf(context).width * 0.7,
+                                    MediaQuery.sizeOf(context).width * 0.7,
                                     height: 40,
                                     child: AppTextField(
                                       key: ValueKey(grocery.key),
                                       maxLines: 1,
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: PaddingSizes.sm,
-                                              vertical: 0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: PaddingSizes.sm,
+                                          vertical: 0),
                                       textAlignVertical:
-                                          TextAlignVertical.center,
+                                      TextAlignVertical.center,
                                       onChanged: (p0) {
                                         ref
                                             .read(hasUpdatedGroceryProvider
-                                                .notifier)
+                                            .notifier)
                                             .state = true;
                                       },
                                       onEditingComplete: () {},
                                       controller:
-                                          _completeNameController[index],
+                                      _completeNameController[index],
                                       textStyle: AppTextStyles().mRegular,
                                     ),
                                   ),
@@ -332,13 +336,13 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                           )),
                       grocery.isChecked
                           ? Positioned(
-                              top: 25,
-                              left: 50,
-                              child: Container(
-                                  width: MediaQuery.sizeOf(context).width * 0.8,
-                                  height: 1,
-                                  color: context.primaryColor.withOpacity(0.7)),
-                            )
+                        top: 25,
+                        left: 50,
+                        child: Container(
+                            width: MediaQuery.sizeOf(context).width * 0.8,
+                            height: 1,
+                            color: context.primaryColor.withOpacity(0.7)),
+                      )
                           : const SizedBox.shrink(),
                     ],
                   );
@@ -355,7 +359,10 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                 DeleteGroceryWidget(
                                   groceryMethods: groceryMethods,
                                   grocery: const GroceryModel(
-                                      groceryName: '',
+                                      groceryItem: RecipeProduct(
+                                          id: 0,
+                                          text: '',
+                                          ingredientName: ''),
                                       isChecked: false,
                                       key: ''),
                                 ),
@@ -372,8 +379,8 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                         focusColor: context.primaryColor,
                                         shape: const CircleBorder(),
                                         side:
-                                            MaterialStateBorderSide.resolveWith(
-                                          (states) => BorderSide(
+                                        MaterialStateBorderSide.resolveWith(
+                                              (states) => BorderSide(
                                               width: 1.0,
                                               color: context.primaryColor),
                                         ),
@@ -396,13 +403,13 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                           )),
                       _isChecked[adjustedIndex]
                           ? Positioned(
-                              top: 25,
-                              left: 50,
-                              child: Container(
-                                  width: MediaQuery.sizeOf(context).width * 0.8,
-                                  height: 1,
-                                  color: context.primaryColor.withOpacity(0.7)),
-                            )
+                        top: 25,
+                        left: 50,
+                        child: Container(
+                            width: MediaQuery.sizeOf(context).width * 0.8,
+                            height: 1,
+                            color: context.primaryColor.withOpacity(0.7)),
+                      )
                           : const SizedBox.shrink(),
                     ],
                   );
@@ -437,6 +444,7 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
     );
   }
 }
+
 
 class GroceryTextField extends StatefulWidget {
   final RichTextController controller;

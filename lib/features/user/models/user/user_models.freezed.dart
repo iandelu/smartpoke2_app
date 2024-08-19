@@ -530,7 +530,6 @@ Userinfo _$UserinfoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Userinfo {
-  int get id => throw _privateConstructorUsedError;
   int get sex => throw _privateConstructorUsedError;
   double get height => throw _privateConstructorUsedError;
   double get weight => throw _privateConstructorUsedError;
@@ -547,8 +546,7 @@ abstract class $UserinfoCopyWith<$Res> {
   factory $UserinfoCopyWith(Userinfo value, $Res Function(Userinfo) then) =
       _$UserinfoCopyWithImpl<$Res, Userinfo>;
   @useResult
-  $Res call(
-      {int id, int sex, double height, double weight, DateTime birthdate});
+  $Res call({int sex, double height, double weight, DateTime birthdate});
 }
 
 /// @nodoc
@@ -564,17 +562,12 @@ class _$UserinfoCopyWithImpl<$Res, $Val extends Userinfo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? sex = null,
     Object? height = null,
     Object? weight = null,
     Object? birthdate = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -603,8 +596,7 @@ abstract class _$$UserinfoImplCopyWith<$Res>
       __$$UserinfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id, int sex, double height, double weight, DateTime birthdate});
+  $Res call({int sex, double height, double weight, DateTime birthdate});
 }
 
 /// @nodoc
@@ -618,17 +610,12 @@ class __$$UserinfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? sex = null,
     Object? height = null,
     Object? weight = null,
     Object? birthdate = null,
   }) {
     return _then(_$UserinfoImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -654,8 +641,7 @@ class __$$UserinfoImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$UserinfoImpl implements _Userinfo {
   const _$UserinfoImpl(
-      {required this.id,
-      required this.sex,
+      {required this.sex,
       required this.height,
       required this.weight,
       required this.birthdate});
@@ -663,8 +649,6 @@ class _$UserinfoImpl implements _Userinfo {
   factory _$UserinfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserinfoImplFromJson(json);
 
-  @override
-  final int id;
   @override
   final int sex;
   @override
@@ -676,7 +660,7 @@ class _$UserinfoImpl implements _Userinfo {
 
   @override
   String toString() {
-    return 'Userinfo(id: $id, sex: $sex, height: $height, weight: $weight, birthdate: $birthdate)';
+    return 'Userinfo(sex: $sex, height: $height, weight: $weight, birthdate: $birthdate)';
   }
 
   @override
@@ -684,7 +668,6 @@ class _$UserinfoImpl implements _Userinfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserinfoImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.height, height) || other.height == height) &&
             (identical(other.weight, weight) || other.weight == weight) &&
@@ -694,8 +677,7 @@ class _$UserinfoImpl implements _Userinfo {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, sex, height, weight, birthdate);
+  int get hashCode => Object.hash(runtimeType, sex, height, weight, birthdate);
 
   @JsonKey(ignore: true)
   @override
@@ -713,8 +695,7 @@ class _$UserinfoImpl implements _Userinfo {
 
 abstract class _Userinfo implements Userinfo {
   const factory _Userinfo(
-      {required final int id,
-      required final int sex,
+      {required final int sex,
       required final double height,
       required final double weight,
       required final DateTime birthdate}) = _$UserinfoImpl;
@@ -722,8 +703,6 @@ abstract class _Userinfo implements Userinfo {
   factory _Userinfo.fromJson(Map<String, dynamic> json) =
       _$UserinfoImpl.fromJson;
 
-  @override
-  int get id;
   @override
   int get sex;
   @override

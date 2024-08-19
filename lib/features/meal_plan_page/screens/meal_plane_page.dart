@@ -6,6 +6,7 @@ import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/date_time.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:meal_ai/core/widgets/appbar.dart';
+import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provider/grocery_list_provider.dart';
 import 'package:meal_ai/features/meal_plan_page/providers/meal_plane_page_provider/meal_plan_page_provider.dart';
 import 'package:meal_ai/features/meal_plan_page/screens/add_meal_plan_list.dart';
@@ -20,7 +21,7 @@ class MealPlanPage extends ConsumerStatefulWidget {
 }
 
 class _MealPlanPageState extends ConsumerState<MealPlanPage> {
-  final List<Map<String, dynamic>> mealRecipeIngredients = [];
+  final List<GroceryModel> mealRecipeIngredients = [];
   @override
   void didChangeDependencies() {
     final mealRecipes =
@@ -57,13 +58,13 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
           for (var mealRecipe in mealRecipes) {
             for (var product in mealRecipe.recipeProducts) {
 
-              final String amount = product.amount.toString();
-              final String description = product.ingredientName;
-              mealRecipeIngredients.add({
-                "groceryName": description,
-                "value": amount,
-                "isChecked": false
-              });
+              mealRecipeIngredients.add(
+                  GroceryModel(
+                      groceryItem: product,
+                      isChecked: false,
+                      key: null,
+                  )
+              );
             }
           }
           showModalBottomSheet(
@@ -144,8 +145,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
                                         Row(
                                           children: [
                                             Text(
-                                              ingredients.values.toList()[1] ??
-                                                  '-',
+                                              '${ingredients.groceryItem.amount.toString()} ${ingredients.groceryItem.unitOfMeasure?.name ?? ''}',
                                               style: AppTextStyles()
                                                   .mThick
                                                   .copyWith(
@@ -157,9 +157,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
                                             Expanded(
                                               flex: 1,
                                               child: Text(
-                                                ingredients.values
-                                                    .toList()[0]
-                                                    .toString(),
+                                                ingredients.groceryItem.ingredientName ?? '-',
                                                 style: AppTextStyles().mRegular,
                                               ),
                                             ),

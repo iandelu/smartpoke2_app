@@ -18,10 +18,10 @@ void main() async {
   await Hive.openBox('meal_plan_recipe');
   await Hive.openBox('authBox');
 
-  //await Hive.deleteBoxFromDisk('recipe_from_url');
-  //await Hive.deleteBoxFromDisk('meal_plan_recipe');
-  //await Hive.deleteBoxFromDisk('grocery_list');
-  //await Hive.deleteBoxFromDisk('authBox');
+  /*await Hive.deleteBoxFromDisk('recipe_from_url');
+  await Hive.deleteBoxFromDisk('meal_plan_recipe');
+  await Hive.deleteBoxFromDisk('grocery_list');
+  await Hive.deleteBoxFromDisk('authBox');*/
   runApp(const ProviderScope(child: MyApp()));
 }
 

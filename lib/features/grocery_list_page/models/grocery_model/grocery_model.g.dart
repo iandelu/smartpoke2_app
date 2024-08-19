@@ -8,14 +8,15 @@ part of 'grocery_model.dart';
 
 _$GroceryModelImpl _$$GroceryModelImplFromJson(Map<String, dynamic> json) =>
     _$GroceryModelImpl(
-      groceryName: json['groceryName'] as String,
+      groceryItem:
+          RecipeProduct.fromJson(json['groceryItem'] as Map<String, dynamic>),
       isChecked: json['isChecked'] as bool,
       key: json['key'],
     );
 
 Map<String, dynamic> _$$GroceryModelImplToJson(_$GroceryModelImpl instance) =>
     <String, dynamic>{
-      'groceryName': instance.groceryName,
+      'groceryItem': instance.groceryItem.toJson(),
       'isChecked': instance.isChecked,
       'key': instance.key,
     };

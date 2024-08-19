@@ -37,7 +37,6 @@ class Location with _$Location {
 class Userinfo with _$Userinfo {
   @JsonSerializable(explicitToJson: true)
   const factory Userinfo({
-    required int id,
     required int sex,
     required double height,
     required double weight,

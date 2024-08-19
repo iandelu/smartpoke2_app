@@ -7,7 +7,8 @@ class MealPlanHiveService {
 
   Future<void> addMealPlanRecipe(RecipeModel recipe, DateTime addTime) async {
     final recipeWithTime = recipe.copyWith(addTime: addTime.toString());
-    await _recipeFromApi.add(recipeWithTime.toJson());
+    Map<String, dynamic> recipeMap = recipeWithTime.toJson();
+    await _recipeFromApi.add(recipeMap);
   }
 
   Future<void> removeMealPlanRecipe(dynamic key) async {
@@ -17,8 +18,9 @@ class MealPlanHiveService {
   List<RecipeModel> getMealPlanRecipes() {
     final data = _recipeFromApi.keys.map((key) {
       final item = _recipeFromApi.get(key);
-      return RecipeModel.fromJson(item);
+      item['key'] = key;
+      return item;
     }).toList();
-    return data;
+    return data.map((e) => RecipeModel.fromJson(parser(e))).toList();
   }
 }

@@ -4,6 +4,7 @@ import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/features/settings_page/widgets/user_info_edit.dart';
 import 'package:meal_ai/features/user/models/user/user_models.dart';
 import 'package:meal_ai/features/user/service/auth_state_user_service.dart';
 
@@ -44,6 +45,7 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
   late bool _verify;
   late bool _premium;
   late bool _isEditing;
+  final GlobalKey<UserInfoEditState> _userInfoEditKey = GlobalKey<UserInfoEditState>();
 
   @override
   void initState() {
@@ -69,6 +71,7 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
   }
 
   void _updateUser(WidgetRef ref) {
+    final updatedUserinfo = _userInfoEditKey.currentState!.getUpdatedUserinfo();
     final updatedUser = UserModel(
       firstName: _firstNameController.text,
       lastName: _lastNameController.text,
@@ -78,6 +81,7 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
       premium: _premium,
       role: _roleController.text,
       id: widget.authenticatedUser.id,
+      userinfo: updatedUserinfo,
     );
 
     ref.read(authStateProvider.notifier).setUser(updatedUser);
@@ -167,6 +171,8 @@ class _SettingsAccountPageBodyState extends State<SettingsAccountPageBody> {
                       _premium = value;
                     });
                   }),
+                  const SizedBox(height: PaddingSizes.sm),
+                  UserInfoEdit(key: _userInfoEditKey, userinfo: widget.authenticatedUser.userinfo ?? Userinfo(sex: 0, height: 170, weight: 70, birthdate: DateTime.now())),
                   const SizedBox(height: PaddingSizes.xxl),
                   ElevatedButton(
                     onPressed: () {

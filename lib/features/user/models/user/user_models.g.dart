@@ -52,7 +52,6 @@ Map<String, dynamic> _$$LocationImplToJson(_$LocationImpl instance) =>
 
 _$UserinfoImpl _$$UserinfoImplFromJson(Map<String, dynamic> json) =>
     _$UserinfoImpl(
-      id: (json['id'] as num).toInt(),
       sex: (json['sex'] as num).toInt(),
       height: (json['height'] as num).toDouble(),
       weight: (json['weight'] as num).toDouble(),
@@ -61,7 +60,6 @@ _$UserinfoImpl _$$UserinfoImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$UserinfoImplToJson(_$UserinfoImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'sex': instance.sex,
       'height': instance.height,
       'weight': instance.weight,

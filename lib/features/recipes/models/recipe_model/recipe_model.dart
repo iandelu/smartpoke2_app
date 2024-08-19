@@ -99,7 +99,7 @@ class RecipeStep with _$RecipeStep {
 class RecipeProduct with _$RecipeProduct {
   @JsonSerializable(explicitToJson: true)
   const factory RecipeProduct({
-    required int id,
+    required int? id,
     @Default(0.0) double amount,
     @Default('No text available') String text,
     @Default('Unknown ingredient') String ingredientName,

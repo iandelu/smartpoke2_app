@@ -6,7 +6,7 @@ part of 'grocery_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$groceryListHash() => r'1f8911e56bdb3838c3f448344c5a18019dbca9e0';
+String _$groceryListHash() => r'4555b3734b04b97c2d5f07087df5d5c7205a87bb';
 
 /// See also [GroceryList].
 @ProviderFor(GroceryList)

@@ -303,7 +303,7 @@ Map<String, dynamic> _$$RecipeStepImplToJson(_$RecipeStepImpl instance) =>
 
 _$RecipeProductImpl _$$RecipeProductImplFromJson(Map<String, dynamic> json) =>
     _$RecipeProductImpl(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
       text: json['text'] as String? ?? 'No text available',
       ingredientName: json['ingredientName'] as String? ?? 'Unknown ingredient',

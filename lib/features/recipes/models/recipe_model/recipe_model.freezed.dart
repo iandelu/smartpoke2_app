@@ -1793,7 +1793,7 @@ RecipeProduct _$RecipeProductFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RecipeProduct {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   String get ingredientName => throw _privateConstructorUsedError;
@@ -1813,7 +1813,7 @@ abstract class $RecipeProductCopyWith<$Res> {
       _$RecipeProductCopyWithImpl<$Res, RecipeProduct>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       double amount,
       String text,
       String ingredientName,
@@ -1837,7 +1837,7 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? amount = null,
     Object? text = null,
     Object? ingredientName = null,
@@ -1845,10 +1845,10 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
     Object? product = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -1906,7 +1906,7 @@ abstract class _$$RecipeProductImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       double amount,
       String text,
       String ingredientName,
@@ -1930,7 +1930,7 @@ class __$$RecipeProductImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? amount = null,
     Object? text = null,
     Object? ingredientName = null,
@@ -1938,10 +1938,10 @@ class __$$RecipeProductImplCopyWithImpl<$Res>
     Object? product = freezed,
   }) {
     return _then(_$RecipeProductImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -1982,7 +1982,7 @@ class _$RecipeProductImpl implements _RecipeProduct {
       _$$RecipeProductImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   @JsonKey()
   final double amount;
@@ -2038,7 +2038,7 @@ class _$RecipeProductImpl implements _RecipeProduct {
 
 abstract class _RecipeProduct implements RecipeProduct {
   const factory _RecipeProduct(
-      {required final int id,
+      {required final int? id,
       final double amount,
       final String text,
       final String ingredientName,
@@ -2049,7 +2049,7 @@ abstract class _RecipeProduct implements RecipeProduct {
       _$RecipeProductImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   double get amount;
   @override
