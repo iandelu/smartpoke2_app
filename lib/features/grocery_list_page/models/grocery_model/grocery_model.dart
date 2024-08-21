@@ -6,7 +6,7 @@ part 'grocery_model.g.dart';
 
 @freezed
 class GroceryModel with _$GroceryModel {
-  @JsonSerializable(explicitToJson: true)
+  @JsonSerializable(explicitToJson: true, anyMap: true)
   const factory GroceryModel({
     required RecipeProduct groceryItem,
     required bool isChecked,

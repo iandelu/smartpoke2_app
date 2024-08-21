@@ -5,6 +5,9 @@ import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provider/grocery_list_provider.dart';
 import 'package:meal_ai/features/product/search/product_search_delegate.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
+
+import 'grocery_detail_sheet.dart';
 
 class GroceryListWidget extends StatefulHookConsumerWidget {
   const GroceryListWidget({
@@ -17,11 +20,37 @@ class GroceryListWidget extends StatefulHookConsumerWidget {
 
 class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
 
+  void _showBottomSheet(BuildContext context, GroceryModel grocery, int index, Function(int, GroceryModel) onUpdateGrocery, List<UnitOfMeasure> unitOfMeasures) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return GroceryDetailSheet(
+          grocery: grocery,
+          index: index,
+          onUpdateGrocery: onUpdateGrocery,
+          unitOfMeasures: unitOfMeasures,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final groceryList = ref.watch(groceryListProvider);
     final groceryMethods = ref.read(groceryListProvider.notifier);
     final groupedGroceries = <String, List<GroceryModel>>{};
+
+    final onUpdateGrocery = (index, grocery) {
+      groceryMethods.updateGrocery(item: grocery, key: grocery.key);
+    };
+
+    final unitOfMeasures = [
+      UnitOfMeasure(id: 1, name: 'g'),
+      UnitOfMeasure(id: 2, name: 'kg'),
+      UnitOfMeasure(id: 3, name: 'L'),
+    ];
+
+
 
     for (var grocery in groceryList) {
       final category = grocery.groceryItem.product?.category?.name ?? 'Otros';
@@ -88,6 +117,9 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: ListTile(
+                            onTap: () {
+                              _showBottomSheet(context, grocery, index, onUpdateGrocery, unitOfMeasures);
+                            },
                             leading: Checkbox(
                               value: grocery.isChecked,
                               onChanged: (val) {
@@ -104,7 +136,7 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                               },
                             ),
                             title: Text(
-                              '${item.amount}${item.unitOfMeasure?.name ?? ''} -${item.product?.name}',
+                              '${item.amount}${item.unitOfMeasure?.name ?? ''} -${item.product?.description ?? item.product?.name ?? 'Unknown'}',
                               style: TextStyle(
                                 fontSize: 16,
                                 decoration: grocery.isChecked
@@ -132,4 +164,6 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
       ),
     );
   }
+
+
 }
