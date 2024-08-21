@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
@@ -40,9 +41,9 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
     final groceryMethods = ref.read(groceryListProvider.notifier);
     final groupedGroceries = <String, List<GroceryModel>>{};
 
-    final onUpdateGrocery = (index, grocery) {
+    onUpdateGrocery(index, grocery) {
       groceryMethods.updateGrocery(item: grocery, key: grocery.key);
-    };
+    }
 
     final unitOfMeasures = [
       UnitOfMeasure(id: 1, name: 'g'),
@@ -72,7 +73,10 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
           showSearch(
             context: context,
             delegate: ProductSearchDelegate(ref, initialProducts: []),
-          );
+          ).then((ean) {
+            if(ean == null) return;
+            context.push('/product/$ean');
+          });
         },
         child: const Icon(Icons.search),
       ),
@@ -116,42 +120,64 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                 : accentTeal2,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: ListTile(
-                            onTap: () {
-                              _showBottomSheet(context, grocery, index, onUpdateGrocery, unitOfMeasures);
+                          child: Dismissible(
+                            key: Key(grocery.key.toString()),
+                            direction: DismissDirection.startToEnd,
+                            onDismissed: (direction) {
+                              setState(() {
+                                deleteGroceryItem(grocery, selectedCount, groupedGroceries, category, groceryList, index, groceryMethods);
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Producto eliminado'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
                             },
-                            leading: Checkbox(
-                              value: grocery.isChecked,
-                              onChanged: (val) {
-                                setState(() {
-                                  FocusScope.of(context).unfocus();
-
-                                  final updatedGrocery = grocery
-                                      .copyWith(isChecked: val!);
-                                  grocery = updatedGrocery;
-                                  groceryMethods.updateGrocery(
-                                      item: grocery,
-                                      key: grocery.key);
-                                });
-                              },
-                            ),
-                            title: Text(
-                              '${item.amount}${item.unitOfMeasure?.name ?? ''} -${item.product?.description ?? item.product?.name ?? 'Unknown'}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                decoration: grocery.isChecked
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                                color: grocery.isChecked
-                                    ? Colors.black54
-                                    : Colors.black,
+                            background: Container(
+                              color: Colors.red,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              alignment: Alignment.centerRight,
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
                               ),
                             ),
-                            trailing: Text(
+                            child: ListTile(
+                              onTap: () {
+                                _showBottomSheet(context, grocery, index, onUpdateGrocery, unitOfMeasures);
+                              },
+                              leading: Checkbox(
+                                value: grocery.isChecked,
+                                onChanged: (val) {
+                                  setState(() {
+                                    FocusScope.of(context).unfocus();
+
+                                    final updatedGrocery = grocery.copyWith(isChecked: val!);
+                                    grocery = updatedGrocery;
+                                    groceryMethods.updateGrocery(
+                                        item: grocery, key: grocery.key);
+                                  });
+                                },
+                              ),
+                              title: Text(
+                                '${item.amount}${item.unitOfMeasure?.name ?? ''} - ${item.ingredientName}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  decoration: grocery.isChecked
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  color: grocery.isChecked
+                                      ? Colors.black54
+                                      : Colors.black,
+                                ),
+                              ),
+                              trailing: Text(
                                 item.product?.category?.emoji ?? '🍽️',
-                              style: AppTextStyles().emojiCategory,
+                                style: AppTextStyles().emojiCategory,
+                              ),
                             ),
-                          ),
+                          )
                         );
                       }).toList(),
                     ],
@@ -163,6 +189,21 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
         ),
       ),
     );
+  }
+
+  void deleteGroceryItem(GroceryModel grocery, int selectedCount, Map<String, List<GroceryModel>> groupedGroceries, String category, List<GroceryModel> groceryList, int index, GroceryList groceryMethods) {
+    if (grocery.isChecked) {
+      selectedCount--;
+    }
+    groceryList.removeAt(index);
+
+    if(groupedGroceries[category]!.length == 1) {
+      groupedGroceries.remove(category);
+    } else {
+      groupedGroceries[category]!.remove(grocery);
+    }
+    groceryList.removeAt(index);
+    groceryMethods.deleteGrocery(key: grocery.key);
   }
 
 

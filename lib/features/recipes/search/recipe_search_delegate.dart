@@ -52,7 +52,7 @@ class RecipeSearchDelegate extends SearchDelegate {
           final filters = await showDialog<Map<String, dynamic>>(
             context: context,
             builder: (context) {
-              return FilterDialog();
+              return RecipeFilterSheet();
             },
           );
 

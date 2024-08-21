@@ -107,22 +107,11 @@ class ProductSearchDelegate extends SearchDelegate {
                             ),
                           ),
                           onDismissed: (direction) {
-                            GroceryModel newGrocery = GroceryModel(
-                              groceryItem: RecipeProduct(
-                                id: null,
-                                product: product,
-                                amount: 1,
-                                unitOfMeasure: null
-                              ),
-                              isChecked: false,
-                              key: null,
-                            );
-                            ref.read(groceryListProvider.notifier).addGrocery(newGrocery);
-                            initialProducts.remove(product);
+                            saveProductIntoGrocery(product);
                           },
                           child: ProductCard(
                             product: product,
-                            onTap: () => close(context, product.id),
+                            onTap: () => close(context, product.ean),
                           ),
                         )
 
@@ -139,5 +128,21 @@ class ProductSearchDelegate extends SearchDelegate {
         );
       },
     );
+  }
+
+  void saveProductIntoGrocery(ProductModel product) {
+    GroceryModel newGrocery = GroceryModel(
+      groceryItem: RecipeProduct(
+        id: null,
+        product: product,
+        amount: 1,
+        ingredientName: product.description ?? product.name,
+        unitOfMeasure: null
+      ),
+      isChecked: false,
+      key: null,
+    );
+    ref.read(groceryListProvider.notifier).addGrocery(newGrocery);
+    initialProducts.remove(product);
   }
 }

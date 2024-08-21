@@ -33,13 +33,11 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouter);
-    return ProviderScope(
-      child: MaterialApp.router(
-        routerConfig: router,
-        debugShowCheckedModeBanner: false,
-        title: 'Savor',
-        theme: AppTheme.getTheme(),
-      ),
+    return MaterialApp.router(
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
+      title: 'Savor',
+      theme: AppTheme.getTheme(),
     );
   }
 }

@@ -31,7 +31,7 @@ class _GroceryDetailSheetState extends State<GroceryDetailSheet> {
   void initState() {
     super.initState();
     _amountController = TextEditingController(text: widget.grocery.groceryItem.amount.toString());
-    _nameController = TextEditingController(text: widget.grocery.groceryItem.product?.description ?? widget.grocery.groceryItem.product?.name);
+    _nameController = TextEditingController(text: widget.grocery.groceryItem.ingredientName);
     selectedUnit = widget.grocery.groceryItem.unitOfMeasure;
   }
 
@@ -62,8 +62,8 @@ class _GroceryDetailSheetState extends State<GroceryDetailSheet> {
               TextButton(
                 onPressed: () {
                   final updatedProduct = widget.grocery.groceryItem.copyWith(
+                    ingredientName: _nameController.text,
                     amount: double.tryParse(_amountController.text) ?? widget.grocery.groceryItem.amount,
-                    product: widget.grocery.groceryItem.product?.copyWith(name: _nameController.text),
                     unitOfMeasure: selectedUnit,
                   );
 
