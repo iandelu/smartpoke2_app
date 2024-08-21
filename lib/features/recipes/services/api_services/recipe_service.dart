@@ -4,10 +4,10 @@ import 'package:meal_ai/config/connections/smartpoke_client.dart';
 import 'package:meal_ai/core/utils/helper_methods.dart';
 import 'package:meal_ai/core/utils/logger.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
-import 'package:meal_ai/features/recipes/services/local_services/smarpoke_hive_service.dart';
+import 'package:meal_ai/features/recipes/services/local_services/recipe_hive_service.dart';
 
 class RecipeApiService {
-  final SmartPokeRecipeHiveService hiveService = SmartPokeRecipeHiveService();
+  final RecipeHiveService hiveService = RecipeHiveService();
 
   Future<RecipeModel> getRecipeFromUrl({required String url}) async {
     final apiUrl =

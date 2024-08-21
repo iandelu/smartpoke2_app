@@ -13,9 +13,8 @@ final searchedRecipesNotifier = StateNotifierProvider<SearchedRecipesNotifier, L
   return SearchedRecipesNotifier(RecipeApiService(), ref);
 });
 
+
 class SearchedRecipesNotifier extends StateNotifier<List<RecipeModel>> {
-  Timer? _debounce;
-  String? _lastQuery;
   List<String> _categories = [];
   int? _rating;
   int? _time;

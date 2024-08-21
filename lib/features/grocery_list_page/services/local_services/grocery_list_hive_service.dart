@@ -27,7 +27,7 @@ class GroceryListService {
 
   List<GroceryModel> getGroceries() {
     final data = _groceryListBox.keys.map((key) {
-      final item = _groceryListBox.get(key);
+      Map<String, dynamic> item = _groceryListBox.get(key);
       item['key'] = key;
       return item;
     }).toList();

@@ -20,7 +20,7 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductModel {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String? get ean => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get amount => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $ProductModelCopyWith<$Res> {
       _$ProductModelCopyWithImpl<$Res, ProductModel>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String? ean,
       String name,
       String? amount,
@@ -88,7 +88,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? ean = freezed,
     Object? name = null,
     Object? amount = freezed,
@@ -108,10 +108,10 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? allergens = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ean: freezed == ean
           ? _value.ean
           : ean // ignore: cast_nullable_to_non_nullable
@@ -217,7 +217,7 @@ abstract class _$$ProductModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String? ean,
       String name,
       String? amount,
@@ -253,7 +253,7 @@ class __$$ProductModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? ean = freezed,
     Object? name = null,
     Object? amount = freezed,
@@ -273,10 +273,10 @@ class __$$ProductModelImplCopyWithImpl<$Res>
     Object? allergens = freezed,
   }) {
     return _then(_$ProductModelImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ean: freezed == ean
           ? _value.ean
           : ean // ignore: cast_nullable_to_non_nullable
@@ -354,7 +354,7 @@ class __$$ProductModelImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$ProductModelImpl implements _ProductModel {
   const _$ProductModelImpl(
-      {required this.id,
+      {this.id,
       this.ean,
       required this.name,
       this.amount,
@@ -379,7 +379,7 @@ class _$ProductModelImpl implements _ProductModel {
       _$$ProductModelImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   final String? ean;
   @override
@@ -509,7 +509,7 @@ class _$ProductModelImpl implements _ProductModel {
 
 abstract class _ProductModel implements ProductModel {
   const factory _ProductModel(
-      {required final int id,
+      {final int? id,
       final String? ean,
       required final String name,
       final String? amount,
@@ -532,7 +532,7 @@ abstract class _ProductModel implements ProductModel {
       _$ProductModelImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   String? get ean;
   @override

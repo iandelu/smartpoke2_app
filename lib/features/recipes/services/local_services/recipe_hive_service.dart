@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_ai/core/utils/helper_methods.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
-class SmartPokeRecipeHiveService {
+class RecipeHiveService {
   final _recipeFromApi = Hive.box('recipe_from_url');
 
   Future<void> addRecipe(Map<String, dynamic> item) async {

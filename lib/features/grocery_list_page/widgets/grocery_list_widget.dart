@@ -10,6 +10,8 @@ import 'package:meal_ai/core/widgets/app_textfield.dart';
 import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provider/grocery_list_provider.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/state_providers.dart';
+import 'package:meal_ai/features/product/providers/search_product_provider.dart';
+import 'package:meal_ai/features/product/search/product_search_delegate.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
 
@@ -162,6 +164,21 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                               .mRegular
                               .copyWith(color: context.primaryColor)),
                     ),
+                    IconButton(
+                        onPressed: () {
+                          final searchedProducts = ref.watch(searchedProductsNotifier);
+                          showSearch(
+                            context: context,
+                            delegate: ProductSearchDelegate(
+                              ref,
+                              initialProducts: searchedProducts,
+                            ),
+                          ).then((id) {
+                            if (id == null) return;
+                            // context.push('/product/$id');
+                          });
+                        },
+                        icon: const Icon(Icons.search, size: 30)),
                     TextButton(
                       onPressed: () async {
                         if (!_formKey.currentState!.validate()) {
