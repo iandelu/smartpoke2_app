@@ -22,7 +22,8 @@ class GroceryListService {
   }
 
   Future<void> updateGrocery(GroceryModel item, dynamic key) async {
-    await _groceryListBox.put(key, item);
+    Map<String, dynamic> itemMap = item.toJson();
+    await _groceryListBox.put(key, itemMap);
   }
 
   List<GroceryModel> getGroceries() {

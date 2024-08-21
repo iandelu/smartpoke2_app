@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
+import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provider/grocery_list_provider.dart';
 import 'package:meal_ai/features/product/models/product_model/product_models.dart';
 import 'package:meal_ai/features/product/providers/product_provider.dart';
 import 'package:meal_ai/features/product/providers/search_product_provider.dart';
 import 'package:meal_ai/features/product/widgets/product_card.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 class ProductSearchDelegate extends SearchDelegate {
   List<ProductModel> initialProducts;
@@ -104,7 +107,17 @@ class ProductSearchDelegate extends SearchDelegate {
                             ),
                           ),
                           onDismissed: (direction) {
-                            ref.read(productProviderProvider.notifier).addProductToHive( product: product);
+                            GroceryModel newGrocery = GroceryModel(
+                              groceryItem: RecipeProduct(
+                                id: null,
+                                product: product,
+                                amount: 1,
+                                unitOfMeasure: null
+                              ),
+                              isChecked: false,
+                              key: null,
+                            );
+                            ref.read(groceryListProvider.notifier).addGrocery(newGrocery);
                             initialProducts.remove(product);
                           },
                           child: ProductCard(

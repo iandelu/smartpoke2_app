@@ -69,9 +69,9 @@ class CategoryItem extends StatelessWidget{
             ),
             boxShadow: const [
              BoxShadow(
-              color: black1, // Opacidad del 100%
-              offset: Offset(4, 4), // Offset X, Y
-              blurRadius: 0, // No blur
+              color: black1,
+              offset: Offset(4, 4),
+              blurRadius: 0,
             ),
             ],
           ),
