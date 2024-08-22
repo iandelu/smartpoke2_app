@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:meal_ai/features/category/models/category_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/features/category/widgets/category_chips.dart';
 
 import '../../category/widgets/category_selector.dart';
 
@@ -82,26 +83,7 @@ class _RecipeFilterSheetState extends ConsumerState<RecipeFilterSheet> {
               ],
             ),
             if (_selectedCategories != null && _selectedCategories!.isNotEmpty)
-              Wrap(
-                spacing: 8.0,
-                runSpacing: 8.0,
-                children: _selectedCategories!.map((category) {
-                  return Chip(
-                    label: Text(
-                      "${category.name.toUpperCase()} ${category.emoji ?? '🍽️'}",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                      side: BorderSide(color: Colors.black, width: 2.0),
-                    ),
-                  );
-                }).toList(),
-              ),
+              CategoryChips(categories: _selectedCategories!),
             const SizedBox(height: 16),
             Text('Rating'),
             RatingBar.builder(

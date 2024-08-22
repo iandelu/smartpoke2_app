@@ -23,8 +23,8 @@ class _RecipesState extends ConsumerState<RecipesPage> {
       body: const MyRecipesPageBody(),
       floatingActionButton: AddRecipeMenu(
         builder: (context, showMenu) => Container(
-          height: 60,
-          width: 60,
+          height: 50,
+          width: 50,
           decoration: BoxDecoration(
             color: context.primaryColor,
             shape: BoxShape.circle,

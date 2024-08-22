@@ -10,6 +10,8 @@ import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/features/grocery_list_page/widgets/recipe_product_edit_sheet.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/features/recipes/widgets/edit_recipe_widgets/edit_ingredient_section.dart';
+import 'package:meal_ai/features/recipes/widgets/edit_recipe_widgets/text_field_section.dart';
 
 class EditRecipeScreen extends ConsumerStatefulWidget {
   final RecipeModel recipe;
@@ -49,18 +51,29 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
     final unitOfMeasures = ref.watch(unitOfMeasureProvider).units;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: TextButton(
+        leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-          ),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          )
         ),
+        centerTitle: true,
         title: const Text(
           'Edit Recipe',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: headline2,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _saveRecipe;
+            },
+            icon: const Icon(
+              Icons.save,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -71,7 +84,7 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
             SizedBox(height: 16),
             _buildTextFieldSection('Food Name', _nameController),
             SizedBox(height: 16),
-            _buildTextFieldSection('Description', _descriptionController, maxLines: 3),
+            _buildTextFieldSection('Description', _descriptionController, maxLines: 4),
             SizedBox(height: 16),
             CookingDurationSection(
               initialDuration: _cookingDuration,
@@ -107,23 +120,6 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
               }),
             ),
             SizedBox(height: 24),
-            Center(
-              child: ElevatedButton(
-                onPressed: _saveRecipe,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: Colors.black, width: 3),
-                  ),
-                ),
-                child: Text(
-                  'Save Recipe',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -189,14 +185,14 @@ class CoverPhotoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Handle image upload
+        // Handle adding/editing cover photo
       },
       child: Container(
-        height: 150,
+        height: MediaQuery.of(context).size.height * 0.4,
         width: double.infinity,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 3),
-          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.black, width: 4),
+          borderRadius: BorderRadius.circular(8),
           color: Colors.white,
         ),
         child: pictureUrl.isNotEmpty
@@ -212,44 +208,7 @@ class CoverPhotoSection extends StatelessWidget {
   }
 }
 
-class TextFieldSection extends StatelessWidget {
-  final String label;
-  final TextEditingController controller;
-  final int maxLines;
 
-  TextFieldSection({
-    required this.label,
-    required this.controller,
-    this.maxLines = 1,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 3),
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.white,
-          ),
-          child: TextField(
-            controller: controller,
-            maxLines: maxLines,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            ),
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 class CookingDurationSection extends StatelessWidget {
   final int initialDuration;
@@ -272,88 +231,6 @@ class CookingDurationSection extends StatelessWidget {
   }
 }
 
-class IngredientsSection extends StatelessWidget {
-  final List<RecipeProduct> ingredients;
-  final List<UnitOfMeasure> unitOfMeasures;
-  final Function(int, RecipeProduct) onIngredientChanged;
-  final Function(int) onIngredientRemoved;
-  final Function() onIngredientAdded;
-
-  IngredientsSection({
-    required this.ingredients,
-    required this.onIngredientChanged,
-    required this.onIngredientRemoved,
-    required this.onIngredientAdded,
-    required this.unitOfMeasures,
-  });
-
-  void _showBottomSheet(BuildContext context,RecipeProduct recipeProduct, int index, Function(int, RecipeProduct) onUpdateGrocery, List<UnitOfMeasure> unitOfMeasures) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return RecipeProductEditSheet(
-          recipeProduct: recipeProduct,
-          onUpdateGrocery: onUpdateGrocery,
-          unitOfMeasures: unitOfMeasures,
-          index: index,
-        );
-      },
-    );
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-
-    onUpdateRecipeProduct(index, product) {
-      final ingredient = ingredients[index].copyWith(
-        amount: product.amount,
-        ingredientName: product.ingredientName,
-        unitOfMeasure: product.unitOfMeasure,
-        product: product.product,
-      );
-      onIngredientChanged(index, ingredient);
-    }
-  
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Ingredients', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            TextButton(
-              onPressed: onIngredientAdded,
-              child: Text('+ Ingredient'),
-            ),
-          ],
-        ),
-        Column(
-          children: ingredients.asMap().entries.map((entry) {
-            int index = entry.key;
-            RecipeProduct ingredient = entry.value;
-            return ListTile(
-              onTap: () {
-                _showBottomSheet(context, ingredient, index, onUpdateRecipeProduct, unitOfMeasures);
-              },
-              title: Text(
-                '${ingredient.amount}${ingredient.unitOfMeasure?.name ?? ''} - ${ingredient.ingredientName}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.none,
-                  color: Colors.black,
-                ),
-              ),
-              trailing: Text(
-                ingredient.product?.category?.emoji ?? '🍽️',
-                style: AppTextStyles().emojiCategory,
-              ),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-}
 
 class StepsSection extends StatelessWidget {
   final List<RecipeStep> steps;

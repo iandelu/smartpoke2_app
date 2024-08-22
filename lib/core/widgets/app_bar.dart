@@ -48,7 +48,7 @@ class _BrutBottomNavigationBarState extends State<BrutBottomNavigationBar> {
       color: white,
       padding: EdgeInsets.zero,
       shape: const CircularNotchedRectangle(),
-      height: 50,
+      height: 56,
       child: Container(
         decoration: BoxDecoration(
           color: widget.defaultColor,
