@@ -10,6 +10,7 @@ import 'package:meal_ai/core/widgets/buttons.dart';
 import 'package:meal_ai/core/widgets/expandable_text.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
+import 'package:meal_ai/features/recipes/screens/recippe_edit.dart';
 import 'package:meal_ai/features/recipes/widgets/categories_list_widget.dart';
 import 'package:meal_ai/features/recipes/widgets/ingredients_widget.dart';
 import 'package:meal_ai/features/recipes/widgets/nutrition_list_widget.dart';
@@ -65,6 +66,29 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
     });
   }
 
+  void _editRecipe() async {
+    if (recipe == null) {
+      return;
+    }
+    final updatedRecipe = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditRecipeScreen(recipe: recipe!),
+      ),
+    );
+
+    if (updatedRecipe != null) {
+      setState(() {
+        recipe = updatedRecipe;
+
+      });
+      if (recipe != null){
+        ref.read(recipeFromUrlProvider.notifier).updateRecipe(key: updatedRecipe, recipe: updatedRecipe);
+      }
+
+    }
+  }
+
   Widget buildRecipeImage() {
     return SliverAppBar(
       expandedHeight: 350,
@@ -100,14 +124,24 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
           padding: const EdgeInsets.all(6.0),
           child: Consumer(builder: (context, ref, _) {
             final favorite = ref.watch(favoriteProvider);
-            return IconButton(
-              icon: Icon(
-                favorite ? Icons.favorite : Icons.favorite_border,
-                color: favorite ? Colors.red : Colors.black,
-              ),
-              onPressed: () {
-                ref.read(favoriteProvider.notifier).state = !favorite;
-              },
+            return Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () {
+                    _editRecipe();
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
+                    favorite ? Icons.favorite : Icons.favorite_border,
+                    color: favorite ? Colors.red : Colors.black,
+                  ),
+                  onPressed: () {
+                    ref.read(favoriteProvider.notifier).state = !favorite;
+                  },
+                ),
+              ],
             );
           }),
         )

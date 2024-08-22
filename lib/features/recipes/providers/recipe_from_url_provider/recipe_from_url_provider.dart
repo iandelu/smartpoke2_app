@@ -20,11 +20,23 @@ class RecipeFromUrl extends _$RecipeFromUrl {
 
   Future<void> updateRecipe(
       {required dynamic key, required RecipeModel recipe}) async {
+
     logger.d('Attempting to update recipe');
-    final addTime = DateTime.now().toString();
-    final Map<String, dynamic> recipeJson = recipe.toJson();
-    recipeJson['addTime'] = addTime;
-    await _hiveService.updateRecipe(key, recipeJson);
+    final addTime = DateTime.now();
+    recipe = recipe.copyWith(
+        addTime: addTime.toString(),
+        lastUpdateDate: addTime
+    );
+
+    final recipeSaved = await _apiService.updateRecipe(recipe: recipe);
+
+    if (key == null) {
+      addRecipeFromUrlToHive(recipe: recipeSaved);
+    }else{
+      final Map<String, dynamic> recipeJson = recipeSaved.toJson();;
+      await _hiveService.updateRecipe(key, recipeJson);
+    }
+
     logger.d('Successfully updated recipe');
     ref.invalidateSelf();
   }
@@ -39,6 +51,13 @@ class RecipeFromUrl extends _$RecipeFromUrl {
     logger.d('Fetching recipe from API by id: $id');
     final recipe = await _apiService.getRecipeFromId(id: id);
     return recipe;
+  }
+
+  Future<RecipeModel> createRecipe({required RecipeModel recipe}) async {
+    logger.d('Creating recipe from API');
+    final recipeSaved = await _apiService.createRecipe(recipe: recipe);
+    await addRecipeFromUrlToHive(recipe: recipeSaved);
+    return recipeSaved;
   }
 
   Future<void> addRecipeFromUrlToHive({required RecipeModel recipe}) async {

@@ -39,8 +39,12 @@ mixin _$ProductModel {
   List<String>? get tags => throw _privateConstructorUsedError;
   List<AllergenDto>? get allergens => throw _privateConstructorUsedError;
 
+  /// Serializes this ProductModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProductModelCopyWith<ProductModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -85,6 +89,8 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ProductModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -183,6 +189,8 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     ) as $Val);
   }
 
+  /// Create a copy of ProductModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CategoryCopyWith<$Res>? get category {
@@ -195,6 +203,8 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     });
   }
 
+  /// Create a copy of ProductModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $NutrientsCopyWith<$Res>? get nutrients {
@@ -250,6 +260,8 @@ class __$$ProductModelImplCopyWithImpl<$Res>
       _$ProductModelImpl _value, $Res Function(_$ProductModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProductModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -470,7 +482,7 @@ class _$ProductModelImpl implements _ProductModel {
                 .equals(other._allergens, _allergens));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -493,7 +505,9 @@ class _$ProductModelImpl implements _ProductModel {
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_allergens));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProductModelImplCopyWith<_$ProductModelImpl> get copyWith =>
@@ -567,8 +581,11 @@ abstract class _ProductModel implements ProductModel {
   List<String>? get tags;
   @override
   List<AllergenDto>? get allergens;
+
+  /// Create a copy of ProductModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProductModelImplCopyWith<_$ProductModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -582,8 +599,12 @@ mixin _$AllergenDto {
   String get name => throw _privateConstructorUsedError;
   String get lan => throw _privateConstructorUsedError;
 
+  /// Serializes this AllergenDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AllergenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AllergenDtoCopyWith<AllergenDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -607,6 +628,8 @@ class _$AllergenDtoCopyWithImpl<$Res, $Val extends AllergenDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AllergenDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -645,6 +668,8 @@ class __$$AllergenDtoImplCopyWithImpl<$Res>
       _$AllergenDtoImpl _value, $Res Function(_$AllergenDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AllergenDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -692,11 +717,13 @@ class _$AllergenDtoImpl implements _AllergenDto {
             (identical(other.lan, lan) || other.lan == lan));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, lan);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AllergenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AllergenDtoImplCopyWith<_$AllergenDtoImpl> get copyWith =>
@@ -722,8 +749,11 @@ abstract class _AllergenDto implements AllergenDto {
   String get name;
   @override
   String get lan;
+
+  /// Create a copy of AllergenDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AllergenDtoImplCopyWith<_$AllergenDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -740,8 +770,12 @@ mixin _$Category {
   String? get emoji => throw _privateConstructorUsedError;
   List<RecipeModel>? get recipes => throw _privateConstructorUsedError;
 
+  /// Serializes this Category to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Category
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CategoryCopyWith<Category> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -769,6 +803,8 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Category
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -827,6 +863,8 @@ class __$$CategoryImplCopyWithImpl<$Res>
       _$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Category
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -911,12 +949,14 @@ class _$CategoryImpl implements _Category {
             const DeepCollectionEquality().equals(other._recipes, _recipes));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, lan, emoji,
       const DeepCollectionEquality().hash(_recipes));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Category
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
@@ -951,8 +991,11 @@ abstract class _Category implements Category {
   String? get emoji;
   @override
   List<RecipeModel>? get recipes;
+
+  /// Create a copy of Category
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,10 +6,9 @@ part of 'grocery_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GroceryModelImpl _$$GroceryModelImplFromJson(Map<String, dynamic> json) =>
-    _$GroceryModelImpl(
-      groceryItem:
-          RecipeProduct.fromJson(json['groceryItem'] as Map<String, dynamic>),
+_$GroceryModelImpl _$$GroceryModelImplFromJson(Map json) => _$GroceryModelImpl(
+      groceryItem: RecipeProduct.fromJson(
+          Map<String, dynamic>.from(json['groceryItem'] as Map)),
       isChecked: json['isChecked'] as bool,
       key: json['key'],
     );

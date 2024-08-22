@@ -49,10 +49,15 @@ class SearchedRecipesNotifier extends StateNotifier<List<RecipeModel>> {
   }
 
   Future<List<RecipeModel>> searchRecipes(String query) async {
-    List<RecipeModel> recipes = await recipeApiClient.fetchRecipes(query, category: _categories, rating: _rating, time: _time, difficulty: _difficulty);
-    ref.read(searchQueryProvider.notifier).update((state) => query);
+    try {
+      List<RecipeModel> recipes = await recipeApiClient.fetchRecipes(query, category: _categories, rating: _rating, time: _time, difficulty: _difficulty);
+      ref.read(searchQueryProvider.notifier).update((state) => query);
+      state = recipes;
 
-    state = recipes;
+    } on Exception catch (e) {
+      state = [];
+    }
+
     return state;
   }
 }

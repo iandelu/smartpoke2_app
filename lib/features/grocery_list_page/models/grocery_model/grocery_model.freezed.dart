@@ -24,8 +24,12 @@ mixin _$GroceryModel {
   bool get isChecked => throw _privateConstructorUsedError;
   dynamic get key => throw _privateConstructorUsedError;
 
+  /// Serializes this GroceryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GroceryModelCopyWith<GroceryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$GroceryModelCopyWithImpl<$Res, $Val extends GroceryModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -74,6 +80,8 @@ class _$GroceryModelCopyWithImpl<$Res, $Val extends GroceryModel>
     ) as $Val);
   }
 
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $RecipeProductCopyWith<$Res> get groceryItem {
@@ -105,6 +113,8 @@ class __$$GroceryModelImplCopyWithImpl<$Res>
       _$GroceryModelImpl _value, $Res Function(_$GroceryModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -131,7 +141,7 @@ class __$$GroceryModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, anyMap: true)
 class _$GroceryModelImpl implements _GroceryModel {
   const _$GroceryModelImpl(
       {required this.groceryItem, required this.isChecked, required this.key});
@@ -163,12 +173,14 @@ class _$GroceryModelImpl implements _GroceryModel {
             const DeepCollectionEquality().equals(other.key, key));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, groceryItem, isChecked,
       const DeepCollectionEquality().hash(key));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GroceryModelImplCopyWith<_$GroceryModelImpl> get copyWith =>
@@ -197,8 +209,11 @@ abstract class _GroceryModel implements GroceryModel {
   bool get isChecked;
   @override
   dynamic get key;
+
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GroceryModelImplCopyWith<_$GroceryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

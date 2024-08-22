@@ -20,6 +20,7 @@ RecipeModel _$RecipeModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RecipeModel {
+  dynamic get key => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -43,8 +44,12 @@ mixin _$RecipeModel {
   UserModel? get user => throw _privateConstructorUsedError;
   String get addTime => throw _privateConstructorUsedError;
 
+  /// Serializes this RecipeModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RecipeModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RecipeModelCopyWith<RecipeModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,7 +61,8 @@ abstract class $RecipeModelCopyWith<$Res> {
       _$RecipeModelCopyWithImpl<$Res, RecipeModel>;
   @useResult
   $Res call(
-      {int id,
+      {dynamic key,
+      int id,
       String name,
       String description,
       int totalTime,
@@ -92,9 +98,12 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RecipeModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? key = freezed,
     Object? id = null,
     Object? name = null,
     Object? description = null,
@@ -118,6 +127,10 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
     Object? addTime = null,
   }) {
     return _then(_value.copyWith(
+      key: freezed == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -205,6 +218,8 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
     ) as $Val);
   }
 
+  /// Create a copy of RecipeModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $NutrientsCopyWith<$Res> get nutrients {
@@ -213,6 +228,8 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
     });
   }
 
+  /// Create a copy of RecipeModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserModelCopyWith<$Res>? get user {
@@ -235,7 +252,8 @@ abstract class _$$RecipeModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {dynamic key,
+      int id,
       String name,
       String description,
       int totalTime,
@@ -271,9 +289,12 @@ class __$$RecipeModelImplCopyWithImpl<$Res>
       _$RecipeModelImpl _value, $Res Function(_$RecipeModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RecipeModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? key = freezed,
     Object? id = null,
     Object? name = null,
     Object? description = null,
@@ -297,6 +318,10 @@ class __$$RecipeModelImplCopyWithImpl<$Res>
     Object? addTime = null,
   }) {
     return _then(_$RecipeModelImpl(
+      key: freezed == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -390,7 +415,8 @@ class __$$RecipeModelImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$RecipeModelImpl implements _RecipeModel {
   const _$RecipeModelImpl(
-      {required this.id,
+      {required this.key,
+      required this.id,
       required this.name,
       this.description = 'No description available',
       this.totalTime = 0,
@@ -418,6 +444,8 @@ class _$RecipeModelImpl implements _RecipeModel {
   factory _$RecipeModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecipeModelImplFromJson(json);
 
+  @override
+  final dynamic key;
   @override
   final int id;
   @override
@@ -497,7 +525,7 @@ class _$RecipeModelImpl implements _RecipeModel {
 
   @override
   String toString() {
-    return 'RecipeModel(id: $id, name: $name, description: $description, totalTime: $totalTime, price: $price, yields: $yields, pictureUrl: $pictureUrl, source: $source, lan: $lan, ratings: $ratings, views: $views, videoUrl: $videoUrl, lastUpdateDate: $lastUpdateDate, imageFile: $imageFile, difficulty: $difficulty, nutrients: $nutrients, recipeSteps: $recipeSteps, recipeProducts: $recipeProducts, categories: $categories, user: $user, addTime: $addTime)';
+    return 'RecipeModel(key: $key, id: $id, name: $name, description: $description, totalTime: $totalTime, price: $price, yields: $yields, pictureUrl: $pictureUrl, source: $source, lan: $lan, ratings: $ratings, views: $views, videoUrl: $videoUrl, lastUpdateDate: $lastUpdateDate, imageFile: $imageFile, difficulty: $difficulty, nutrients: $nutrients, recipeSteps: $recipeSteps, recipeProducts: $recipeProducts, categories: $categories, user: $user, addTime: $addTime)';
   }
 
   @override
@@ -505,6 +533,7 @@ class _$RecipeModelImpl implements _RecipeModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RecipeModelImpl &&
+            const DeepCollectionEquality().equals(other.key, key) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -538,10 +567,11 @@ class _$RecipeModelImpl implements _RecipeModel {
             (identical(other.addTime, addTime) || other.addTime == addTime));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        const DeepCollectionEquality().hash(key),
         id,
         name,
         description,
@@ -565,7 +595,9 @@ class _$RecipeModelImpl implements _RecipeModel {
         addTime
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RecipeModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RecipeModelImplCopyWith<_$RecipeModelImpl> get copyWith =>
@@ -581,7 +613,8 @@ class _$RecipeModelImpl implements _RecipeModel {
 
 abstract class _RecipeModel implements RecipeModel {
   const factory _RecipeModel(
-      {required final int id,
+      {required final dynamic key,
+      required final int id,
       required final String name,
       final String description,
       final int totalTime,
@@ -606,6 +639,8 @@ abstract class _RecipeModel implements RecipeModel {
   factory _RecipeModel.fromJson(Map<String, dynamic> json) =
       _$RecipeModelImpl.fromJson;
 
+  @override
+  dynamic get key;
   @override
   int get id;
   @override
@@ -649,8 +684,11 @@ abstract class _RecipeModel implements RecipeModel {
   UserModel? get user;
   @override
   String get addTime;
+
+  /// Create a copy of RecipeModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RecipeModelImplCopyWith<_$RecipeModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -724,8 +762,12 @@ mixin _$Nutrients {
   @HiveField(30)
   double get niacin => throw _privateConstructorUsedError;
 
+  /// Serializes this Nutrients to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Nutrients
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NutrientsCopyWith<Nutrients> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -779,6 +821,8 @@ class _$NutrientsCopyWithImpl<$Res, $Val extends Nutrients>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Nutrients
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -993,6 +1037,8 @@ class __$$NutrientsImplCopyWithImpl<$Res>
       _$NutrientsImpl _value, $Res Function(_$NutrientsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Nutrients
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1380,7 +1426,7 @@ class _$NutrientsImpl implements _Nutrients {
             (identical(other.niacin, niacin) || other.niacin == niacin));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -1417,7 +1463,9 @@ class _$NutrientsImpl implements _Nutrients {
         niacin
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Nutrients
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NutrientsImplCopyWith<_$NutrientsImpl> get copyWith =>
@@ -1561,8 +1609,11 @@ abstract class _Nutrients implements Nutrients {
   @override
   @HiveField(30)
   double get niacin;
+
+  /// Create a copy of Nutrients
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NutrientsImplCopyWith<_$NutrientsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1579,8 +1630,12 @@ mixin _$RecipeStep {
   int get time => throw _privateConstructorUsedError;
   String get picture => throw _privateConstructorUsedError;
 
+  /// Serializes this RecipeStep to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RecipeStep
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RecipeStepCopyWith<RecipeStep> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1605,6 +1660,8 @@ class _$RecipeStepCopyWithImpl<$Res, $Val extends RecipeStep>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RecipeStep
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1659,6 +1716,8 @@ class __$$RecipeStepImplCopyWithImpl<$Res>
       _$RecipeStepImpl _value, $Res Function(_$RecipeStepImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RecipeStep
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1741,12 +1800,14 @@ class _$RecipeStepImpl implements _RecipeStep {
             (identical(other.picture, picture) || other.picture == picture));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, description, position, time, picture);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RecipeStep
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RecipeStepImplCopyWith<_$RecipeStepImpl> get copyWith =>
@@ -1781,8 +1842,11 @@ abstract class _RecipeStep implements RecipeStep {
   int get time;
   @override
   String get picture;
+
+  /// Create a copy of RecipeStep
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RecipeStepImplCopyWith<_$RecipeStepImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1800,8 +1864,12 @@ mixin _$RecipeProduct {
   UnitOfMeasure? get unitOfMeasure => throw _privateConstructorUsedError;
   ProductModel? get product => throw _privateConstructorUsedError;
 
+  /// Serializes this RecipeProduct to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RecipeProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RecipeProductCopyWith<RecipeProduct> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1834,6 +1902,8 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RecipeProduct
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1872,6 +1942,8 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
     ) as $Val);
   }
 
+  /// Create a copy of RecipeProduct
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UnitOfMeasureCopyWith<$Res>? get unitOfMeasure {
@@ -1884,6 +1956,8 @@ class _$RecipeProductCopyWithImpl<$Res, $Val extends RecipeProduct>
     });
   }
 
+  /// Create a copy of RecipeProduct
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ProductModelCopyWith<$Res>? get product {
@@ -1927,6 +2001,8 @@ class __$$RecipeProductImplCopyWithImpl<$Res>
       _$RecipeProductImpl _value, $Res Function(_$RecipeProductImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RecipeProduct
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2017,12 +2093,14 @@ class _$RecipeProductImpl implements _RecipeProduct {
             (identical(other.product, product) || other.product == product));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, amount, text, ingredientName, unitOfMeasure, product);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RecipeProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RecipeProductImplCopyWith<_$RecipeProductImpl> get copyWith =>
@@ -2060,8 +2138,11 @@ abstract class _RecipeProduct implements RecipeProduct {
   UnitOfMeasure? get unitOfMeasure;
   @override
   ProductModel? get product;
+
+  /// Create a copy of RecipeProduct
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RecipeProductImplCopyWith<_$RecipeProductImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2075,8 +2156,12 @@ mixin _$UnitOfMeasure {
   int get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
 
+  /// Serializes this UnitOfMeasure to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UnitOfMeasure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UnitOfMeasureCopyWith<UnitOfMeasure> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2100,6 +2185,8 @@ class _$UnitOfMeasureCopyWithImpl<$Res, $Val extends UnitOfMeasure>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UnitOfMeasure
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2138,6 +2225,8 @@ class __$$UnitOfMeasureImplCopyWithImpl<$Res>
       _$UnitOfMeasureImpl _value, $Res Function(_$UnitOfMeasureImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UnitOfMeasure
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2185,11 +2274,13 @@ class _$UnitOfMeasureImpl implements _UnitOfMeasure {
             (identical(other.name, name) || other.name == name));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UnitOfMeasure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UnitOfMeasureImplCopyWith<_$UnitOfMeasureImpl> get copyWith =>
@@ -2214,8 +2305,11 @@ abstract class _UnitOfMeasure implements UnitOfMeasure {
   int get id;
   @override
   String? get name;
+
+  /// Create a copy of UnitOfMeasure
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UnitOfMeasureImplCopyWith<_$UnitOfMeasureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -14,6 +14,7 @@ part 'recipe_model.g.dart';
 class RecipeModel with _$RecipeModel {
   @JsonSerializable(explicitToJson: true)
   const factory RecipeModel({
+    required dynamic key,
     required int id,
     required String name,
     @Default('No description available') String description,

@@ -9,7 +9,6 @@ import 'package:meal_ai/core/utils/logger.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
 import 'package:meal_ai/features/recipes/screens/recipe_detail.dart';
-import 'package:meal_ai/features/recipes/screens/recipe_details_page.dart';
 
 class RecipeWidget extends ConsumerStatefulWidget {
   const RecipeWidget({super.key});

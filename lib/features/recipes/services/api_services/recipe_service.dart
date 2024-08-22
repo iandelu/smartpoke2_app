@@ -37,6 +37,18 @@ class RecipeApiService {
     }
 
   }
+
+  Future<RecipeModel> createRecipe({required RecipeModel recipe}) async {
+    final response = await smartPokeClient.post('recipes', data: recipe.toJson());
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return RecipeModel.fromJson(response.data);
+    } else {
+      logger.d(response.statusCode);
+      throw Exception('Something went wrong');
+    }
+  }
+
   Future<List<RecipeModel>> fetchRecipes(String query, {required List<CategoryModel> category, int? rating, int? time, String? difficulty}) async {
 
     final categoriesString = category.map((e) => e.name).toList().join(',');
@@ -71,6 +83,18 @@ class RecipeApiService {
       logger.d(response.statusCode);
       throw Exception('Something went wrong');
     }
+  }
+
+  Future<RecipeModel> updateRecipe({required RecipeModel recipe}) {
+    return smartPokeClient.put('recipes/${recipe.id}', data: recipe.toJson())
+        .then((response) {
+      if (response.statusCode == 200) {
+        return RecipeModel.fromJson(response.data);
+      } else {
+        logger.d(response.statusCode);
+        throw Exception('Something went wrong');
+      }
+    });
   }
 
 }
