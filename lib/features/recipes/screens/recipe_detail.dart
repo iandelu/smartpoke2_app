@@ -8,6 +8,7 @@ import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/human_formats.dart';
 import 'package:meal_ai/core/widgets/buttons.dart';
 import 'package:meal_ai/core/widgets/expandable_text.dart';
+import 'package:meal_ai/features/category/widgets/category_chips.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
 import 'package:meal_ai/features/recipes/screens/recipe_edit.dart';
@@ -170,16 +171,17 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: PaddingSizes.md,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: ExpandableTextWidget(
+                    text: recipe!.name,
+                    style: headline3,
+                    maxLines: 2,
+                  ),
                 ),
-                ExpandableTextWidget(
-                  text: recipe!.name,
-                  style: headline1,
-                  maxLines: 2,
-                ),
+                SizedBox(width: 8,),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: YieldsCounter(
@@ -192,10 +194,26 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: PaddingSizes.md,
+            recipe!.user != null ?
+            Text(
+              recipe!.user?.email ?? 'Unknown',
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 16,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ) :
+            Text(
+              "${RegExp(r'^https?:\/\/([^\/]+)').firstMatch(recipe!.source)?.group(1)}",
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 16,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-            Row(
+            /*Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 createIconText(
@@ -214,10 +232,8 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
                   accentTeal1,
                 ),
               ],
-            ),
-            const SizedBox(
-              height: PaddingSizes.md,
-            ),
+            ),*/
+            SizedBox(height: 8,),
             const Text(
               "Description",
               style: headline5,
@@ -233,9 +249,19 @@ class RecipeDetailState extends ConsumerState<RecipeDetail> {
             const SizedBox(
               height: PaddingSizes.md,
             ),
-            CategoriesWidget(
-              categories: recipe!.categories,
-            ),
+            if (recipe!.categories.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Categories",
+                    style: headline5,
+                  ),
+                  CategoryChips(
+                    categories: recipe!.categories,
+                  )
+                ],
+              ),
             const SizedBox(
               height: PaddingSizes.md,
             ),

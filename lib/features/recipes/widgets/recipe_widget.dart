@@ -86,28 +86,21 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
       child: Column(
         children: [
           const SizedBox(height: 10),
-          CupertinoContextMenu(
-            actions: [
-              Builder(
-                builder: (cupertinoContext) => CupertinoContextMenuAction(
-                    child: const Text('Delete'),
-                    onPressed: () async {
-                      await ref
-                          .read(recipeFromUrlProvider.notifier)
-                          .deleteRecipeFromHive(key: widget.key);
-                      if (!mounted) return;
-                      Navigator.pop(cupertinoContext);
-                    }),
-              ),
-              Builder(builder: (cupertinoContext) {
-                return CupertinoContextMenuAction(
-                  child: const Text('Cancel'),
-                  onPressed: () {
-                    Navigator.pop(cupertinoContext);
-                  },
-                );
-              })
-            ],
+          Dismissible(
+            key: ValueKey(widget.recipe.id),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) async {
+
+              await ref
+                  .read(recipeFromUrlProvider.notifier)
+                  .deleteRecipeFromHive(key: widget.recipe.key);
+            },
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: const Icon(Icons.delete, color: Colors.white),
+            ),
             child: GestureDetector(
               onTap: () => Navigator.push(
                   context,
@@ -118,19 +111,23 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 160,
-                    width: MediaQuery.sizeOf(context).width * 0.9,
-                    decoration: BoxDecoration(
-                        boxShadow: [shadowMediumBrut],
-                        borderRadius: kStandardBorderRadius,
-                        border: Border.all(color: black1, width: 2),
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.3), BlendMode.darken),
-                            image:
+                  Row(
+                    children: [
+                      Container(
+                        height: 160,
+                        width: MediaQuery.sizeOf(context).width *0.91,
+                        decoration: BoxDecoration(
+                            boxShadow: [shadowMediumBrut],
+                            borderRadius: kStandardBorderRadius,
+                            border: Border.all(color: black1, width: 2),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.3), BlendMode.darken),
+                                image:
                                 CachedNetworkImageProvider(widget.recipe.pictureUrl))),
+                      ),
+                    ],
                   ),
                   Row(
                     children: [
@@ -153,8 +150,8 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
                         CupertinoIcons.time,
                         color: black1,
                       ),
-                       Text(
-                       " ${widget.recipe.totalTime.toString()} minutes",
+                      Text(
+                        " ${widget.recipe.totalTime.toString()} minutes",
                       ),
                       const SizedBox( width: 8,),
                       const Icon(
@@ -167,7 +164,6 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
                       ),
                     ],
                   ),
-
                 ],
               ),
             ),
