@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:meal_ai/features/category/models/category_models.dart';
 import 'dart:convert';
 import 'dart:async';
 
@@ -15,7 +16,7 @@ final searchedRecipesNotifier = StateNotifierProvider<SearchedRecipesNotifier, L
 
 
 class SearchedRecipesNotifier extends StateNotifier<List<RecipeModel>> {
-  List<String> _categories = [];
+  List<CategoryModel> _categories = [];
   int? _rating;
   int? _time;
   String? _difficulty;
@@ -24,11 +25,27 @@ class SearchedRecipesNotifier extends StateNotifier<List<RecipeModel>> {
 
   SearchedRecipesNotifier(this.recipeApiClient, this.ref) : super([]);
 
-  void setFilters(List<String> categories, int? rating, int? time, String? difficulty) {
+  void setFilters(List<CategoryModel> categories, int? rating, int? time, String? difficulty) {
     _categories = categories;
     _rating = rating;
     _time = time;
     _difficulty = difficulty;
+  }
+
+  void clearFilters() {
+    _categories = [];
+    _rating = null;
+    _time = null;
+    _difficulty = null;
+  }
+
+  Map<String, dynamic> getFilters() {
+    return {
+      'categories': _categories,
+      'rating': _rating,
+      'time': _time,
+      'difficulty': _difficulty,
+    };
   }
 
   Future<List<RecipeModel>> searchRecipes(String query) async {

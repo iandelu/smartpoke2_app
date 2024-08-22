@@ -8,9 +8,10 @@ import 'package:meal_ai/features/category/models/category_models.dart';
 import 'package:meal_ai/features/category/services/api_services/smartpoke_api_service.dart';
 
 class CategoriesHorizontalScroller extends StatelessWidget{
-  final SmartpokeCategoryApiService _apiService = SmartpokeCategoryApiService();
+  final List<CategoryModel> categories;
   final String title;
   CategoriesHorizontalScroller({
+    required this.categories,
     required this.title,
     super.key,
   });
@@ -32,7 +33,6 @@ class CategoriesHorizontalScroller extends StatelessWidget{
   }
 
   Future<Widget> _buildFutureContent(BuildContext context) async {
-    final List<CategoryModel> categories = await _apiService.getRecipeCategories();
     return  SizedBox(
       height: 45,
       child: ListView.separated(

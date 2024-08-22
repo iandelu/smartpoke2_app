@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meal_ai/features/category/category_screen.dart';
+import 'package:meal_ai/features/category/models/category_models.dart';
+import 'package:meal_ai/features/category/providers/catgories_provider.dart';
 import 'package:meal_ai/features/main_page/screens/main_page.dart';
 import 'package:meal_ai/features/product/screens/product_detail_screen.dart';
 import 'package:meal_ai/features/recipes/screens/recipe_detail.dart';
@@ -47,7 +49,7 @@ final appRouter = Provider<GoRouter>((ref) {
         name: CategoryScreen.name,
         builder: (context, state) {
           final parameter = state.pathParameters['category'] ?? '';
-          String category = parameter;
+          CategoryModel category = ref.read(categoryProvider).recipeCategories.firstWhere((element) => element.name == parameter);
           return CategoryScreen(category: category);
         },
       ),

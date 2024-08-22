@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:meal_ai/config/connections/smartpoke_client.dart';
 import 'package:meal_ai/core/utils/helper_methods.dart';
 import 'package:meal_ai/core/utils/logger.dart';
+import 'package:meal_ai/features/category/models/category_models.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/services/local_services/recipe_hive_service.dart';
 
@@ -36,12 +37,13 @@ class RecipeApiService {
     }
 
   }
-  Future<List<RecipeModel>> fetchRecipes(String query, {required List<String> category, int? rating, int? time, String? difficulty}) async {
+  Future<List<RecipeModel>> fetchRecipes(String query, {required List<CategoryModel> category, int? rating, int? time, String? difficulty}) async {
 
+    final categoriesString = category.map((e) => e.name).toList().join(',');
     final response = await smartPokeClient.get('recipes',
                       queryParams: {
                       'name': query,
-                      'category': category,
+                      'categories': categoriesString,
                       'rating': rating,
                       'time': time,
                       'difficulty': difficulty

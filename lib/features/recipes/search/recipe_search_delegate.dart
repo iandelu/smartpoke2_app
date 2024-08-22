@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/features/category/providers/catgories_provider.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
 import 'package:meal_ai/features/recipes/search/search_recipe_provider.dart';
-import 'package:meal_ai/features/recipes/widgets/filter_dialog.dart';
+import 'package:meal_ai/features/recipes/widgets/recipe_filter_sheet.dart';
 import 'package:meal_ai/features/recipes/widgets/recipe_card.dart';
 
 class RecipeSearchDelegate extends SearchDelegate {
@@ -49,21 +50,31 @@ class RecipeSearchDelegate extends SearchDelegate {
       IconButton(
         icon: const Icon(Icons.filter_list),
         onPressed: () async {
-          final filters = await showDialog<Map<String, dynamic>>(
+          final categories = ref.read(categoryProvider);
+          final filters = ref.read(searchedRecipesNotifier.notifier).getFilters();
+
+          final newFilters = await showModalBottomSheet<Map<String, dynamic>>(
             context: context,
+            isScrollControlled: true,
             builder: (context) {
-              return RecipeFilterSheet();
+              return RecipeFilterSheet(
+                  allCategories: categories.recipeCategories,
+                  selectedCategories: filters["categories"],
+                  selectedRating: filters["rating"],
+                  selectedTime: filters["time"],
+                  selectedDifficulty: filters["difficulty"],
+              );
             },
           );
 
-          if (filters != null) {
+          if (newFilters != null) {
             ref.read(searchedRecipesNotifier.notifier).setFilters(
-              filters['categories'],
-              filters['rating'],
-              filters['time'],
-              filters['difficulty'],
+              newFilters['categories'],
+              newFilters['rating'],
+              newFilters['time'],
+              newFilters['difficulty'],
             );
-            ref.read(searchedRecipesNotifier.notifier).searchRecipes(query);
+            _onQueryChanged(query);
           }
         },
       ),

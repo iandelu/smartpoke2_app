@@ -39,12 +39,17 @@ class SmartpokeCategoryApiService {
 
   Future<List<CategoryModel>> getProductCategories() async {
     final response = await smartPokeClient.get(
-      '/categories/product',
+      'categories/product',
     );
 
     if (response.statusCode == 200) {
-      List<Map<String, dynamic>> categoriesJson = await response.data;
-      return categoriesJson.map((category) => CategoryModel.fromJson(category)).toList();
+      try {
+        List<dynamic> categoriesJson = await response.data;
+        return categoriesJson.map((category) => CategoryModel.fromJson(category)).toList();
+      } on Exception catch (e) {
+        logger.d(e);
+        throw Exception('Something went wrong');
+      }
 
     } else {
       logger.d(response.statusCode);
