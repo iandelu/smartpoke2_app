@@ -137,7 +137,7 @@ class NutrientsImplAdapter extends TypeAdapter<_$NutrientsImpl> {
 _$RecipeModelImpl _$$RecipeModelImplFromJson(Map<String, dynamic> json) =>
     _$RecipeModelImpl(
       key: json['key'],
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String,
       description: json['description'] as String? ?? 'No description available',
       totalTime: (json['totalTime'] as num?)?.toInt() ?? 0,

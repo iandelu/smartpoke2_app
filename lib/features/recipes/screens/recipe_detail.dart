@@ -10,7 +10,7 @@ import 'package:meal_ai/core/widgets/buttons.dart';
 import 'package:meal_ai/core/widgets/expandable_text.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
-import 'package:meal_ai/features/recipes/screens/recippe_edit.dart';
+import 'package:meal_ai/features/recipes/screens/recipe_edit.dart';
 import 'package:meal_ai/features/recipes/widgets/categories_list_widget.dart';
 import 'package:meal_ai/features/recipes/widgets/ingredients_widget.dart';
 import 'package:meal_ai/features/recipes/widgets/nutrition_list_widget.dart';
@@ -39,6 +39,7 @@ class RecipeDetail extends ConsumerStatefulWidget {
 
 class RecipeDetailState extends ConsumerState<RecipeDetail> {
   RecipeModel? recipe;
+  var units = [];
   double _factor = 1.0;
   late Color color = Theme.of(context).colorScheme.secondary;
   late Color colorSecondary = Theme.of(context).colorScheme.primary;

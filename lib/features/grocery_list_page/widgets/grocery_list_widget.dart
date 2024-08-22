@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
+import 'package:meal_ai/core/provider/unit_of_measure_provider.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provider/grocery_list_provider.dart';
 import 'package:meal_ai/features/product/search/product_search_delegate.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
-import 'grocery_detail_sheet.dart';
+import 'recipe_product_edit_sheet.dart';
 
 class GroceryListWidget extends StatefulHookConsumerWidget {
   const GroceryListWidget({
@@ -21,12 +22,12 @@ class GroceryListWidget extends StatefulHookConsumerWidget {
 
 class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
 
-  void _showBottomSheet(BuildContext context, GroceryModel grocery, int index, Function(int, GroceryModel) onUpdateGrocery, List<UnitOfMeasure> unitOfMeasures) {
+  void _showBottomSheet(BuildContext context, GroceryModel grocery, int index, Function(int, RecipeProduct) onUpdateGrocery, List<UnitOfMeasure> unitOfMeasures) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return GroceryDetailSheet(
-          grocery: grocery,
+        return RecipeProductEditSheet(
+          recipeProduct: grocery.groceryItem,
           index: index,
           onUpdateGrocery: onUpdateGrocery,
           unitOfMeasures: unitOfMeasures,
@@ -41,17 +42,12 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
     final groceryMethods = ref.read(groceryListProvider.notifier);
     final groupedGroceries = <String, List<GroceryModel>>{};
 
-    onUpdateGrocery(index, grocery) {
+    onUpdateGrocery(index, product) {
+      final grocery = groceryList[index].copyWith(groceryItem: product);
       groceryMethods.updateGrocery(item: grocery, key: grocery.key);
     }
 
-    final unitOfMeasures = [
-      UnitOfMeasure(id: 1, name: 'g'),
-      UnitOfMeasure(id: 2, name: 'kg'),
-      UnitOfMeasure(id: 3, name: 'L'),
-    ];
-
-
+    final unitOfMeasures = ref.read(unitOfMeasureProvider).units;
 
     for (var grocery in groceryList) {
       final category = grocery.groceryItem.product?.category?.name ?? 'Otros';

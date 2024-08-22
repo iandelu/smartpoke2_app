@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
-class GroceryDetailSheet extends StatefulWidget {
-  final GroceryModel grocery;
+class RecipeProductEditSheet extends StatefulWidget {
+  final RecipeProduct recipeProduct;
   final int index;
-  final void Function(int, GroceryModel) onUpdateGrocery;
+  final void Function(int, RecipeProduct) onUpdateGrocery;
   final List<UnitOfMeasure> unitOfMeasures;
 
-  const GroceryDetailSheet({
-    required this.grocery,
+  const RecipeProductEditSheet({
+    required this.recipeProduct,
     required this.index,
     required this.onUpdateGrocery,
     required this.unitOfMeasures,
@@ -19,10 +18,10 @@ class GroceryDetailSheet extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GroceryDetailSheetState createState() => _GroceryDetailSheetState();
+  _RecipeProductEditSheetState createState() => _RecipeProductEditSheetState();
 }
 
-class _GroceryDetailSheetState extends State<GroceryDetailSheet> {
+class _RecipeProductEditSheetState extends State<RecipeProductEditSheet> {
   late TextEditingController _amountController;
   late TextEditingController _nameController;
   UnitOfMeasure? selectedUnit;
@@ -30,9 +29,9 @@ class _GroceryDetailSheetState extends State<GroceryDetailSheet> {
   @override
   void initState() {
     super.initState();
-    _amountController = TextEditingController(text: widget.grocery.groceryItem.amount.toString());
-    _nameController = TextEditingController(text: widget.grocery.groceryItem.ingredientName);
-    selectedUnit = widget.grocery.groceryItem.unitOfMeasure;
+    _amountController = TextEditingController(text: widget.recipeProduct.amount.toString());
+    _nameController = TextEditingController(text: widget.recipeProduct.ingredientName);
+    selectedUnit = widget.recipeProduct.unitOfMeasure;
   }
 
   @override
@@ -61,19 +60,13 @@ class _GroceryDetailSheetState extends State<GroceryDetailSheet> {
               Text('Detalles', style: textTheme.headlineMedium?.copyWith(color: colorScheme.onBackground)),
               TextButton(
                 onPressed: () {
-                  final updatedProduct = widget.grocery.groceryItem.copyWith(
+                  final updatedProduct = widget.recipeProduct.copyWith(
                     ingredientName: _nameController.text,
-                    amount: double.tryParse(_amountController.text) ?? widget.grocery.groceryItem.amount,
+                    amount: double.tryParse(_amountController.text) ?? widget.recipeProduct.amount,
                     unitOfMeasure: selectedUnit,
                   );
 
-                  final updatedGrocery = GroceryModel(
-                    groceryItem: updatedProduct,
-                    isChecked: widget.grocery.isChecked,
-                    key: widget.grocery.key,
-                  );
-
-                  widget.onUpdateGrocery(widget.index, updatedGrocery);
+                  widget.onUpdateGrocery(widget.index, updatedProduct);
                   Navigator.pop(context);
                 },
                 child: Text('Hecho', style: TextStyle(color: colorScheme.primary)),
@@ -122,7 +115,7 @@ class _GroceryDetailSheetState extends State<GroceryDetailSheet> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: colorScheme.surface,
-                    labelText: widget.grocery.groceryItem.unitOfMeasure?.name ?? 'Unidad',
+                    labelText: widget.recipeProduct.unitOfMeasure?.name ?? 'Unidad',
                     labelStyle: TextStyle(color: colorScheme.onSurface),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16), // Bordes redondeados

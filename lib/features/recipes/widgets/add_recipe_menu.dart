@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
+import 'package:meal_ai/features/recipes/screens/recipe_edit.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
 import 'enter_url_dialog_widget.dart';
@@ -14,13 +17,36 @@ class AddRecipeMenu extends ConsumerStatefulWidget {
 }
 
 class _MealPlanMenuState extends ConsumerState<AddRecipeMenu> {
+
+  Future<void> _createNewRecipeFromScratch() async {
+    RecipeModel newRecipe = RecipeModel(key: null, id: null, name: '');
+
+    newRecipe = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditRecipeScreen(recipe: newRecipe),
+      ),
+    );
+
+    if (newRecipe == null) {
+      return;
+    }
+
+    ref.read(recipeFromUrlProvider.notifier)
+        .createRecipe(recipe: newRecipe);
+  }
+
   @override
   Widget build(BuildContext context) {
     return PullDownButton(
         itemBuilder: (context) => [
               PullDownMenuItem(
                 title: 'From Scratch',
-                onTap: () {},
+                onTap: () {
+
+                  _createNewRecipeFromScratch();
+
+                },
                 icon: CupertinoIcons.pencil,
               ),
               PullDownMenuItem(
@@ -56,3 +82,5 @@ class _MealPlanMenuState extends ConsumerState<AddRecipeMenu> {
         buttonBuilder: widget.builder);
   }
 }
+
+

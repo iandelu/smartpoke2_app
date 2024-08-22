@@ -21,7 +21,7 @@ RecipeModel _$RecipeModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RecipeModel {
   dynamic get key => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   int get totalTime => throw _privateConstructorUsedError;
@@ -62,7 +62,7 @@ abstract class $RecipeModelCopyWith<$Res> {
   @useResult
   $Res call(
       {dynamic key,
-      int id,
+      int? id,
       String name,
       String description,
       int totalTime,
@@ -104,7 +104,7 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
   @override
   $Res call({
     Object? key = freezed,
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? description = null,
     Object? totalTime = null,
@@ -131,10 +131,10 @@ class _$RecipeModelCopyWithImpl<$Res, $Val extends RecipeModel>
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -253,7 +253,7 @@ abstract class _$$RecipeModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {dynamic key,
-      int id,
+      int? id,
       String name,
       String description,
       int totalTime,
@@ -295,7 +295,7 @@ class __$$RecipeModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? key = freezed,
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? description = null,
     Object? totalTime = null,
@@ -322,10 +322,10 @@ class __$$RecipeModelImplCopyWithImpl<$Res>
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -447,7 +447,7 @@ class _$RecipeModelImpl implements _RecipeModel {
   @override
   final dynamic key;
   @override
-  final int id;
+  final int? id;
   @override
   final String name;
   @override
@@ -614,7 +614,7 @@ class _$RecipeModelImpl implements _RecipeModel {
 abstract class _RecipeModel implements RecipeModel {
   const factory _RecipeModel(
       {required final dynamic key,
-      required final int id,
+      required final int? id,
       required final String name,
       final String description,
       final int totalTime,
@@ -642,7 +642,7 @@ abstract class _RecipeModel implements RecipeModel {
   @override
   dynamic get key;
   @override
-  int get id;
+  int? get id;
   @override
   String get name;
   @override
