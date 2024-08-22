@@ -54,7 +54,7 @@ class AddMealPlanRecipeWidget extends StatelessWidget {
                     Text('Recipes',
                         style: AppTextStyles().lThick.copyWith(
                             fontSize: 36, color: context.primaryColor)),
-                    const SearchBarWidget(),
+                    SearchBarWidget(),
                     const SizedBox(height: PaddingSizes.mdl),
                     Expanded(
                       child: ListView.builder(

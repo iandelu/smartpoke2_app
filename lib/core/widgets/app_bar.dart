@@ -48,7 +48,7 @@ class _BrutBottomNavigationBarState extends State<BrutBottomNavigationBar> {
       color: white,
       padding: EdgeInsets.zero,
       shape: const CircularNotchedRectangle(),
-      height: 60,
+      height: 50,
       child: Container(
         decoration: BoxDecoration(
           color: widget.defaultColor,
@@ -65,13 +65,13 @@ class _BrutBottomNavigationBarState extends State<BrutBottomNavigationBar> {
                 decoration: BoxDecoration(
                   border: _selectedIndex == index ? brutBorderNormal : Border.all(color: Colors.transparent), // Change the border if selected
                   color: _selectedIndex == index ? widget.activeColor : widget.defaultColor, // Change the background color if selected
-                  borderRadius: BorderRadius.circular(BorderRadiusSizes.sm),
+                  borderRadius: BorderRadius.circular(BorderRadiusSizes.md),
                   boxShadow: _selectedIndex == index ? [shadowMediumBrut] : [], // Change the shadow if selected
                 ),
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                 child: Icon(
                   item.icon,
-                  color: _selectedIndex == index ? black1 : white,
+                  color: _selectedIndex == index ? black1 : black1,
                 ),
               ),
             );

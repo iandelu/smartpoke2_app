@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:meal_ai/core/widgets/app_bar.dart';
 import 'package:meal_ai/features/meal_plan_page/screens/meal_plane_page.dart';
@@ -64,8 +65,8 @@ class MainPageState extends State<MainPage> {
       ),
       bottomNavigationBar: isOnMainPage
           ? BrutBottomNavigationBar(
-              activeColor: Theme.of(context).colorScheme.secondary,
-              defaultColor: Theme.of(context).colorScheme.primary,
+              activeColor: accentTeal1,
+              defaultColor: cream2,
               items: navBarMenus,
               currentIndex: currentIndex,
               onItemTapped: onTap,

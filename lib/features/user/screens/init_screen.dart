@@ -56,22 +56,21 @@ class InitialPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BrutIconButton(
-                        iconData: Icons.apple,
+                        icon: Icon(Icons.apple),
                         buttonColor: Colors.white,
                         rounded: false,
                         height: 60,
                         width: 60,
                       ),
                       BrutIconButton(
-                        iconData: Icons.apple,
+                        icon: Icon(Icons.facebook, color: Colors.white,),
                         buttonColor: Colors.black,
-                        iconColor: Colors.white,
                         rounded: false,
                         height: 60,
                         width: 60,
                       ),
                       BrutIconButton(
-                        iconData: Icons.apple,
+                        icon: Icon(Icons.g_mobiledata),
                         buttonColor: accentCoral3,
                         rounded: false,
                         height: 60,

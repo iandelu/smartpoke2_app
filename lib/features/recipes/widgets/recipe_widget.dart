@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
+import 'package:meal_ai/config/theme/brut_shadows.dart';
 import 'package:meal_ai/core/provider/search_provider.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
@@ -80,7 +82,7 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 250,
+      width: 293,
       child: Column(
         children: [
           const SizedBox(height: 10),
@@ -92,7 +94,7 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
                     onPressed: () async {
                       await ref
                           .read(recipeFromUrlProvider.notifier)
-                          .deleteRecipeFromHive(key: widget.recipe.id);
+                          .deleteRecipeFromHive(key: widget.key);
                       if (!mounted) return;
                       Navigator.pop(cupertinoContext);
                     }),
@@ -112,46 +114,61 @@ class _RecipeCardWidgetState extends ConsumerState<RecipeCardWidget> {
                   CupertinoPageRoute(
                       builder: (context) =>
                           RecipeDetail(recipe: widget.recipe))),
-              child: Container(
-                height: 160,
-                width: MediaQuery.sizeOf(context).width * 0.9,
-                decoration: BoxDecoration(
-                    borderRadius: kStandardBorderRadius,
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.3), BlendMode.darken),
-                        image:
-                            CachedNetworkImageProvider(widget.recipe.pictureUrl))),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: PaddingSizes.sm, top: PaddingSizes.mdl),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 160,
+                    width: MediaQuery.sizeOf(context).width * 0.9,
+                    decoration: BoxDecoration(
+                        boxShadow: [shadowMediumBrut],
+                        borderRadius: kStandardBorderRadius,
+                        border: Border.all(color: black1, width: 2),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(
+                                Colors.black.withOpacity(0.3), BlendMode.darken),
+                            image:
+                                CachedNetworkImageProvider(widget.recipe.pictureUrl))),
+                  ),
+                  Row(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          widget.recipe.name,
-                          textAlign: TextAlign.start,
-                          style: AppTextStyles()
-                              .mThick
-                              .copyWith(color: Colors.white, fontSize: 24),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Serving ${widget.recipe.yields.toString()}',
-                          textAlign: TextAlign.left,
-                          style: AppTextStyles()
-                              .mThick
-                              .copyWith(color: Colors.white),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            widget.recipe.name,
+                            style: headline6.copyWith(color: black1),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
+                  Row(
+                    children: [
+                      const SizedBox( width: 8,),
+                      const Icon(
+                        size: 16,
+                        CupertinoIcons.time,
+                        color: black1,
+                      ),
+                       Text(
+                       " ${widget.recipe.totalTime.toString()} minutes",
+                      ),
+                      const SizedBox( width: 8,),
+                      const Icon(
+                        size: 16,
+                        CupertinoIcons.person_solid,
+                        color: black1,
+                      ),
+                      Text(
+                        " ${widget.recipe.yields.toString()} servings",
+                      ),
+                    ],
+                  ),
+
+                ],
               ),
             ),
           ),

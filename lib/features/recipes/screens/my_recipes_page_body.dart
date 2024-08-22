@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/widgets/buttons.dart';
@@ -57,10 +58,10 @@ class _MyRecipesPageBody extends ConsumerState<MyRecipesPageBody> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SearchBarWidget(showFilter: true),
+                SearchBarWidget(showFilter: true),
                 const SizedBox(height: PaddingSizes.sm),
                 CategoriesHorizontalScroller(title: 'Categories', categories: categories),
-                const SizedBox(height: PaddingSizes.mdl),
+                const SizedBox(height: PaddingSizes.lg),
                 Padding(
                   padding: const EdgeInsets.only(top: PaddingSizes.xxxs),
                   child: Row(
@@ -71,7 +72,7 @@ class _MyRecipesPageBody extends ConsumerState<MyRecipesPageBody> {
                       ),
                       const Expanded(child: SizedBox.shrink()),
                       CustomIconButton(
-                        icon: Icons.book,
+                        icon: Icon(Icons.book, color: black1, size: 24),
                         onPressed: () {
                           final searchedRecipes = ref.read(searchedRecipesNotifier);
 
@@ -105,9 +106,15 @@ class _MyRecipesPageBody extends ConsumerState<MyRecipesPageBody> {
 
 AppBar _appBar(BuildContext context){
   return AppBar(
-    title: Text(
-      'Recipes',
-      style: AppTextStyles().lThick,
+    title: Column(
+      children: [
+        Text(
+          'Recipes',
+          style: AppTextStyles().lThick.copyWith(
+            color: black1,
+          ),
+        ),
+      ],
     ),
     centerTitle: false,
     elevation: 0,

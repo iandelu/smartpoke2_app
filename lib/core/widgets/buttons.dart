@@ -73,27 +73,23 @@ class BrutButton extends StatelessWidget {
 class BrutIconButton extends StatefulWidget {
   final Color buttonColor;
   final BoxShadow boxShadow;
-  final IconData iconData;
-  final double iconSize;
+  final Icon icon;
   final double width;
   final double height;
   final bool rounded;
   final bool isClickable;
   final VoidCallback? onPressed;
-  final Color iconColor;
 
   const BrutIconButton({
     Key? key,
-    required this.iconData,
+    required this.icon,
     this.onPressed,
     this.buttonColor = accentTeal1,
     this.boxShadow = shadowMediumBrut,
-    this.iconSize = 30.0,
     this.width = 40,
     this.height = 40,
     this.rounded = true,
     this.isClickable = true,
-    this.iconColor = black1
   }) : super(key: key);
 
   @override
@@ -166,11 +162,7 @@ class _BrutIconButtonState extends State<BrutIconButton> with SingleTickerProvid
                 shape: shape,
                 boxShadow: [widget.boxShadow],
               ),
-              child: Icon(
-                widget.iconData,
-                size: widget.iconSize,
-                color: widget.iconColor,
-              ),
+              child: widget.icon,
             ),
           );
         },
@@ -180,7 +172,7 @@ class _BrutIconButtonState extends State<BrutIconButton> with SingleTickerProvid
 }
 
 class IconAndTextWidget extends StatelessWidget {
-  final IconData icon;
+  final Icon icon;
   final String text;
   final Color iconColor;
   final bool rounded;
@@ -199,7 +191,7 @@ class IconAndTextWidget extends StatelessWidget {
     return Row(
 
       children: [
-        BrutIconButton(iconData: icon, isClickable: false, rounded: true, buttonColor: iconColor, width: 30, height: 30,iconSize: 20,),
+        BrutIconButton(icon: icon, isClickable: false, rounded: true, buttonColor: iconColor, width: 30, height: 30),
         const SizedBox(width: PaddingSizes.xs),
         Text(text, style: Theme.of(context).textTheme.bodyMedium,),
         const SizedBox(width: PaddingSizes.sm),
@@ -210,7 +202,7 @@ class IconAndTextWidget extends StatelessWidget {
 
 class CustomIconButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final IconData icon;
+  final Icon icon;
   final Color iconColor;
   final double iconSize;
   final double borderRadius;
@@ -249,11 +241,7 @@ class CustomIconButton extends StatelessWidget {
         ),
       ),
       child: IconButton(
-        icon: Icon(
-          icon,
-          color: iconColor,
-          size: iconSize,
-        ),
+        icon: icon,
         onPressed: onPressed,
         padding: EdgeInsets.zero, // Sin padding para mantener el botón compacto
         constraints: BoxConstraints(), // Sin restricciones para mantener el tamaño del contenedor
@@ -261,6 +249,8 @@ class CustomIconButton extends StatelessWidget {
     );
   }
 }
+
+
 
 
 
