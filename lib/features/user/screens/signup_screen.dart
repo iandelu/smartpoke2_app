@@ -51,11 +51,11 @@ class SignupPage extends ConsumerWidget {
               ),
               Column(
                 children: <Widget>[
-                  BrutRoundedInputField(label: tEmail, controller: _emailController,),
+                  BrutInputField(label: tEmail, controller: _emailController,),
                   const SizedBox(height: PaddingSizes.md,),
-                  BrutRoundedPasswordInputField(label: tPassword, obscureText: true, controller: _passwordController,),
+                  BrutInputField(label: tPassword, obscureText: true, controller: _passwordController,),
                   const SizedBox(height: PaddingSizes.md,),
-                  BrutRoundedPasswordInputField(label: tConfirmPassword, obscureText: true, controller: _passwordConfirmController,),
+                  BrutInputField(label: tConfirmPassword, obscureText: true, controller: _passwordConfirmController,),
                 ],
               ),
               const SizedBox(height: PaddingSizes.md,),

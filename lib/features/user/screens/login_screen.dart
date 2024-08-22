@@ -42,8 +42,8 @@ class LoginPage extends ConsumerWidget {
               const Text(tLoginHeader, style: headline1,),
               Column(
                 children: <Widget>[
-                  BrutRoundedInputField(label: tEmail, controller: _emailController,),
-                  BrutRoundedPasswordInputField(label: tPassword, obscureText: true, controller: _passwordController,),
+                  BrutInputField(label: tEmail, obscureText:false, controller: _emailController,),
+                  BrutInputField(label: tPassword, obscureText: true, controller: _passwordController,),
                 ],
               ),
               const SizedBox(height: PaddingSizes.md,),
