@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -42,7 +43,9 @@ class _GroceryListPageBodyState extends State<GroceryListPageBody> {
               children: [
                 Text(
                   'Grocery List',
-                  style: AppTextStyles().lThick,
+                  style: AppTextStyles().lThick.copyWith(
+                    color: black1
+                  ),
                 ),
                 GroceryListDialog(
                   builder: ((context, showMenu) => IconButton(
@@ -52,7 +55,6 @@ class _GroceryListPageBodyState extends State<GroceryListPageBody> {
               ],
             ),
             const SizedBox(height: PaddingSizes.mdl),
-            // Usamos Expanded para que el ListView ocupe el espacio restante
             const Expanded(
               child: GroceryListWidget(),
             ),

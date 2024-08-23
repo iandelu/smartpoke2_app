@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
+import 'package:meal_ai/config/theme/brut_shadows.dart';
 import 'package:meal_ai/core/provider/unit_of_measure_provider.dart';
+import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
+import 'package:meal_ai/core/utils/extensions/context.dart';
+import 'package:meal_ai/core/widgets/buttons.dart';
+import 'package:meal_ai/core/widgets/expandable_text.dart';
+import 'package:meal_ai/core/widgets/neu_buttons.dart';
+import 'package:meal_ai/core/widgets/progress_bar.dart';
+import 'package:meal_ai/features/category/models/category_models.dart';
+import 'package:meal_ai/features/category/widgets/categories_horizontal_scroller.dart';
 import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provider/grocery_list_provider.dart';
 import 'package:meal_ai/features/product/search/product_search_delegate.dart';
@@ -64,27 +73,29 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
         : selectedCount / groceryList.length;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showSearch(
-            context: context,
-            delegate: ProductSearchDelegate(ref, initialProducts: []),
-          ).then((ean) {
-            if(ean == null) return;
-            context.push('/product/$ean');
-          });
-        },
-        child: const Icon(Icons.search),
+      floatingActionButton: Container(
+        height: 50,
+        width: 50,
+        decoration: BoxDecoration(
+          color: context.primaryColor,
+          shape: BoxShape.circle,
+        ),
+        child: NeuIconButton(
+          onPressed: showSearhProduct,
+          borderRadius: BorderRadius.circular(BorderRadiusSizes.xxl),
+          icon: const Icon(
+            Icons.search,
+            size: PaddingSizes.xl,
+            color: black1,
+          ),
+          enableAnimation: true,
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            LinearProgressIndicator(
-              value: progress,
-              backgroundColor: Colors.grey[300],
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-            ),
+            NeuProgressBarIndicator(progress: progress),
             const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
@@ -100,10 +111,7 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Text(
                           category,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
+                          style: headline5,
                         ),
                       ),
                       ...items.map((grocery) {
@@ -111,24 +119,20 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 4.0),
                           decoration: BoxDecoration(
+                            boxShadow: [shadowMediumBrut],
+                            border: Border.all(
+                              color: black1,
+                              width: 2.0,
+                            ),
                             color: grocery.isChecked
                                 ? accentTeal1
                                 : accentTeal2,
-                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Dismissible(
                             key: Key(grocery.key.toString()),
                             direction: DismissDirection.startToEnd,
                             onDismissed: (direction) {
-                              setState(() {
-                                deleteGroceryItem(grocery, selectedCount, groupedGroceries, category, groceryList, index, groceryMethods);
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Producto eliminado'),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
+                              onDismissedItem(grocery, selectedCount, groupedGroceries, category, groceryList, index, groceryMethods, context);
                             },
                             background: Container(
                               color: Colors.red,
@@ -144,22 +148,19 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                 _showBottomSheet(context, grocery, index, onUpdateGrocery, unitOfMeasures);
                               },
                               leading: Checkbox(
+                                checkColor: black1,
+                                activeColor: accentCoral1,
                                 value: grocery.isChecked,
                                 onChanged: (val) {
-                                  setState(() {
-                                    FocusScope.of(context).unfocus();
-
-                                    final updatedGrocery = grocery.copyWith(isChecked: val!);
-                                    grocery = updatedGrocery;
-                                    groceryMethods.updateGrocery(
-                                        item: grocery, key: grocery.key);
-                                  });
+                                  grocery = onUpdatedItem(context, grocery, val, groceryMethods);
                                 },
                               ),
-                              title: Text(
-                                '${item.amount}${item.unitOfMeasure?.name ?? ''} - ${item.ingredientName}',
+                              title: ExpandableTextWidget(
+                                text: '${item.amount}${item.unitOfMeasure?.name ?? ''} - ${item.product?.description}',
+                                maxLines: 1,
                                 style: TextStyle(
                                   fontSize: 16,
+                                  fontWeight: FontWeight.w500,
                                   decoration: grocery.isChecked
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
@@ -168,9 +169,15 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                       : Colors.black,
                                 ),
                               ),
-                              trailing: Text(
-                                item.product?.category?.emoji ?? '🍽️',
-                                style: AppTextStyles().emojiCategory,
+                              trailing: Container(
+                                height: 32,
+                                width: 32,
+                                child: CategoryItem(
+                                  CategoryModel(
+                                    name: item.product?.category?.name ?? '',
+                                    emoji: item.product?.category?.emoji ?? '',
+                                  ),
+                                ),
                               ),
                             ),
                           )
@@ -183,6 +190,29 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  GroceryModel onUpdatedItem(BuildContext context, GroceryModel grocery, bool? val, GroceryList groceryMethods) {
+    setState(() {
+      FocusScope.of(context).unfocus();
+      final updatedGrocery = grocery.copyWith(isChecked: val!);
+      grocery = updatedGrocery;
+      groceryMethods.updateGrocery(
+          item: grocery, key: grocery.key);
+    });
+    return grocery;
+  }
+
+  void onDismissedItem(GroceryModel grocery, int selectedCount, Map<String, List<GroceryModel>> groupedGroceries, String category, List<GroceryModel> groceryList, int index, GroceryList groceryMethods, BuildContext context) {
+    setState(() {
+      deleteGroceryItem(grocery, selectedCount, groupedGroceries, category, groceryList, index, groceryMethods);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Producto eliminado'),
+        backgroundColor: Colors.red,
       ),
     );
   }
@@ -202,5 +232,16 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
     groceryMethods.deleteGrocery(key: grocery.key);
   }
 
+
+
+  void showSearhProduct() {
+    showSearch(
+      context: context,
+      delegate: ProductSearchDelegate(ref, initialProducts: []),
+    ).then((ean) {
+      if(ean == null) return;
+      context.push('/product/$ean');
+    });
+  }
 
 }
