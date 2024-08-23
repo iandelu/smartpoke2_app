@@ -11,6 +11,7 @@ import 'package:meal_ai/features/grocery_list_page/widgets/recipe_product_edit_s
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/features/recipes/widgets/edit_recipe_widgets/edit_ingredient_section.dart';
+import 'package:meal_ai/features/recipes/widgets/edit_recipe_widgets/edit_steps.dart';
 import 'package:meal_ai/features/recipes/widgets/edit_recipe_widgets/text_field_section.dart';
 
 class EditRecipeScreen extends ConsumerStatefulWidget {
@@ -231,58 +232,3 @@ class CookingDurationSection extends StatelessWidget {
   }
 }
 
-
-class StepsSection extends StatelessWidget {
-  final List<RecipeStep> steps;
-  final Function(int, RecipeStep) onStepChanged;
-  final Function(int) onStepRemoved;
-  final Function() onStepAdded;
-
-  StepsSection({
-    required this.steps,
-    required this.onStepChanged,
-    required this.onStepRemoved,
-    required this.onStepAdded,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Steps', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        Column(
-          children: steps.asMap().entries.map((entry) {
-            int index = entry.key;
-            RecipeStep step = entry.value;
-            return ListTile(
-              leading: Text(step.position.toString()),
-              title: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Tell a little about your food',
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                ),
-                controller: TextEditingController(text: step.description),
-                style: TextStyle(fontWeight: FontWeight.bold),
-                onChanged: (value) {
-                  onStepChanged(index, step.copyWith(description: value));
-                },
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.camera_alt, color: Colors.black),
-                onPressed: () {
-                  // Handle adding/editing step image
-                },
-              ),
-            );
-          }).toList(),
-        ),
-        TextButton(
-          onPressed: onStepAdded,
-          child: Text('+ Step'),
-        ),
-      ],
-    );
-  }
-}

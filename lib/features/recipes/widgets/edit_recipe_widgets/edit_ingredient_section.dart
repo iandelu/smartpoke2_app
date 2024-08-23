@@ -87,7 +87,7 @@ class _IngredientsSectionState extends State<IngredientsSection> {
             int index = entry.key;
             RecipeProduct ingredient = entry.value;
             return Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
               child: Dismissible(
                 key: Key(entry.key.toString()),
                 direction: DismissDirection.startToEnd,
@@ -105,6 +105,7 @@ class _IngredientsSectionState extends State<IngredientsSection> {
                 ),
                 child: Container(
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
                     boxShadow: [shadowMediumBrut],
                     border: Border.all(
                       color: black1,
