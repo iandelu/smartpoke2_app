@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
+import 'package:meal_ai/config/theme/brut_shadows.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
+import 'package:meal_ai/core/widgets/expandable_text.dart';
+import 'package:meal_ai/features/category/models/category_models.dart';
+import 'package:meal_ai/features/category/widgets/categories_horizontal_scroller.dart';
 import 'package:meal_ai/features/grocery_list_page/widgets/recipe_product_edit_sheet.dart';
+import 'package:meal_ai/features/product/models/product_model/product_models.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
-class IngredientsSection extends StatelessWidget {
+class IngredientsSection extends StatefulWidget {
   final List<RecipeProduct> ingredients;
   final List<UnitOfMeasure> unitOfMeasures;
   final Function(int, RecipeProduct) onIngredientChanged;
@@ -18,7 +24,15 @@ class IngredientsSection extends StatelessWidget {
     required this.unitOfMeasures,
   });
 
-  void _showBottomSheet(BuildContext context,RecipeProduct recipeProduct, int index, Function(int, RecipeProduct) onUpdateGrocery, List<UnitOfMeasure> unitOfMeasures) {
+  @override
+  State<IngredientsSection> createState() => _IngredientsSectionState();
+}
+
+class _IngredientsSectionState extends State<IngredientsSection> {
+  void _showBottomSheet(BuildContext context,
+      RecipeProduct recipeProduct,
+      int index,
+      Function(int, RecipeProduct) onUpdateGrocery, List<UnitOfMeasure> unitOfMeasures) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -32,17 +46,27 @@ class IngredientsSection extends StatelessWidget {
     );
   }
 
+  void onDismissedItem(int index) {
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Producto eliminado'),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
     onUpdateRecipeProduct(index, product) {
-      final ingredient = ingredients[index].copyWith(
+      final ingredient = widget.ingredients[index].copyWith(
         amount: product.amount,
         ingredientName: product.ingredientName,
         unitOfMeasure: product.unitOfMeasure,
         product: product.product,
       );
-      onIngredientChanged(index, ingredient);
+      widget.onIngredientChanged(index, ingredient);
     }
 
     return Column(
@@ -53,30 +77,66 @@ class IngredientsSection extends StatelessWidget {
           children: [
             Text('Ingredients', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             TextButton(
-              onPressed: onIngredientAdded,
+              onPressed: widget.onIngredientAdded,
               child: Text('+ Ingredient'),
             ),
           ],
         ),
         Column(
-          children: ingredients.asMap().entries.map((entry) {
+          children: widget.ingredients.asMap().entries.map((entry) {
             int index = entry.key;
             RecipeProduct ingredient = entry.value;
-            return ListTile(
-              onTap: () {
-                _showBottomSheet(context, ingredient, index, onUpdateRecipeProduct, unitOfMeasures);
-              },
-              title: Text(
-                '${ingredient.amount}${ingredient.unitOfMeasure?.name ?? ''} - ${ingredient.ingredientName}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.none,
-                  color: Colors.black,
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Dismissible(
+                key: Key(entry.key.toString()),
+                direction: DismissDirection.startToEnd,
+                onDismissed: (direction) {
+                  onDismissedItem(entry.key);
+                },
+                background: Container(
+                  color: Colors.red,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  alignment: Alignment.centerLeft,
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              trailing: Text(
-                ingredient.product?.category?.emoji ?? '🍽️',
-                style: AppTextStyles().emojiCategory,
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [shadowMediumBrut],
+                    border: Border.all(
+                      color: black1,
+                      width: 2.0,
+                    ),
+                    color: cream1,
+                  ),
+                  child: ListTile(
+                      onTap: () {
+                        _showBottomSheet(context, ingredient, index, onUpdateRecipeProduct, widget.unitOfMeasures);
+                      },
+                      title: ExpandableTextWidget(
+                        text: '${ingredient.amount}${ingredient.unitOfMeasure?.name ?? ''} - ${ingredient.product?.description ?? ingredient.product?.name ?? ingredient.ingredientName}',
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+                      trailing: Container(
+                        height: 33,
+                        width: 33,
+                        child: CategoryItem(
+                          CategoryModel(
+                            name: ingredient.product?.category?.name ?? '🍽️',
+                            emoji: ingredient.product?.category?.emoji ?? '🍽️',
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
               ),
             );
           }).toList(),
