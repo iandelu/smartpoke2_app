@@ -11,6 +11,8 @@ import 'package:meal_ai/features/user/service/auth_state_user_service.dart';
 class SettingsAccountPage extends ConsumerWidget {
   const SettingsAccountPage({super.key});
 
+  static const String name = "account-settings";
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authenticatedUser = ref.watch(authStateProvider.notifier);

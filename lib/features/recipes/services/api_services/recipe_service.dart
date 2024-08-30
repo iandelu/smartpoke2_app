@@ -14,23 +14,13 @@ class RecipeApiService {
     final apiUrl =
         Uri.parse('http://localhost:8082/api/recipes/from_url');
 
-    final response = await http.post(
-      apiUrl,
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({'url': url}),
+    final response = await smartPokeClient.post(
+      'recipes/from_url',
+      data: {'url': url}
     );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      // Decode the response body with UTF-8
-      var decodedResponse = utf8.decode(response.bodyBytes);
-
-      // Parse the decoded string to JSON
-      final Map<String, dynamic> jsonResponse = jsonDecode(decodedResponse);
-      final result = RecipeModel.fromJson(parser(jsonResponse));
-      return result;
+    
+    if (response.statusCode == 200) {
+      return RecipeModel.fromJson(response.data);
     } else {
       logger.d(response.statusCode);
       throw Exception('Something went wrong');
