@@ -23,7 +23,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
 
     await Future.delayed(const Duration(seconds: 1));
 
-    if (user != null) {
+    if (user == null) {
       context.go('/session');
     } else {
       context.go('/home');

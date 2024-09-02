@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/features/settings_page/widgets/menu_group.dart';
 import 'package:meal_ai/features/settings_page/widgets/menu_tile.dart';
 import 'package:meal_ai/features/settings_page/widgets/profile_header.dart';
+import 'package:meal_ai/features/user/service/auth_state_user_service.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -15,14 +18,14 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-class SettingsPageBody extends StatefulWidget {
+class SettingsPageBody extends ConsumerStatefulWidget {
   const SettingsPageBody({super.key});
 
   @override
-  State<SettingsPageBody> createState() => _SettingsPageBodyState();
+  ConsumerState<SettingsPageBody> createState() => _SettingsPageBodyState();
 }
 
-class _SettingsPageBodyState extends State<SettingsPageBody> {
+class _SettingsPageBodyState extends ConsumerState<SettingsPageBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +79,7 @@ class _SettingsPageBodyState extends State<SettingsPageBody> {
                   icon: Icons.message,
                   title: 'Messages',
                   onTap: () {},
-                  
+
                 ),
                 MenuTile(
                   icon: Icons.notifications,
@@ -116,7 +119,20 @@ class _SettingsPageBodyState extends State<SettingsPageBody> {
                 MenuTile(
                   icon: Icons.logout,
                   title: 'Logout',
-                  onTap: () {},
+                  onTap: () async{
+                    final isCleared = await ref.read(authStateProvider.notifier).logout();
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          isCleared != null
+                              ? 'logged out successfully!'
+                              : 'Failed to log out.',
+                        ),
+                      ),
+                    );
+                    context.go('/');
+                  },
                 ),
               ],
             ),
