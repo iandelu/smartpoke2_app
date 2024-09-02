@@ -59,18 +59,22 @@ class _SettingsPageBodyState extends State<SettingsPageBody> {
                 MenuTile(
                   icon: Icons.post_add,
                   title: 'Posts',
+                  onTap: () {},
                 ),
                 MenuTile(
                   icon: Icons.group,
                   title: 'Community',
+                  onTap: () {},
                 ),
                 MenuTile(
                   icon: Icons.favorite,
                   title: 'Favourites',
+                  onTap: () {},
                 ),
                 MenuTile(
                   icon: Icons.download,
                   title: 'Downloads',
+                  onTap: () {},
                 ),
               ],
             ),
@@ -80,19 +84,23 @@ class _SettingsPageBodyState extends State<SettingsPageBody> {
                 MenuTile(
                   icon: Icons.message,
                   title: 'Messages',
+                  onTap: () {},
                   
                 ),
                 MenuTile(
                   icon: Icons.notifications,
                   title: 'Notifications',
+                  onTap: () {},
                 ),
                 MenuTile(
                   icon: Icons.history,
                   title: 'Activity History',
+                  onTap: () {},
                 ),
                 MenuTile(
                   icon: Icons.emoji_events,
                   title: 'Achievements',
+                  onTap: () {},
                 ),
               ],
             ),
@@ -102,18 +110,22 @@ class _SettingsPageBodyState extends State<SettingsPageBody> {
                 MenuTile(
                   icon: Icons.security,
                   title: 'Privacy and Security Settings',
+                  onTap: () {},
                 ),
                 MenuTile(
                   icon: Icons.accessibility,
                   title: 'Accessibility Features',
+                  onTap: () {},
                 ),
                 MenuTile(
                   icon: Icons.help,
                   title: 'Help and Support',
+                  onTap: () {},
                 ),
                 MenuTile(
                   icon: Icons.logout,
                   title: 'Logout',
+                  onTap: () {},
                 ),
               ],
             ),
