@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/features/category/models/category_models.dart';
+import 'package:meal_ai/features/category/providers/catgories_provider.dart';
 import 'package:meal_ai/features/recipes/providers/recipe_from_url_provider/recipe_from_url_provider.dart';
 import 'package:meal_ai/features/recipes/services/api_services/recipe_service.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
@@ -8,16 +9,17 @@ import 'package:meal_ai/features/recipes/widgets/recipe_card.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CategoryScreen extends ConsumerStatefulWidget {
-  final CategoryModel category;
+  final String categoryName;
   static const String name = 'category-screen';
 
-  CategoryScreen({required this.category});
+  CategoryScreen({required this.categoryName});
 
   @override
   _RecipeScreenState createState() => _RecipeScreenState();
 }
 
 class _RecipeScreenState extends ConsumerState<CategoryScreen> {
+  late final CategoryModel category;
   final RecipeApiService _recipeService = RecipeApiService();
   final BehaviorSubject<bool> isLoadingStream = BehaviorSubject<bool>.seeded(false);
   final BehaviorSubject<List<RecipeModel>> debouncedRecipes = BehaviorSubject<List<RecipeModel>>.seeded([]);
@@ -25,6 +27,7 @@ class _RecipeScreenState extends ConsumerState<CategoryScreen> {
 
   @override
   void initState() {
+    category = ref.read(categoryProvider).recipeCategories.firstWhere((element) => element.name == widget.categoryName);
     super.initState();
     fetchRecipes();
   }
@@ -39,7 +42,7 @@ class _RecipeScreenState extends ConsumerState<CategoryScreen> {
   Future<void> fetchRecipes() async {
     try {
       isLoadingStream.add(true);
-      final recipes = await _recipeService.fetchRecipes('', category: [widget.category]);
+      final recipes = await _recipeService.fetchRecipes('', category: [category]);
       setState(() {
         initialRecipes = recipes;
       });
@@ -55,7 +58,7 @@ class _RecipeScreenState extends ConsumerState<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.category.name} ${widget.category.emoji} Recipes'),
+        title: Text('${category.name} ${category.emoji} Recipes'),
       ),
       body: StreamBuilder<bool>(
         stream: isLoadingStream.stream,

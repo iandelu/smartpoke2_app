@@ -12,21 +12,13 @@ const IS_AUTHENTICATED_KEY = 'IS_AUTHENTICATED_KEY';
 const AUTHENTICATED_USER_EMAIL_KEY = 'AUTHENTICATED_USER_EMAIL_KEY';
 const JWT_KEY = 'JWT_KEY';
 
-final hiveProvider = Provider((_) async {
-  await Hive.initFlutter();
-  return Hive;
-});
 
-final hiveBoxProvider = FutureProvider<Box>((ref) async {
-  final hive = await ref.watch(hiveProvider);
-  return await hive.openBox('authBox');
-});
 
 class AuthState extends StateNotifier<AuthResponse?> {
-  final Box _box;
+  final Box _box = Hive.box('authBox');
   final UserService _userApiService;
 
-  AuthState(this._box, this._userApiService) : super(null) {
+  AuthState(this._userApiService) : super(null) {
     _loadFromHive();
   }
 
@@ -76,7 +68,6 @@ class AuthState extends StateNotifier<AuthResponse?> {
 }
 
 final authStateProvider = StateNotifierProvider<AuthState, AuthResponse?>((ref) {
-  final box = ref.watch(hiveBoxProvider).asData!.value;
   final apiClient = ref.watch(userRepositoryProvider);
-  return AuthState(box, apiClient);
+  return AuthState(apiClient);
 });
