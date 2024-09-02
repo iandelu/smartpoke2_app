@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:meal_ai/core/utils/logger.dart';
 
 final smartpokeBaseOptions = BaseOptions(
-    baseUrl: 'http://p24pntqj-8082.uks1.devtunnels.ms/api/'
+    baseUrl: 'http://localhost:8082/api/'
 );
 
 final smartPokeClient = ApiClient(smartpokeBaseOptions);

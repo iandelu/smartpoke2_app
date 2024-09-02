@@ -1,18 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
-import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
-import 'package:meal_ai/core/utils/extensions/context.dart';
-import 'package:meal_ai/core/utils/helper_methods.dart';
-import 'package:meal_ai/features/settings_page/screens/settings_account_page.dart';
-import 'package:meal_ai/features/settings_page/screens/settings_general_page.dart';
-import 'package:meal_ai/features/settings_page/screens/settings_how_to_add_recipe_page.dart';
 import 'package:meal_ai/features/settings_page/widgets/menu_group.dart';
 import 'package:meal_ai/features/settings_page/widgets/menu_tile.dart';
 import 'package:meal_ai/features/settings_page/widgets/profile_header.dart';
-import 'package:meal_ai/features/settings_page/widgets/settings_list_tile_widgets.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

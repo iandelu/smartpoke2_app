@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/date_time.dart';
@@ -70,7 +71,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
           showModalBottomSheet(
               isScrollControlled: true,
               useRootNavigator: true,
-              backgroundColor: Colors.grey.shade100,
+              backgroundColor: cream2,
               context: context,
               builder: ((context) {
                 return SizedBox(
@@ -92,7 +93,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
                                 child: Text('Cancel',
                                     style: AppTextStyles()
                                         .lRegular
-                                        .copyWith(color: context.primaryColor)),
+                                        .copyWith(color: black1)),
                               ),
                               GestureDetector(
                                 onTap: () async {
@@ -112,7 +113,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
                                     'Add ${mealRecipeIngredients.length}',
                                     style: AppTextStyles()
                                         .lRegular
-                                        .copyWith(color: context.primaryColor)),
+                                        .copyWith(color: black1)),
                               ),
                             ],
                           ),
@@ -149,8 +150,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
                                               style: AppTextStyles()
                                                   .mThick
                                                   .copyWith(
-                                                      color:
-                                                          context.primaryColor),
+                                                      color: black1),
                                             ),
                                             const SizedBox(
                                                 width: PaddingSizes.sm),
@@ -176,8 +176,6 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
         },
         trailingButtonIcon: Icon(
           Icons.local_grocery_store_outlined,
-          color: context.primaryColor,
-          size: 35,
         ),
       ),
       body: const MealPlanPageBody(),
@@ -246,8 +244,9 @@ class MealPlanWidget extends StatelessWidget {
                   title: Text(
                     '$dayLabel, ${getMonthName(month)} $day',
                     style: AppTextStyles().lRegular.copyWith(
+                        decorationStyle: isCurrentDay ? TextDecorationStyle.wavy : TextDecorationStyle.solid,
                         color:
-                            isCurrentDay ? context.primaryColor : Colors.grey),
+                            isCurrentDay ? context.primaryColor : black1),
                   ),
                   trailing: MealPlanMenu(
                     addTime: DateTime.now().add(Duration(days: index)),
