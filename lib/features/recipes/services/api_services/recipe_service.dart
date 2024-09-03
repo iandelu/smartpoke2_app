@@ -18,8 +18,8 @@ class RecipeApiService {
       'recipes/from_url',
       data: {'url': url}
     );
-    
-    if (response.statusCode == 200) {
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return RecipeModel.fromJson(response.data);
     } else {
       logger.d(response.statusCode);

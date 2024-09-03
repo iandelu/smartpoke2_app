@@ -156,7 +156,7 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                 },
                               ),
                               title: ExpandableTextWidget(
-                                text: '${item.amount}${item.unitOfMeasure?.name ?? ''} - ${item.product?.description}',
+                                text: '${item.amount}${item.unitOfMeasure?.name ?? ''} - ${item.product?.description ?? item.product?.name ?? item.ingredientName ?? ''}',
                                 maxLines: 1,
                                 style: TextStyle(
                                   fontSize: 16,
@@ -170,12 +170,12 @@ class _GroceryListWidgetState extends ConsumerState<GroceryListWidget> {
                                 ),
                               ),
                               trailing: Container(
-                                height: 32,
-                                width: 32,
+                                height: 33,
+                                width: 33,
                                 child: CategoryItem(
                                   CategoryModel(
                                     name: item.product?.category?.name ?? '',
-                                    emoji: item.product?.category?.emoji ?? '',
+                                    emoji: item.product?.category?.emoji ?? '🍽️',
                                   ),
                                 ),
                               ),
