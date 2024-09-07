@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/provider/unit_of_measure_provider.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
-import 'package:meal_ai/features/grocery_list_page/widgets/recipe_product_edit_sheet.dart';
+import 'package:meal_ai/features/category/models/category_models.dart';
+import 'package:meal_ai/features/category/providers/catgories_provider.dart';
+import 'package:meal_ai/features/category/widgets/category_chips.dart';
 import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
-
-
-import 'package:flutter/material.dart';
-import 'package:meal_ai/core/styles/text_styles.dart';
-import 'package:meal_ai/features/grocery_list_page/widgets/recipe_product_edit_sheet.dart';
-import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_ai/features/recipes/widgets/edit_recipe_widgets/edit_ingredient_section.dart';
 import 'package:meal_ai/features/recipes/widgets/edit_recipe_widgets/edit_steps.dart';
 import 'package:meal_ai/features/recipes/widgets/edit_recipe_widgets/text_field_section.dart';
 
+import '../../category/widgets/category_selector.dart';
+
 class EditRecipeScreen extends ConsumerStatefulWidget {
-  final RecipeModel recipe;
+  late final RecipeModel recipe;
+
 
   EditRecipeScreen({required this.recipe});
 
@@ -29,6 +30,10 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
   late int _cookingDuration;
   late List<RecipeProduct> _ingredients;
   late List<RecipeStep> _steps;
+  late String _selectedDifficulty;
+  late List<CategoryModel>? _selectedCategories;
+  late final List<CategoryModel> _allCategories;
+
 
   @override
   void initState() {
@@ -38,6 +43,9 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
     _cookingDuration = widget.recipe.totalTime;
     _ingredients = List.from(widget.recipe.recipeProducts);
     _steps = List.from(widget.recipe.recipeSteps);
+    _selectedDifficulty = widget.recipe.difficulty;
+    _selectedCategories = List.from(widget.recipe.categories);
+    _allCategories = ref.read(categoryProvider).recipeCategories;
   }
 
   @override
@@ -66,9 +74,7 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              _saveRecipe;
-            },
+            onPressed: () => _saveRecipe(),
             icon: const Icon(
               Icons.save,
               color: Colors.black,
@@ -93,7 +99,53 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
                 _cookingDuration = value;
               }),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Text(
+                  'Categories',
+                  style: headline5,
+                ),
+                IconButton(
+                  onPressed: () async {
+                    final selectedCategories = await showDialog<List<CategoryModel>>(
+                      context: context,
+                      builder: (context) {
+                        return CustomCategorySelector(
+                          categories: _allCategories,
+                          preselectedCategories: _selectedCategories ?? [],
+                          onSelectionChanged: (selected) {
+                            Navigator.of(context).pop(selected);
+                          },
+                        );
+                      },
+                    );
+                    setState(() {
+                      _selectedCategories = selectedCategories;
+                    });
+                  },
+                  icon: Icon(Icons.add),
+                ),
+              ],
+            ),
+            if (_selectedCategories != null && _selectedCategories!.isNotEmpty)
+              CategoryChips(categories: _selectedCategories!),
+            SizedBox(height: 16),
+            Text(
+              'Difficulty',
+              style: headline5,
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildDifficultyOption('EASY', '😄'),
+                _buildDifficultyOption('MODERATE', '😐'),
+                _buildDifficultyOption('KIND_OF_HARD', '🤨'),
+                _buildDifficultyOption('HARD', '😡'),
+              ],
+            ),
+            SizedBox(height: 16),
             IngredientsSection(
               ingredients: _ingredients,
               unitOfMeasures: unitOfMeasures,
@@ -131,6 +183,37 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
     return TextFieldSection(label: label, controller: controller, maxLines: maxLines);
   }
 
+  Widget _buildDifficultyOption(String difficulty, String emoji) {
+    final isSelected = _selectedDifficulty == difficulty; // Usar la variable de estado local
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedDifficulty = difficulty; // Actualizar la dificultad seleccionada
+        });
+      },
+      child: Column(
+        children: [
+          Text(
+            emoji,
+            style: TextStyle(
+              fontSize: 24,
+              color: isSelected ? Colors.blue : Colors.black,
+            ),
+          ),
+          if (isSelected)
+            Text(
+              difficulty,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
   void _saveRecipe() {
     RecipeModel updatedRecipe = widget.recipe.copyWith(
       name: _nameController.text,
@@ -138,6 +221,7 @@ class _EditRecipeScreenState extends ConsumerState<EditRecipeScreen> {
       totalTime: _cookingDuration,
       recipeProducts: _ingredients,
       recipeSteps: _steps,
+      difficulty: _selectedDifficulty,
     );
 
     Navigator.pop(context, updatedRecipe);
@@ -211,7 +295,7 @@ class CoverPhotoSection extends StatelessWidget {
 
 
 
-class CookingDurationSection extends StatelessWidget {
+class CookingDurationSection extends StatefulWidget {
   final int initialDuration;
   final ValueChanged<int> onDurationChanged;
 
@@ -221,12 +305,51 @@ class CookingDurationSection extends StatelessWidget {
   });
 
   @override
+  _CookingDurationSectionState createState() => _CookingDurationSectionState();
+}
+
+class _CookingDurationSectionState extends State<CookingDurationSection> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialDuration.toString());
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Cooking Duration (in minutes)', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(
+          'Cooking Duration (in minutes)',
+          style: headline5,
+        ),
         SizedBox(height: 8),
+        TextField(
+          controller: _controller,
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly, // Solo permite números
+          ],
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            focusColor: black1,
+          ),
+          onChanged: (value) {
+            int? duration = int.tryParse(value);
+            if (duration != null) {
+              widget.onDurationChanged(duration);
+            }
+          },
+        ),
       ],
     );
   }

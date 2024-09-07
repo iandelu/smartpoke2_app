@@ -126,9 +126,10 @@ class _RecipeFilterSheetState extends ConsumerState<RecipeFilterSheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildDifficultyOption('Easy', '😄'),
-                _buildDifficultyOption('Medium', '😐'),
-                _buildDifficultyOption('Hard', '😡'),
+                _buildDifficultyOption('EASY', '😄'),
+                _buildDifficultyOption('MODERATE', '😐'),
+                _buildDifficultyOption('KIND_OF_HARD', '🤨'),
+                _buildDifficultyOption('HARD', '😡'),
               ],
             ),
             const SizedBox(height: 16),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/config/theme/brut_shadows.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
+import 'package:meal_ai/core/widgets/buttons.dart';
 import 'package:meal_ai/core/widgets/expandable_text.dart';
 import 'package:meal_ai/features/category/models/category_models.dart';
 import 'package:meal_ai/features/category/widgets/categories_horizontal_scroller.dart';
@@ -76,9 +77,8 @@ class _IngredientsSectionState extends State<IngredientsSection> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Ingredients', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            TextButton(
-              onPressed: widget.onIngredientAdded,
-              child: Text('+ Ingredient'),
+            TextButton( onPressed: widget.onIngredientAdded,
+              child:  Text('+ Ingredient', style: TextStyle(color: accentTeal3, fontSize: 16)),
             ),
           ],
         ),
