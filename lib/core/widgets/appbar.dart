@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
+import 'package:meal_ai/core/widgets/buttons.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -32,7 +34,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         title,
-        style: AppTextStyles().lThick,
+        style: AppTextStyles().lThick.copyWith(
+          color: black1,
+        )
       ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,
@@ -52,18 +56,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           : null,
       actions: showTrailingButton
           ? [
-              IconButton(
-                icon: trailingButtonIcon ??
-                    const Icon(
-                      Icons.settings,
-                      color: Colors.black,
-                    ),
-                onPressed: () {
-                  if (trailingButtonOnPressed != null) {
-                    trailingButtonOnPressed!();
-                  }
-                },
-                padding: const EdgeInsets.only(right: 12.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: BrutIconButton(
+                  icon: trailingButtonIcon ??
+                      const Icon(
+                        Icons.settings,
+                        color: Colors.black,
+                      ),
+                  onPressed: () {
+                    if (trailingButtonOnPressed != null) {
+                      trailingButtonOnPressed!();
+                    }
+                  },
+                ),
               ),
             ]
           : [],

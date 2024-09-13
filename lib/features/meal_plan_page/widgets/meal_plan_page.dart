@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
-import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 class MealPlaneRecipeWidget extends StatelessWidget {
   const MealPlaneRecipeWidget({
@@ -28,7 +28,7 @@ class MealPlaneRecipeWidget extends StatelessWidget {
                     fit: BoxFit.cover,
                     colorFilter: ColorFilter.mode(
                         Colors.black.withOpacity(0.3), BlendMode.darken),
-                    image: CachedNetworkImageProvider(recipe.image))),
+                    image: CachedNetworkImageProvider(recipe.pictureUrl))),
             child: Padding(
               padding: const EdgeInsets.only(
                   left: PaddingSizes.sm, top: PaddingSizes.mdl),
@@ -38,7 +38,7 @@ class MealPlaneRecipeWidget extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      recipe.title,
+                      recipe.name,
                       textAlign: TextAlign.start,
                       style: AppTextStyles()
                           .mThick

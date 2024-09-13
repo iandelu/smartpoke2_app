@@ -6,7 +6,7 @@ part of 'meal_plan_page_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mealPlanHash() => r'8a6fbe6ecfa376a32575719822b2af9db409103c';
+String _$mealPlanHash() => r'54f062b2a481f84c6769387e9272b435bd687063';
 
 /// See also [MealPlan].
 @ProviderFor(MealPlan)

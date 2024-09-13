@@ -21,33 +21,27 @@ class GroceryList extends _$GroceryList {
   }
 
   Future<void> addMultipleGroceries(
-      List<Map<String, dynamic>> groceries) async {
-    for (var grocery in groceries) {
+      List<GroceryModel> groceries) async {
+    for (GroceryModel grocery in groceries) {
       await addGrocery(
-        groceryName: grocery["groceryName"],
-        isChecked: grocery["isChecked"],
+        grocery
       );
     }
   }
 
   Future<void> updateMultipleGroceries(
-      List<Map<String, dynamic>> groceries) async {
-    for (var grocery in groceries) {
+      List<GroceryModel> groceries) async {
+    for (GroceryModel grocery in groceries) {
       await updateGrocery(
-          groceryName: grocery['groceryName'],
-          isChecked: grocery["isChecked"],
-          key: grocery["key"]);
+          item: grocery,
+          key: grocery.key);
     }
   }
 
-  Future<void> addGrocery({
-    required String groceryName,
-    required bool isChecked,
-  }) async {
+  Future<void> addGrocery(GroceryModel item) async {
     try {
       logger.d('Attempting to add grocery to Hive');
-      await GroceryListService()
-          .addGrocery({"groceryName": groceryName, "isChecked": isChecked});
+      await GroceryListService().addGrocery(item);
       logger.d('Successfully added grocery to Hive');
       ref.invalidateSelf();
     } catch (e, st) {
@@ -56,13 +50,12 @@ class GroceryList extends _$GroceryList {
   }
 
   Future<void> updateGrocery(
-      {required String groceryName,
-      required bool isChecked,
+      {required GroceryModel item,
       required dynamic key}) async {
     try {
       logger.d('Attempting to update grocery in Hive');
       await GroceryListService().updateGrocery(
-          {"groceryName": groceryName, "isChecked": isChecked}, key);
+          item, key);
       logger.d('Successfully updated grocery in Hive');
       ref.invalidateSelf();
     } catch (e, st) {

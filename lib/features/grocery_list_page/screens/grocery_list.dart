@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,42 +33,32 @@ class _GroceryListPageBodyState extends State<GroceryListPageBody> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: PaddingSizes.md, vertical: PaddingSizes.sm),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Grocery List',
-                    style: AppTextStyles().lThick,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: PaddingSizes.md, vertical: PaddingSizes.sm),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Grocery List',
+                  style: AppTextStyles().lThick.copyWith(
+                    color: black1
                   ),
-                  GroceryListDialog(
-                      builder: ((context, showMenu) => IconButton(
-                          onPressed: showMenu,
-                          icon: const Icon(Icons.more_horiz, size: 30))))
-                  // IconButton(
-                  //     onPressed: () {
-                  //       // showCupertinoDialog(
-                  //       //     context: context,
-                  //       //     barrierDismissible: true,
-                  //       //     builder: (context) {
-                  //       //       return const GroceryListSettings();
-                  //       //     });
-                  //     },
-                  //     icon: const Icon(
-                  //       Icons.more_horiz,
-                  //       size: 30,
-                  //     ))
-                ],
-              ),
-              const SizedBox(height: PaddingSizes.mdl),
-              const GroceryListWidget()
-            ],
-          ),
+                ),
+                GroceryListDialog(
+                  builder: ((context, showMenu) => IconButton(
+                      onPressed: showMenu,
+                      icon: const Icon(Icons.more_horiz, size: 30))),
+                ),
+              ],
+            ),
+            const SizedBox(height: PaddingSizes.mdl),
+            const Expanded(
+              child: GroceryListWidget(),
+            ),
+          ],
         ),
       ),
     );

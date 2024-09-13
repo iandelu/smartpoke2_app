@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_ai/config/theme/brut_colors.dart';
 import 'package:meal_ai/core/styles/sizes.dart';
 import 'package:meal_ai/core/styles/text_styles.dart';
 import 'package:meal_ai/core/utils/date_time.dart';
 import 'package:meal_ai/core/utils/extensions/context.dart';
 import 'package:meal_ai/core/widgets/appbar.dart';
+import 'package:meal_ai/features/grocery_list_page/models/grocery_model/grocery_model.dart';
 import 'package:meal_ai/features/grocery_list_page/providers/grocery_list_provider/grocery_list_provider.dart';
 import 'package:meal_ai/features/meal_plan_page/providers/meal_plane_page_provider/meal_plan_page_provider.dart';
 import 'package:meal_ai/features/meal_plan_page/screens/add_meal_plan_list.dart';
 import 'package:meal_ai/features/meal_plan_page/widgets/meal_plan_menu.dart';
-import 'package:meal_ai/features/recipes_page/models/recipe_model/recipe_model.dart';
+import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 class MealPlanPage extends ConsumerStatefulWidget {
   const MealPlanPage({super.key});
@@ -20,7 +22,7 @@ class MealPlanPage extends ConsumerStatefulWidget {
 }
 
 class _MealPlanPageState extends ConsumerState<MealPlanPage> {
-  final List<Map<String, dynamic>> mealRecipeIngredients = [];
+  final List<GroceryModel> mealRecipeIngredients = [];
   @override
   void didChangeDependencies() {
     final mealRecipes =
@@ -36,7 +38,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
       if (recipeDate.isBefore(currentDate)) {
         ref
             .read(mealPlanProvider.notifier)
-            .deleteMealPlanRecipeFromHive(key: mealRecipe.key);
+            .deleteMealPlanRecipeFromHive(key: mealRecipe.id);
       }
     }
     super.didChangeDependencies();
@@ -55,22 +57,21 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
               ref.read(mealPlanProvider.notifier).getMealPlanRecipes();
 
           for (var mealRecipe in mealRecipes) {
-            for (var ingredient in mealRecipe.ingredients) {
-              final RegExp regex = RegExp(r'^([\d./\s]+)?(.*)$');
-              final Match match = regex.firstMatch(ingredient)!;
-              final String? amount = match[1]?.trim();
-              final String description = match[2]!.trim();
-              mealRecipeIngredients.add({
-                "groceryName": description,
-                "value": amount,
-                "isChecked": false
-              });
+            for (var product in mealRecipe.recipeProducts) {
+
+              mealRecipeIngredients.add(
+                  GroceryModel(
+                      groceryItem: product,
+                      isChecked: false,
+                      key: null,
+                  )
+              );
             }
           }
           showModalBottomSheet(
               isScrollControlled: true,
               useRootNavigator: true,
-              backgroundColor: Colors.grey.shade100,
+              backgroundColor: cream2,
               context: context,
               builder: ((context) {
                 return SizedBox(
@@ -92,7 +93,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
                                 child: Text('Cancel',
                                     style: AppTextStyles()
                                         .lRegular
-                                        .copyWith(color: context.primaryColor)),
+                                        .copyWith(color: black1)),
                               ),
                               GestureDetector(
                                 onTap: () async {
@@ -112,7 +113,7 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
                                     'Add ${mealRecipeIngredients.length}',
                                     style: AppTextStyles()
                                         .lRegular
-                                        .copyWith(color: context.primaryColor)),
+                                        .copyWith(color: black1)),
                               ),
                             ],
                           ),
@@ -145,22 +146,18 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
                                         Row(
                                           children: [
                                             Text(
-                                              ingredients.values.toList()[1] ??
-                                                  '-',
+                                              '${ingredients.groceryItem.amount.toString()} ${ingredients.groceryItem.unitOfMeasure?.name ?? ''}',
                                               style: AppTextStyles()
                                                   .mThick
                                                   .copyWith(
-                                                      color:
-                                                          context.primaryColor),
+                                                      color: black1),
                                             ),
                                             const SizedBox(
                                                 width: PaddingSizes.sm),
                                             Expanded(
                                               flex: 1,
                                               child: Text(
-                                                ingredients.values
-                                                    .toList()[0]
-                                                    .toString(),
+                                                ingredients.groceryItem.ingredientName ?? '-',
                                                 style: AppTextStyles().mRegular,
                                               ),
                                             ),
@@ -179,8 +176,6 @@ class _MealPlanPageState extends ConsumerState<MealPlanPage> {
         },
         trailingButtonIcon: Icon(
           Icons.local_grocery_store_outlined,
-          color: context.primaryColor,
-          size: 35,
         ),
       ),
       body: const MealPlanPageBody(),
@@ -249,8 +244,9 @@ class MealPlanWidget extends StatelessWidget {
                   title: Text(
                     '$dayLabel, ${getMonthName(month)} $day',
                     style: AppTextStyles().lRegular.copyWith(
+                        decorationStyle: isCurrentDay ? TextDecorationStyle.wavy : TextDecorationStyle.solid,
                         color:
-                            isCurrentDay ? context.primaryColor : Colors.grey),
+                            isCurrentDay ? context.primaryColor : black1),
                   ),
                   trailing: MealPlanMenu(
                     addTime: DateTime.now().add(Duration(days: index)),

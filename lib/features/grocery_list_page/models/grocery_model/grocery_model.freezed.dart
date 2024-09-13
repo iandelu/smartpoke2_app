@@ -12,7 +12,7 @@ part of 'grocery_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 GroceryModel _$GroceryModelFromJson(Map<String, dynamic> json) {
   return _GroceryModel.fromJson(json);
@@ -20,12 +20,16 @@ GroceryModel _$GroceryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$GroceryModel {
-  String get groceryName => throw _privateConstructorUsedError;
+  RecipeProduct get groceryItem => throw _privateConstructorUsedError;
   bool get isChecked => throw _privateConstructorUsedError;
   dynamic get key => throw _privateConstructorUsedError;
 
+  /// Serializes this GroceryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GroceryModelCopyWith<GroceryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -36,7 +40,9 @@ abstract class $GroceryModelCopyWith<$Res> {
           GroceryModel value, $Res Function(GroceryModel) then) =
       _$GroceryModelCopyWithImpl<$Res, GroceryModel>;
   @useResult
-  $Res call({String groceryName, bool isChecked, dynamic key});
+  $Res call({RecipeProduct groceryItem, bool isChecked, dynamic key});
+
+  $RecipeProductCopyWith<$Res> get groceryItem;
 }
 
 /// @nodoc
@@ -49,18 +55,20 @@ class _$GroceryModelCopyWithImpl<$Res, $Val extends GroceryModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? groceryName = null,
+    Object? groceryItem = null,
     Object? isChecked = null,
     Object? key = freezed,
   }) {
     return _then(_value.copyWith(
-      groceryName: null == groceryName
-          ? _value.groceryName
-          : groceryName // ignore: cast_nullable_to_non_nullable
-              as String,
+      groceryItem: null == groceryItem
+          ? _value.groceryItem
+          : groceryItem // ignore: cast_nullable_to_non_nullable
+              as RecipeProduct,
       isChecked: null == isChecked
           ? _value.isChecked
           : isChecked // ignore: cast_nullable_to_non_nullable
@@ -71,39 +79,54 @@ class _$GroceryModelCopyWithImpl<$Res, $Val extends GroceryModel>
               as dynamic,
     ) as $Val);
   }
+
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RecipeProductCopyWith<$Res> get groceryItem {
+    return $RecipeProductCopyWith<$Res>(_value.groceryItem, (value) {
+      return _then(_value.copyWith(groceryItem: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$_GroceryModelCopyWith<$Res>
+abstract class _$$GroceryModelImplCopyWith<$Res>
     implements $GroceryModelCopyWith<$Res> {
-  factory _$$_GroceryModelCopyWith(
-          _$_GroceryModel value, $Res Function(_$_GroceryModel) then) =
-      __$$_GroceryModelCopyWithImpl<$Res>;
+  factory _$$GroceryModelImplCopyWith(
+          _$GroceryModelImpl value, $Res Function(_$GroceryModelImpl) then) =
+      __$$GroceryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String groceryName, bool isChecked, dynamic key});
+  $Res call({RecipeProduct groceryItem, bool isChecked, dynamic key});
+
+  @override
+  $RecipeProductCopyWith<$Res> get groceryItem;
 }
 
 /// @nodoc
-class __$$_GroceryModelCopyWithImpl<$Res>
-    extends _$GroceryModelCopyWithImpl<$Res, _$_GroceryModel>
-    implements _$$_GroceryModelCopyWith<$Res> {
-  __$$_GroceryModelCopyWithImpl(
-      _$_GroceryModel _value, $Res Function(_$_GroceryModel) _then)
+class __$$GroceryModelImplCopyWithImpl<$Res>
+    extends _$GroceryModelCopyWithImpl<$Res, _$GroceryModelImpl>
+    implements _$$GroceryModelImplCopyWith<$Res> {
+  __$$GroceryModelImplCopyWithImpl(
+      _$GroceryModelImpl _value, $Res Function(_$GroceryModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? groceryName = null,
+    Object? groceryItem = null,
     Object? isChecked = null,
     Object? key = freezed,
   }) {
-    return _then(_$_GroceryModel(
-      groceryName: null == groceryName
-          ? _value.groceryName
-          : groceryName // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_$GroceryModelImpl(
+      groceryItem: null == groceryItem
+          ? _value.groceryItem
+          : groceryItem // ignore: cast_nullable_to_non_nullable
+              as RecipeProduct,
       isChecked: null == isChecked
           ? _value.isChecked
           : isChecked // ignore: cast_nullable_to_non_nullable
@@ -117,16 +140,17 @@ class __$$_GroceryModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$_GroceryModel implements _GroceryModel {
-  const _$_GroceryModel(
-      {required this.groceryName, required this.isChecked, required this.key});
 
-  factory _$_GroceryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_GroceryModelFromJson(json);
+@JsonSerializable(explicitToJson: true, anyMap: true)
+class _$GroceryModelImpl implements _GroceryModel {
+  const _$GroceryModelImpl(
+      {required this.groceryItem, required this.isChecked, required this.key});
+
+  factory _$GroceryModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GroceryModelImplFromJson(json);
 
   @override
-  final String groceryName;
+  final RecipeProduct groceryItem;
   @override
   final bool isChecked;
   @override
@@ -134,35 +158,37 @@ class _$_GroceryModel implements _GroceryModel {
 
   @override
   String toString() {
-    return 'GroceryModel(groceryName: $groceryName, isChecked: $isChecked, key: $key)';
+    return 'GroceryModel(groceryItem: $groceryItem, isChecked: $isChecked, key: $key)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GroceryModel &&
-            (identical(other.groceryName, groceryName) ||
-                other.groceryName == groceryName) &&
+            other is _$GroceryModelImpl &&
+            (identical(other.groceryItem, groceryItem) ||
+                other.groceryItem == groceryItem) &&
             (identical(other.isChecked, isChecked) ||
                 other.isChecked == isChecked) &&
             const DeepCollectionEquality().equals(other.key, key));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, groceryName, isChecked,
+  int get hashCode => Object.hash(runtimeType, groceryItem, isChecked,
       const DeepCollectionEquality().hash(key));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GroceryModelCopyWith<_$_GroceryModel> get copyWith =>
-      __$$_GroceryModelCopyWithImpl<_$_GroceryModel>(this, _$identity);
+  _$$GroceryModelImplCopyWith<_$GroceryModelImpl> get copyWith =>
+      __$$GroceryModelImplCopyWithImpl<_$GroceryModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GroceryModelToJson(
+    return _$$GroceryModelImplToJson(
       this,
     );
   }
@@ -170,21 +196,24 @@ class _$_GroceryModel implements _GroceryModel {
 
 abstract class _GroceryModel implements GroceryModel {
   const factory _GroceryModel(
-      {required final String groceryName,
+      {required final RecipeProduct groceryItem,
       required final bool isChecked,
-      required final dynamic key}) = _$_GroceryModel;
+      required final dynamic key}) = _$GroceryModelImpl;
 
   factory _GroceryModel.fromJson(Map<String, dynamic> json) =
-      _$_GroceryModel.fromJson;
+      _$GroceryModelImpl.fromJson;
 
   @override
-  String get groceryName;
+  RecipeProduct get groceryItem;
   @override
   bool get isChecked;
   @override
   dynamic get key;
+
+  /// Create a copy of GroceryModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_GroceryModelCopyWith<_$_GroceryModel> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GroceryModelImplCopyWith<_$GroceryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
