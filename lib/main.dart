@@ -6,7 +6,6 @@ import 'package:meal_ai/features/recipes/models/recipe_model/recipe_model.dart';
 
 import 'config/router/app_router.dart';
 import 'config/theme/app_theme.dart';
-
 void main() async {
   Hive.deleteFromDisk();
   WidgetsFlutterBinding.ensureInitialized();
